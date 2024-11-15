@@ -11,8 +11,10 @@ import com.movtery.zalithlauncher.databinding.ActivitySplashBinding
 import com.movtery.zalithlauncher.feature.background.BackgroundManager.setBackgroundImage
 import com.movtery.zalithlauncher.feature.background.BackgroundType
 import com.movtery.zalithlauncher.feature.unpack.Components
+import com.movtery.zalithlauncher.feature.unpack.GameFile
 import com.movtery.zalithlauncher.feature.unpack.Jre
 import com.movtery.zalithlauncher.feature.unpack.UnpackComponentsTask
+import com.movtery.zalithlauncher.feature.unpack.UnpackGameFileTask
 import com.movtery.zalithlauncher.feature.unpack.UnpackJreTask
 import com.movtery.zalithlauncher.feature.unpack.UnpackSingleFilesTask
 import com.movtery.zalithlauncher.task.Task
@@ -29,6 +31,8 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        UnpackSingleFilesTask(this).run()
 
         initItems()
 
@@ -86,6 +90,18 @@ class SplashActivity : BaseActivity() {
                         it.jreName,
                         getString(it.summary),
                         unpackJreTask
+                    )
+                )
+            }
+        }
+        GameFile.entries.forEach {
+            val unpackGameFileTask = UnpackGameFileTask(this, it)
+            if (!unpackGameFileTask.isCheckFailed()) {
+                items.add(
+                    InstallableItem(
+                        it.displayName,
+                        it.summary?.let { it1 -> getString(it1) },
+                        unpackGameFileTask
                     )
                 )
             }

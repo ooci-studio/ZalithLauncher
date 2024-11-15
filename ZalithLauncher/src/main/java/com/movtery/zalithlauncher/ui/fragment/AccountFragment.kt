@@ -168,31 +168,34 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
                 }
 
                 if (fromUser) { //需要判断是否为用户手动点击的，否则会一直进入微软登录界面
-                    when (toIndex) {
-                        //微软账户
-                        0 -> ZHTools.swapFragmentWithAnim(
-                            this@AccountFragment,
-                            MicrosoftLoginFragment::class.java,
-                            MicrosoftLoginFragment.TAG,
-                            null
-                        )
-                        //离线账户
-                        1 -> {
-                            nonMicrosoftLogin(
-                                R.string.account_no_microsoft_account_local
-                            ) { localLogin() }
-                        }
-                        //外置账户
-                        else -> {
-                            nonMicrosoftLogin(
-                                R.string.account_no_microsoft_account_other
-                            ) { otherLogin(toIndex - 2) /* Server索引需要从0开始 */ }
-                        }
-                    }
+//                    when (toIndex) {
+//                        //微软账户
+//                        0 -> ZHTools.swapFragmentWithAnim(
+//                            this@AccountFragment,
+//                            MicrosoftLoginFragment::class.java,
+//                            MicrosoftLoginFragment.TAG,
+//                            null
+//                        )
+//                        //离线账户
+//                        1 -> {
+//                            nonMicrosoftLogin(
+//                                R.string.account_no_microsoft_account_local
+//                            ) { localLogin() }
+//                        }
+//                        //外置账户
+//                        else -> {
+//                            nonMicrosoftLogin(
+//                                R.string.account_no_microsoft_account_other
+//                            ) { otherLogin(toIndex - 2) /* Server索引需要从0开始 */ }
+//                        }
+//                    }
+
+                    otherLogin(0)
                 }
             }
 
             addOtherServer.setOnClickListener(this@AccountFragment)
+            loginButton.setOnClickListener(this@AccountFragment)
             returnButton.setOnClickListener(this@AccountFragment)
         }
 
@@ -429,6 +432,9 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
         val activity = requireActivity()
         binding.apply {
             when (v) {
+                loginButton -> {
+                    otherLogin(0)
+                }
                 returnButton -> ZHTools.onBackPressed(activity)
                 addOtherServer -> TipDialog.Builder(activity)
                     .setMessage(R.string.other_login_add_server)

@@ -1,0 +1,9 @@
+{
+  "server": [
+    {
+      "baseUrl": "https://auth-api.ooci.co/",
+      "register": "https://register.ooci.co",
+      "serverName": "Ooci Network"
+    }
+  ]
+}

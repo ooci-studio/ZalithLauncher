@@ -289,6 +289,34 @@ public final class Tools {
         }
     }
 
+    public static void copyAssetFolder(Context ctx, String assetFolder, String outputFolder, boolean overwrite) throws IOException {
+        // 获取资源文件夹中所有文件和子文件夹的名称
+        String[] assetFiles = ctx.getAssets().list(assetFolder);
+        if (assetFiles == null || assetFiles.length == 0) {
+            return; // 目录为空，直接返回
+        }
+
+        // 创建输出目录
+        File outputDir = new File(outputFolder);
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
+
+        // 遍历资源文件夹的内容
+        for (String assetFileName : assetFiles) {
+            String assetPath = assetFolder + "/" + assetFileName;
+            String outputPath = outputFolder + "/" + assetFileName;
+
+            if (ctx.getAssets().list(assetPath).length == 0) {
+                // 如果是文件，调用单文件复制的方法
+                copyAssetFile(ctx, assetPath, outputFolder, assetFileName, overwrite);
+            } else {
+                // 如果是文件夹，递归调用
+                copyAssetFolder(ctx, assetPath, outputPath, overwrite);
+            }
+        }
+    }
+
     public static String printToString(Throwable throwable) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);

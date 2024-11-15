@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
         android:layout_toEndOf="@id/icon"/>
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

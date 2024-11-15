@@ -191,13 +191,14 @@ public class LauncherActivity extends BaseActivity {
 
             @Override
             public void onUsageDenied() {
-                if (!AllSettings.getLocalAccountReminders()) {
-                    launchGame(prof);
-                } else {
-                    LocalAccountUtils.openDialog(LauncherActivity.this, () -> launchGame(prof),
-                            getString(R.string.account_no_microsoft_account) + getString(R.string.account_purchase_minecraft_account_tip),
-                            R.string.account_continue_to_launch_the_game);
-                }
+                launchGame(prof);
+//                if (!AllSettings.getLocalAccountReminders()) {
+//                    launchGame(prof);
+//                } else {
+//                    LocalAccountUtils.openDialog(LauncherActivity.this, () -> launchGame(prof),
+//                            getString(R.string.account_no_microsoft_account) + getString(R.string.account_purchase_minecraft_account_tip),
+//                            R.string.account_continue_to_launch_the_game);
+//                }
             }
         });
     }

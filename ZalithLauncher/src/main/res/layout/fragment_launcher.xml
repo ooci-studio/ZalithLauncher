@@ -33,6 +33,7 @@
                 android:orientation="vertical">
 
                 <com.kdt.mcgui.LauncherMenuButton
+                    android:visibility="gone"
                     android:id="@+id/about_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,6 +73,7 @@
                     android:textColor="@color/primary_text" />
 
                 <com.kdt.mcgui.LauncherMenuButton
+                    android:visibility="gone"
                     android:id="@+id/install_jar_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
