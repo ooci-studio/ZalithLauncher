@@ -119,7 +119,7 @@ android {
                 }
             }
 
-            def baseName = "ZalithLauncher-${variant.buildType.name == 'release' ? variant.versionName : "Debug-${variant.versionName}"}"
+            def baseName = "OociLauncher-${variant.buildType.name == 'release' ? variant.versionName : "Debug-${variant.versionName}"}"
             outputFileName = abi == "all" ? "${baseName}.apk" : "${baseName}-${abi}.apk"
         }
     }
