@@ -35,8 +35,8 @@ import com.google.gson.GsonBuilder;
 import com.movtery.zalithlauncher.R;
 import com.movtery.zalithlauncher.context.ContextExecutor;
 import com.movtery.zalithlauncher.feature.customprofilepath.ProfilePathHome;
-import com.movtery.zalithlauncher.feature.customprofilepath.ProfilePathManager;
 import com.movtery.zalithlauncher.feature.log.Logging;
+import com.movtery.zalithlauncher.feature.version.Version;
 import com.movtery.zalithlauncher.setting.AllSettings;
 import com.movtery.zalithlauncher.task.Task;
 import com.movtery.zalithlauncher.ui.activity.BaseActivity;
@@ -58,7 +58,6 @@ import net.kdt.pojavlaunch.utils.DownloadUtils;
 import net.kdt.pojavlaunch.utils.FileUtils;
 import net.kdt.pojavlaunch.value.DependentLibrary;
 import net.kdt.pojavlaunch.value.MinecraftLibraryArtifact;
-import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
@@ -111,16 +110,6 @@ public final class Tools {
         return Environment.getExternalStorageState(externalFilesDir).equals(Environment.MEDIA_MOUNTED);
     }
 
-    public static File getGameDirPath(@NonNull MinecraftProfile minecraftProfile){
-        if(minecraftProfile.gameDir != null){
-            if(minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,ProfilePathManager.getCurrentPath() +"/"));
-            else
-                return new File(ProfilePathManager.getCurrentPath(),minecraftProfile.gameDir);
-        }
-        return new File(PathAndUrlManager.DIR_GAME_DEFAULT);
-    }
-
     public static void buildNotificationChannel(Context context) {
         NotificationChannel channel = new NotificationChannel(
                 NOTIFICATION_CHANNEL_DEFAULT,
@@ -169,8 +158,8 @@ public final class Tools {
         return libInfos[0].replaceAll("\\.", "/") + "/" + libInfos[1] + "/" + libInfos[2] + "/" + libInfos[1] + "-" + libInfos[2] + ".jar";
     }
 
-    public static String getClientClasspath(String version) {
-        return ProfilePathHome.getVersionsHome() + "/" + version + "/" + version + ".jar";
+    public static String getClientClasspath(Version version) {
+        return new File(version.getVersionPath(), version.getVersionName() + ".jar").getAbsolutePath();
     }
 
     public static String getLWJGL3ClassPath() {
@@ -189,13 +178,13 @@ public final class Tools {
         return libStr.toString();
     }
 
-    public static String generateLaunchClassPath(JMinecraftVersionList.Version info, String actualname) {
+    public static String generateLaunchClassPath(JMinecraftVersionList.Version info, Version minecraftVersion) {
         StringBuilder finalClasspath = new StringBuilder(); //versnDir + "/" + version + "/" + version + ".jar:";
 
         String[] classpath = generateLibClasspath(info);
 
         if (isClientFirst) {
-            finalClasspath.append(getClientClasspath(actualname));
+            finalClasspath.append(getClientClasspath(minecraftVersion));
         }
         for (String jarFile : classpath) {
             if (!FileUtils.exists(jarFile)) {
@@ -205,7 +194,7 @@ public final class Tools {
             finalClasspath.append((isClientFirst ? ":" : "")).append(jarFile).append(!isClientFirst ? ":" : "");
         }
         if (!isClientFirst) {
-            finalClasspath.append(getClientClasspath(actualname));
+            finalClasspath.append(getClientClasspath(minecraftVersion));
         }
 
         return finalClasspath.toString();
@@ -495,23 +484,23 @@ public final class Tools {
         return libDir.toArray(new String[0]);
     }
 
-    public static JMinecraftVersionList.Version getVersionInfo(String versionName) {
-        return getVersionInfo(versionName, false);
+    public static JMinecraftVersionList.Version getVersionInfo(Version version) {
+        return getVersionInfo(version, false);
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static JMinecraftVersionList.Version getVersionInfo(String versionName, boolean skipInheriting) {
+    public static JMinecraftVersionList.Version getVersionInfo(Version version, boolean skipInheriting) {
         try {
-            JMinecraftVersionList.Version customVer = Tools.GLOBAL_GSON.fromJson(read(ProfilePathHome.getVersionsHome() + "/" + versionName + "/" + versionName + ".json"), JMinecraftVersionList.Version.class);
+            JMinecraftVersionList.Version customVer = Tools.GLOBAL_GSON.fromJson(read(new File(version.getVersionPath(), version.getVersionName() + ".json")), JMinecraftVersionList.Version.class);
             if (skipInheriting || customVer.inheritsFrom == null || customVer.inheritsFrom.equals(customVer.id)) {
                 preProcessLibraries(customVer.libraries);
             } else {
                 JMinecraftVersionList.Version inheritsVer;
                 //If it won't download, just search for it
                 try {
-                    inheritsVer = Tools.GLOBAL_GSON.fromJson(read(ProfilePathHome.getVersionsHome() + "/" + customVer.inheritsFrom + "/" + customVer.inheritsFrom + ".json"), JMinecraftVersionList.Version.class);
+                    inheritsVer = Tools.GLOBAL_GSON.fromJson(read(version.getVersionsFolder() + "/" + customVer.inheritsFrom + "/" + customVer.inheritsFrom + ".json"), JMinecraftVersionList.Version.class);
                 } catch (IOException e) {
-                    throw new RuntimeException("Can't find the source version for " + versionName + " (req version=" + customVer.inheritsFrom + ")");
+                    throw new RuntimeException("Can't find the source version for " + version.getVersionName() + " (req version=" + customVer.inheritsFrom + ")");
                 }
                 //inheritsVer.inheritsFrom = inheritsVer.id;
                 insertSafety(inheritsVer, customVer,
@@ -828,30 +817,27 @@ public final class Tools {
         return prefixedName.substring(Tools.LAUNCHERPROFILES_RTPREFIX.length());
     }
 
-    public static String getSelectedRuntime(MinecraftProfile minecraftProfile) {
+    public static String getSelectedRuntime(Version version) {
         String runtime = AllSettings.getDefaultRuntime();
-        String profileRuntime = getRuntimeName(minecraftProfile.javaDir);
-        if(profileRuntime != null) {
-            if(MultiRTUtils.forceReread(profileRuntime).versionString != null) {
-                runtime = profileRuntime;
+        String versionRuntime = getRuntimeName(version.getJavaDir());
+        if (versionRuntime != null) {
+            if (MultiRTUtils.forceReread(versionRuntime).versionString != null) {
+                runtime = versionRuntime;
             }
         }
         return runtime;
     }
 
-    public static @NonNull String pickRuntime(Activity activity, MinecraftProfile minecraftProfile, int targetJavaVersion) {
-        String runtime = getSelectedRuntime(minecraftProfile);
-        String profileRuntime = getRuntimeName(minecraftProfile.javaDir);
+    public static @NonNull String pickRuntime(Activity activity, Version version, int targetJavaVersion) {
+        String runtime = getSelectedRuntime(version);
         Runtime pickedRuntime = MultiRTUtils.read(runtime);
         if (pickedRuntime.javaVersion == 0 || pickedRuntime.javaVersion < targetJavaVersion) {
-            String preferredRuntime = MultiRTUtils.getNearestJreName(targetJavaVersion);
-            if (preferredRuntime == null) {
+            String settingsRuntime = MultiRTUtils.getNearestJreName(targetJavaVersion);
+            if (settingsRuntime == null) {
                 activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.game_autopick_runtime_failed), Toast.LENGTH_LONG).show());
                 return runtime; //返回选择的runtime
             }
-            if (profileRuntime != null)
-                minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + preferredRuntime;
-            runtime = preferredRuntime;
+            runtime = settingsRuntime;
         }
         return runtime;
     }

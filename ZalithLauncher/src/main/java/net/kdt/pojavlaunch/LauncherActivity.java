@@ -31,8 +31,10 @@ import com.movtery.zalithlauncher.event.single.LaunchGameEvent;
 import com.movtery.zalithlauncher.event.single.MainBackgroundChangeEvent;
 import com.movtery.zalithlauncher.event.single.PageOpacityChangeEvent;
 import com.movtery.zalithlauncher.event.single.SwapToLoginEvent;
+import com.movtery.zalithlauncher.event.sticky.InstallingVersionEvent;
 import com.movtery.zalithlauncher.event.sticky.MinecraftVersionValueEvent;
 import com.movtery.zalithlauncher.event.value.InDownloadFragmentEvent;
+import com.movtery.zalithlauncher.event.value.InstallGameEvent;
 import com.movtery.zalithlauncher.event.value.InstallLocalModpackEvent;
 import com.movtery.zalithlauncher.event.value.LocalLoginEvent;
 import com.movtery.zalithlauncher.event.value.MicrosoftLoginEvent;
@@ -49,11 +51,18 @@ import com.movtery.zalithlauncher.feature.mod.modpack.install.ModPackUtils;
 import com.movtery.zalithlauncher.feature.notice.CheckNewNotice;
 import com.movtery.zalithlauncher.feature.notice.NoticeInfo;
 import com.movtery.zalithlauncher.feature.update.UpdateUtils;
+import com.movtery.zalithlauncher.feature.version.GameInstaller;
+import com.movtery.zalithlauncher.feature.version.InstallTask;
+import com.movtery.zalithlauncher.feature.version.Version;
+import com.movtery.zalithlauncher.feature.version.VersionFolderChecker;
+import com.movtery.zalithlauncher.feature.version.VersionInfo;
+import com.movtery.zalithlauncher.feature.version.VersionsManager;
 import com.movtery.zalithlauncher.setting.AllSettings;
 import com.movtery.zalithlauncher.setting.Settings;
 import com.movtery.zalithlauncher.task.Task;
 import com.movtery.zalithlauncher.task.TaskExecutors;
 import com.movtery.zalithlauncher.ui.activity.BaseActivity;
+import com.movtery.zalithlauncher.ui.dialog.EditTextDialog;
 import com.movtery.zalithlauncher.ui.dialog.TipDialog;
 import com.movtery.zalithlauncher.ui.fragment.AccountFragment;
 import com.movtery.zalithlauncher.ui.fragment.DownloadFragment;
@@ -72,8 +81,6 @@ import net.kdt.pojavlaunch.contracts.OpenDocumentWithExtension;
 import net.kdt.pojavlaunch.fragments.MainMenuFragment;
 import net.kdt.pojavlaunch.fragments.MicrosoftLoginFragment;
 import net.kdt.pojavlaunch.lifecycle.ContextAwareDoneListener;
-import net.kdt.pojavlaunch.modloaders.modpacks.ModloaderInstallTracker;
-import net.kdt.pojavlaunch.modloaders.modpacks.api.NotificationDownloadListener;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.progresskeeper.TaskCountListener;
@@ -83,8 +90,6 @@ import net.kdt.pojavlaunch.tasks.AsyncVersionList;
 import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
 import net.kdt.pojavlaunch.utils.NotificationUtils;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
-import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
-import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -92,6 +97,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 import java.util.concurrent.Future;
 
 public class LauncherActivity extends BaseActivity {
@@ -107,7 +113,6 @@ public class LauncherActivity extends BaseActivity {
     private ActivityPojavLauncherBinding binding;
     private SettingsButtonWrapper mSettingsButtonWrapper;
     private ProgressServiceKeeper mProgressServiceKeeper;
-    private ModloaderInstallTracker mInstallTracker;
     private NotificationManager mNotificationManager;
     private boolean mIsInDownloadFragment = false;
     private Future<?> checkNotice;
@@ -166,13 +171,8 @@ public class LauncherActivity extends BaseActivity {
             return;
         }
 
-        String selectedProfile = AllSettings.getCurrentProfile();
-        if (LauncherProfiles.mainProfileJson == null || !LauncherProfiles.mainProfileJson.profiles.containsKey(selectedProfile)) {
-            Toast.makeText(this, R.string.error_no_version, Toast.LENGTH_LONG).show();
-            return;
-        }
-        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
-        if (prof == null || prof.lastVersionId == null || "Unknown".equals(prof.lastVersionId)) {
+        Version version = VersionsManager.INSTANCE.getCurrentVersion();
+        if (version == null) {
             Toast.makeText(this, R.string.error_no_version, Toast.LENGTH_LONG).show();
             return;
         }
@@ -186,12 +186,12 @@ public class LauncherActivity extends BaseActivity {
         LocalAccountUtils.checkUsageAllowed(new LocalAccountUtils.CheckResultListener() {
             @Override
             public void onUsageAllowed() {
-                launchGame(prof);
+                launchGame(version);
             }
 
             @Override
             public void onUsageDenied() {
-                launchGame(prof);
+                launchGame(version);
 //                if (!AllSettings.getLocalAccountReminders()) {
 //                    launchGame(prof);
 //                } else {
@@ -254,23 +254,78 @@ public class LauncherActivity extends BaseActivity {
         ModPackUtils.ModPackEnum type;
         type = ModPackUtils.determineModpack(dirGameModpackFile);
 
-        Task.runTask(() -> {
-                    ModLoaderWrapper loaderInfo = InstallLocalModPack.installModPack(this, type, dirGameModpackFile,
-                            () -> runOnUiThread(installExtra.dialog::dismiss));
-                    if (loaderInfo == null) return null;
-                    return loaderInfo.getDownloadTask(new NotificationDownloadListener(this, loaderInfo));
-                }).beforeStart(TaskExecutors.getAndroidUI(),
-                        () -> ProgressLayout.setProgress(ProgressLayout.INSTALL_RESOURCE, 0, R.string.generic_waiting))
-                .ended(task -> {
-                    if (task != null) {
-                        task.run();
+        new EditTextDialog.Builder(this)
+                .setTitle(R.string.version_install_new)
+                .setEditText(dirGameModpackFile.getName())
+                .setConfirmListener(editText -> {
+                    String string = editText.getText().toString();
+
+                    if (string.contains("/")) {
+                        editText.setError(getString(R.string.generic_input_invalid_character, "/"));
+                        return false;
                     }
-                }).onThrowable(TaskExecutors.getAndroidUI(), e -> Tools.showErrorRemote(this, R.string.modpack_install_download_failed, e))
-                .finallyTask(TaskExecutors.getAndroidUI(), () -> {
-                    ProgressLayout.clearProgress(ProgressLayout.INSTALL_RESOURCE);
-                    installExtra.dialog.dismiss();
-                })
-                .execute();
+
+                    if (VersionsManager.INSTANCE.isVersionExists(string, true)) {
+                        editText.setError(getString(R.string.version_install_exists));
+                        return false;
+                    }
+
+                    InstallingVersionEvent installingVersionEvent = new InstallingVersionEvent();
+                    Task.runTask(() -> {
+                        EventBus.getDefault().postSticky(installingVersionEvent);
+                        ModLoaderWrapper modLoaderWrapper = InstallLocalModPack.installModPack(this, type, dirGameModpackFile, string);
+                        if (modLoaderWrapper != null) {
+                            InstallTask downloadTask = modLoaderWrapper.getDownloadTask();
+                            File versionFolder = VersionsManager.INSTANCE.getVersionPath(string);
+                            String minecraftVersion = modLoaderWrapper.getMinecraftVersion();
+
+                            if (downloadTask != null) {
+                                VersionFolderChecker.checkVersionsFolder(false, true, string);
+
+                                new VersionInfo(
+                                        minecraftVersion,
+                                        new VersionInfo.LoaderInfo[]{
+                                                new VersionInfo.LoaderInfo(
+                                                        modLoaderWrapper.getModLoader().getLoaderName(),
+                                                        modLoaderWrapper.getModLoaderVersion()
+                                                )
+                                        }
+                                ).save(versionFolder);
+
+                                Logging.i("Install Version", "Installing ModLoader: " + modLoaderWrapper.getModLoader().getLoaderName());
+                                File file = downloadTask.run();
+                                if (file != null) {
+                                    return new kotlin.Pair<>(modLoaderWrapper, file);
+                                }
+                            }
+
+                            if (Objects.equals(minecraftVersion, string)) {
+                                new VersionInfo(minecraftVersion, new VersionInfo.LoaderInfo[]{}).save(versionFolder);
+                            }
+                        }
+                        return null;
+                    }).beforeStart(TaskExecutors.getAndroidUI(), () -> ProgressLayout.setProgress(ProgressLayout.INSTALL_RESOURCE, 0, R.string.generic_waiting)).ended(TaskExecutors.getAndroidUI(), filePair -> {
+                        if (filePair != null) {
+                            ModPackUtils.startModLoaderInstall(filePair.getFirst(), LauncherActivity.this, filePair.getSecond());
+                            return;
+                        }
+                        //与GameInstaller那边处理一样，因为Quilt安装采用的旧的方式
+                        GameInstaller.moveVersionFiles();
+                        EventBus.getDefault().removeStickyEvent(installingVersionEvent);
+                        VersionsManager.INSTANCE.refresh();
+                    }).onThrowable(TaskExecutors.getAndroidUI(), e -> Tools.showErrorRemote(this, R.string.modpack_install_download_failed, e))
+                    .finallyTask(TaskExecutors.getAndroidUI(), () -> {
+                        ProgressLayout.clearProgress(ProgressLayout.INSTALL_RESOURCE);
+                        EventBus.getDefault().removeStickyEvent(installingVersionEvent);
+                    }).execute();
+
+                    return true;
+                }).buildDialog();
+    }
+
+    @Subscribe()
+    public void event(InstallGameEvent event) {
+        new GameInstaller(this, event).installGame();
     }
 
     @Override
@@ -304,8 +359,6 @@ public class LauncherActivity extends BaseActivity {
                         new MinecraftVersionValueEvent(versions)),
                 false
         );
-
-        mInstallTracker = new ModloaderInstallTracker(this);
 
         checkNotice();
 
@@ -414,14 +467,9 @@ public class LauncherActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         ContextExecutor.setActivity(this);
-        mInstallTracker.attach();
         setPageOpacity();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mInstallTracker.detach();
+        //避免切换回来的时候，找不到账号，应该在这里刷新账户
+        accountsManager.reload();
     }
 
     @Override
@@ -508,13 +556,13 @@ public class LauncherActivity extends BaseActivity {
         BackgroundManager.setBackgroundImage(this, BackgroundType.MAIN_MENU, findViewById(R.id.background_view));
     }
 
-    private void launchGame(MinecraftProfile prof) {
-        String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
-        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
+    private void launchGame(Version version) {
+        String versionName = version.getVersionName();
+        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(versionName);
         new MinecraftDownloader().start(
                 mcVersion,
-                normalizedVersionId,
-                new ContextAwareDoneListener(this, normalizedVersionId)
+                versionName,
+                new ContextAwareDoneListener(this, version)
         );
     }
 

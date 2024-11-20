@@ -1,18 +1,17 @@
 package com.movtery.zalithlauncher.feature
 
-import com.movtery.zalithlauncher.feature.customprofilepath.ProfilePathHome.Companion.versionsHome
 import com.movtery.zalithlauncher.feature.log.Logging
 import com.movtery.zalithlauncher.feature.mod.modloader.NeoForgeUtils
+import com.movtery.zalithlauncher.feature.version.Version
 import com.movtery.zalithlauncher.setting.AllSettings
 import com.movtery.zalithlauncher.utils.MCVersionRegex
 import com.movtery.zalithlauncher.utils.ZHTools
 import net.kdt.pojavlaunch.JMinecraftVersionList
 import net.kdt.pojavlaunch.Tools
 import net.kdt.pojavlaunch.utils.MCOptionUtils
-import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile
 import org.jackhuang.hmcl.util.versioning.VersionNumber
 import org.jackhuang.hmcl.util.versioning.VersionRange
-
+import java.io.File
 
 class ProfileLanguageSelector {
     companion object {
@@ -26,12 +25,12 @@ class ProfileLanguageSelector {
             } else lang
         }
 
-        private fun getLanguage(versionName: String, rawLang: String): String {
+        private fun getLanguage(minecraftVersion: Version, rawLang: String): String {
             val lang = if (rawLang == "system") ZHTools.getSystemLanguage() else rawLang
 
             val version: String = runCatching {
                 val versionObject = Tools.GLOBAL_GSON.fromJson(
-                    Tools.read("$versionsHome/$versionName/$versionName.json"),
+                    Tools.read(File(minecraftVersion.getVersionPath(), "${minecraftVersion.getVersionName()}.json")),
                     JMinecraftVersionList.Version::class.java
                 )
                 versionObject.id
@@ -91,9 +90,9 @@ class ProfileLanguageSelector {
         }
 
         @JvmStatic
-        fun setGameLanguage(minecraftProfile: MinecraftProfile, overridden: Boolean) {
+        fun setGameLanguage(version: Version, overridden: Boolean) {
             if (MCOptionUtils.containsKey("lang") && !overridden) return
-            val language = getLanguage(minecraftProfile.lastVersionId, AllSettings.setGameLanguage!!)
+            val language = getLanguage(version, AllSettings.setGameLanguage!!)
             Logging.i("ProfileLanguageSelector", "The game language has been set to: $language")
             MCOptionUtils.set("lang", language)
         }

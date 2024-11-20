@@ -107,6 +107,10 @@ class AllSettings {
 
         // Game
         @JvmStatic
+        val versionIsolation: Boolean
+            get() = Settings.Manager.getBoolean("versionIsolation", false)
+
+        @JvmStatic
         val autoSetGameLanguage: Boolean
             get() = Settings.Manager.getBoolean("autoSetGameLanguage", true)
 
@@ -205,10 +209,6 @@ class AllSettings {
             get() = Settings.Manager.getBoolean("bigCoreAffinity", false)
 
         // Other
-        @JvmStatic
-        val currentProfile: String?
-            get() = Settings.Manager.getString("currentProfile", "")
-
         @JvmStatic
         val currentAccount: String?
             get() = Settings.Manager.getString("currentAccount", "")

@@ -1,6 +1,6 @@
 package net.kdt.pojavlaunch.lifecycle;
 
-import static net.kdt.pojavlaunch.MainActivity.INTENT_MINECRAFT_VERSION;
+import static net.kdt.pojavlaunch.MainActivity.INTENT_VERSION;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import com.movtery.zalithlauncher.R;
 import com.movtery.zalithlauncher.context.ContextExecutor;
+import com.movtery.zalithlauncher.feature.version.Version;
 import com.movtery.zalithlauncher.setting.AllSettings;
 
 import net.kdt.pojavlaunch.MainActivity;
@@ -18,16 +19,16 @@ import net.kdt.pojavlaunch.utils.NotificationUtils;
 
 public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneListener, ContextExecutorTask {
     private final String mErrorString;
-    private final String mNormalizedVersionid;
+    private final Version mVersion;
 
-    public ContextAwareDoneListener(Context baseContext, String versionId) {
+    public ContextAwareDoneListener(Context baseContext, Version version) {
         this.mErrorString = baseContext.getString(R.string.mc_download_failed);
-        this.mNormalizedVersionid = versionId;
+        this.mVersion = version;
     }
 
     private Intent createGameStartIntent(Context context) {
         Intent mainIntent = new Intent(context, MainActivity.class);
-        mainIntent.putExtra(INTENT_MINECRAFT_VERSION, mNormalizedVersionid);
+        mainIntent.putExtra(INTENT_VERSION, mVersion);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return mainIntent;
     }
