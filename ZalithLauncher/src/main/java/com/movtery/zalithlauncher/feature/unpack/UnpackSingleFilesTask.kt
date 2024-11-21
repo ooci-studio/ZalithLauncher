@@ -13,7 +13,7 @@ class UnpackSingleFilesTask(val context: Context) : AbstractUnpackTask() {
     override fun run() {
         runCatching {
             copyFromAssets(context)
-            Tools.copyAssetFile(context, "launcher_profiles.json", gameHome, false)
+//            Tools.copyAssetFile(context, "launcher_settings.json", PathAndUrlManager.DIR_FILE.path, true)
             Tools.copyAssetFile(context, "servers.json", PathAndUrlManager.DIR_GAME_HOME, true)
             Tools.copyAssetFile(context, "resolv.conf", PathAndUrlManager.DIR_DATA, false)
         }.getOrElse { e("AsyncAssetManager", "Failed to unpack critical components !") }

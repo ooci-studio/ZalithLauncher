@@ -93,7 +93,19 @@ class Settings {
 
             fun save() {
                 val settingsFile = PathAndUrlManager.FILE_SETTINGS
-                if (!settingsFile.exists()) settingsFile.createNewFile()
+                if (!settingsFile.exists()) {
+                    settingsFile.createNewFile()
+
+                    valueMap["defaultRuntime"] = "Internal-17";
+                    valueMap["gameMenuLocation"] = "right_or_bottom";
+                    valueMap["zinkPreferSystemDriver"] = "true";
+                    valueMap["resolutionRatio"] = "80";
+                    valueMap["renderer"] = "opengles2";
+                    valueMap["hotbarType"] = "auto";
+                    valueMap["mousescale"] = "100";
+                    valueMap["mousespeed"] = "100";
+                    valueMap["mouse_start"] = "false";
+                }
 
                 val currentSettings = settings.toMutableList()
                 val nullValueList: MutableSet<SettingAttribute> = HashSet()

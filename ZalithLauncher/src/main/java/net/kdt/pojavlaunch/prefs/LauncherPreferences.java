@@ -45,7 +45,7 @@ public class LauncherPreferences {
     public static void reloadRuntime() {
         if (!Settings.Manager.contains("defaultRuntime") && !MultiRTUtils.getRuntimes().isEmpty()) {
             //设置默认运行环境
-            Settings.Manager.put("defaultRuntime", Jre.JRE_8.getJreName()).save();
+            Settings.Manager.put("defaultRuntime", Jre.JRE_17.getJreName()).save();
         }
     }
 
