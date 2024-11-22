@@ -88,22 +88,22 @@ class UpdateUtils {
                             if (ignore && versionName == ignoreUpdate) return  //忽略此版本
 
                             val versionCode = launcherVersion.versionCode
-                            if (ZHTools.getVersionCode() < versionCode) {
-                                runInUIThread {
-                                    UpdateDialog(context, launcherVersion).show()
-                                }
-                            } else if (!ignore) {
-                                runInUIThread {
-                                    val nowVersionName = ZHTools.getVersionName()
-                                    runInUIThread {
-                                        Toast.makeText(
-                                            context,
-                                            StringUtils.insertSpace(context.getString(R.string.update_without), nowVersionName),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-                            }
+//                            if (ZHTools.getVersionCode() < versionCode) {
+//                                runInUIThread {
+//                                    UpdateDialog(context, launcherVersion).show()
+//                                }
+//                            } else if (!ignore) {
+//                                runInUIThread {
+//                                    val nowVersionName = ZHTools.getVersionName()
+//                                    runInUIThread {
+//                                        Toast.makeText(
+//                                            context,
+//                                            StringUtils.insertSpace(context.getString(R.string.update_without), nowVersionName),
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                    }
+//                                }
+//                            }
                         } catch (e: Exception) {
                             Logging.e("Check Update", Tools.printToString(e))
                         }

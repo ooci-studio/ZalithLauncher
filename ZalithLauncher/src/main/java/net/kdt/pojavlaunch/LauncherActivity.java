@@ -216,6 +216,7 @@ public class LauncherActivity extends BaseActivity {
     @Subscribe()
     public void event(OtherLoginEvent event) {
         try {
+            event.getAccount().updateSkin();
             event.getAccount().save();
             Logging.i("Account", "Saved the account : " + event.getAccount().username);
         } catch (IOException e) {

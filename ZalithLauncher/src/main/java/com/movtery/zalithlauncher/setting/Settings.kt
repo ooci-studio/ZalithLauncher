@@ -98,13 +98,13 @@ class Settings {
 
                     valueMap["defaultRuntime"] = "Internal-17";
                     valueMap["gameMenuLocation"] = "right_or_bottom";
-                    valueMap["zinkPreferSystemDriver"] = "true";
+                    valueMap["zinkPreferSystemDriver"] = "false";
                     valueMap["resolutionRatio"] = "80";
-                    valueMap["renderer"] = "opengles2";
+                    valueMap["renderer"] = "vulkan_zink";
                     valueMap["hotbarType"] = "auto";
                     valueMap["mousescale"] = "100";
                     valueMap["mousespeed"] = "100";
-                    valueMap["mouse_start"] = "false";
+                    valueMap["mouse_start"] = "true";
                 }
 
                 val currentSettings = settings.toMutableList()

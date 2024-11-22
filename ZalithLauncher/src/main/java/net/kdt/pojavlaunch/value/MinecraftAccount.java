@@ -37,7 +37,11 @@ public class MinecraftAccount {
         File skinFile = new File(PathAndUrlManager.DIR_USER_SKIN, uniqueUUID + ".png");
         if(skinFile.exists()) FileUtils.deleteQuietly(skinFile); //清除一次皮肤文件
         try {
-            SkinFileDownloader.microsoft(skinFile, uuid);
+            if (accountType.equals("Ooci Network")){
+                SkinFileDownloader.ooci_co(skinFile, uuid);
+            }else {
+                SkinFileDownloader.microsoft(skinFile, uuid);
+            }
             Logging.i("SkinLoader", "Update skin success");
         } catch (Exception e) {
             Logging.i("SkinLoader", "Could not update skin\n" + Tools.printToString(e));

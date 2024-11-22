@@ -30,6 +30,22 @@ class SkinFileDownloader {
             downloadSkin(skinUrl, skinFile)
         }
 
+        @Throws(Exception::class)
+        @JvmStatic
+        fun ooci_co(skinFile: File, uuid: String) {
+            val profileJson = DownloadUtils.downloadString("https://auth-api.ooci.co/sessionserver/session/minecraft/profile/$uuid")
+            val profileObject = GSON.fromJson(profileJson, JsonObject::class.java)
+            val properties = profileObject.get("properties").asJsonArray
+            val rawValue = properties.get(0).asJsonObject.get("value").asString
+
+            val value = StringUtils.decodeBase64(rawValue)
+
+            val valueObject = GSON.fromJson(value, JsonObject::class.java)
+            val skinUrl = valueObject.get("textures").asJsonObject.get("SKIN").asJsonObject.get("url").asString
+
+            downloadSkin(skinUrl, skinFile)
+        }
+
         private fun downloadSkin(url: String, skinFile: File) {
             skinFile.parentFile?.apply {
                 if (!exists()) mkdirs()
