@@ -26,7 +26,7 @@ import com.movtery.anim.AnimPlayer;
 import com.movtery.anim.animations.Animations;
 import com.movtery.zalithlauncher.R;
 import com.movtery.zalithlauncher.context.ContextExecutor;
-import com.movtery.zalithlauncher.databinding.ActivityPojavLauncherBinding;
+import com.movtery.zalithlauncher.databinding.ActivityLauncherBinding;
 import com.movtery.zalithlauncher.event.single.LaunchGameEvent;
 import com.movtery.zalithlauncher.event.single.MainBackgroundChangeEvent;
 import com.movtery.zalithlauncher.event.single.PageOpacityChangeEvent;
@@ -54,8 +54,6 @@ import com.movtery.zalithlauncher.feature.update.UpdateUtils;
 import com.movtery.zalithlauncher.feature.version.GameInstaller;
 import com.movtery.zalithlauncher.feature.version.InstallTask;
 import com.movtery.zalithlauncher.feature.version.Version;
-import com.movtery.zalithlauncher.feature.version.VersionFolderChecker;
-import com.movtery.zalithlauncher.feature.version.VersionInfo;
 import com.movtery.zalithlauncher.feature.version.VersionsManager;
 import com.movtery.zalithlauncher.setting.AllSettings;
 import com.movtery.zalithlauncher.setting.Settings;
@@ -97,7 +95,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Objects;
 import java.util.concurrent.Future;
 
 public class LauncherActivity extends BaseActivity {
@@ -110,7 +107,7 @@ public class LauncherActivity extends BaseActivity {
                 }
             });
 
-    private ActivityPojavLauncherBinding binding;
+    private ActivityLauncherBinding binding;
     private SettingsButtonWrapper mSettingsButtonWrapper;
     private ProgressServiceKeeper mProgressServiceKeeper;
     private NotificationManager mNotificationManager;
@@ -259,14 +256,14 @@ public class LauncherActivity extends BaseActivity {
                 .setTitle(R.string.version_install_new)
                 .setEditText(dirGameModpackFile.getName())
                 .setConfirmListener(editText -> {
-                    String string = editText.getText().toString();
+                    String customName = editText.getText().toString();
 
-                    if (string.contains("/")) {
+                    if (customName.contains("/")) {
                         editText.setError(getString(R.string.generic_input_invalid_character, "/"));
                         return false;
                     }
 
-                    if (VersionsManager.INSTANCE.isVersionExists(string, true)) {
+                    if (VersionsManager.INSTANCE.isVersionExists(customName, true)) {
                         editText.setError(getString(R.string.version_install_exists));
                         return false;
                     }
@@ -274,46 +271,27 @@ public class LauncherActivity extends BaseActivity {
                     InstallingVersionEvent installingVersionEvent = new InstallingVersionEvent();
                     Task.runTask(() -> {
                         EventBus.getDefault().postSticky(installingVersionEvent);
-                        ModLoaderWrapper modLoaderWrapper = InstallLocalModPack.installModPack(this, type, dirGameModpackFile, string);
+                        ModLoaderWrapper modLoaderWrapper = InstallLocalModPack.installModPack(this, type, dirGameModpackFile, customName);
                         if (modLoaderWrapper != null) {
                             InstallTask downloadTask = modLoaderWrapper.getDownloadTask();
-                            File versionFolder = VersionsManager.INSTANCE.getVersionPath(string);
-                            String minecraftVersion = modLoaderWrapper.getMinecraftVersion();
 
                             if (downloadTask != null) {
-                                VersionFolderChecker.checkVersionsFolder(false, true, string);
-
-                                new VersionInfo(
-                                        minecraftVersion,
-                                        new VersionInfo.LoaderInfo[]{
-                                                new VersionInfo.LoaderInfo(
-                                                        modLoaderWrapper.getModLoader().getLoaderName(),
-                                                        modLoaderWrapper.getModLoaderVersion()
-                                                )
-                                        }
-                                ).save(versionFolder);
-
-                                Logging.i("Install Version", "Installing ModLoader: " + modLoaderWrapper.getModLoader().getLoaderName());
-                                File file = downloadTask.run();
+                                Logging.i("Install Version", "Installing ModLoader: " + modLoaderWrapper.getModLoaderVersion());
+                                File file = downloadTask.run(customName);
                                 if (file != null) {
                                     return new kotlin.Pair<>(modLoaderWrapper, file);
                                 }
                             }
-
-                            if (Objects.equals(minecraftVersion, string)) {
-                                new VersionInfo(minecraftVersion, new VersionInfo.LoaderInfo[]{}).save(versionFolder);
-                            }
                         }
                         return null;
-                    }).beforeStart(TaskExecutors.getAndroidUI(), () -> ProgressLayout.setProgress(ProgressLayout.INSTALL_RESOURCE, 0, R.string.generic_waiting)).ended(TaskExecutors.getAndroidUI(), filePair -> {
+                    }).beforeStart(TaskExecutors.getAndroidUI(), () -> ProgressLayout.setProgress(ProgressLayout.INSTALL_RESOURCE, 0, R.string.generic_waiting)).ended(filePair -> {
                         if (filePair != null) {
-                            ModPackUtils.startModLoaderInstall(filePair.getFirst(), LauncherActivity.this, filePair.getSecond());
-                            return;
+                            try {
+                                ModPackUtils.startModLoaderInstall(filePair.getFirst(), LauncherActivity.this, filePair.getSecond(), customName);
+                            } catch (Throwable e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                        //与GameInstaller那边处理一样，因为Quilt安装采用的旧的方式
-                        GameInstaller.moveVersionFiles();
-                        EventBus.getDefault().removeStickyEvent(installingVersionEvent);
-                        VersionsManager.INSTANCE.refresh();
                     }).onThrowable(TaskExecutors.getAndroidUI(), e -> Tools.showErrorRemote(this, R.string.modpack_install_download_failed, e))
                     .finallyTask(TaskExecutors.getAndroidUI(), () -> {
                         ProgressLayout.clearProgress(ProgressLayout.INSTALL_RESOURCE);
@@ -332,7 +310,7 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityPojavLauncherBinding.inflate(getLayoutInflater());
+        binding = ActivityLauncherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         processFragment();

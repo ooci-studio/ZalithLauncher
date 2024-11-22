@@ -22,6 +22,7 @@ import com.movtery.zalithlauncher.feature.version.InstallTask
 import com.movtery.zalithlauncher.feature.version.InstallTaskItem
 import com.movtery.zalithlauncher.feature.version.VersionsManager
 import com.movtery.zalithlauncher.setting.AllSettings
+import com.movtery.zalithlauncher.task.TaskExecutors
 import com.movtery.zalithlauncher.ui.dialog.SelectRuntimeDialog
 import com.movtery.zalithlauncher.ui.dialog.TipDialog
 import com.movtery.zalithlauncher.utils.ZHTools
@@ -267,21 +268,21 @@ class InstallGameFragment : FragmentWithAnim(R.layout.fragment_install_game), Vi
                 Addon.FORGE -> {
                     taskMap[addon] = InstallTaskItem(taskPair.first, false, taskPair.second) {  activity, file ->
                         installInGUITask(activity, taskPair.first) { intent, argUtils ->
-                            argUtils.setForge(intent, file)
+                            argUtils.setForge(intent, file, customVersionName)
                         }
                     }
                 }
                 Addon.NEOFORGE -> {
                     taskMap[addon] = InstallTaskItem(taskPair.first, false, taskPair.second) {  activity, file ->
                         installInGUITask(activity, taskPair.first) { intent, argUtils ->
-                            argUtils.setNeoForge(intent, file)
+                            argUtils.setNeoForge(intent, file, customVersionName)
                         }
                     }
                 }
                 Addon.FABRIC -> {
                     taskMap[addon] = InstallTaskItem(taskPair.first, false, taskPair.second) {  activity, file ->
                         installInGUITask(activity, taskPair.first) { intent, argUtils ->
-                            argUtils.setFabric(intent, file)
+                            argUtils.setFabric(intent, file, customVersionName)
                         }
                     }
                 }
@@ -301,20 +302,23 @@ class InstallGameFragment : FragmentWithAnim(R.layout.fragment_install_game), Vi
      * 在JavaGUI内进行安装，作为EndTask，需要在UI线程内运行
      * @param activity **此处必须使用activity的上下文！不能调用Fragment的上下文！！因为调用到这里的时候，Fragment早就被销毁了！！！**
      */
+    @Throws(Throwable::class)
     private fun installInGUITask(activity: Activity, selectVersion: String, setArgs: (Intent, InstallArgsUtils) -> Unit) {
         val intent = Intent(activity, JavaGUILauncherActivity::class.java)
 
         val argUtils = InstallArgsUtils(mcVersion, selectVersion)
         setArgs(intent, argUtils)
 
-        SelectRuntimeDialog(activity).apply {
-            setListener { jreName: String? ->
-                intent.putExtra(JavaGUILauncherActivity.EXTRAS_JRE_NAME, jreName)
-                this.dismiss()
-                activity.startActivity(intent)
-            }
-            setTitleText(R.string.version_install_new)
-        }.show()
+        TaskExecutors.runInUIThread {
+            SelectRuntimeDialog(activity).apply {
+                setListener { jreName: String? ->
+                    intent.putExtra(JavaGUILauncherActivity.EXTRAS_JRE_NAME, jreName)
+                    this.dismiss()
+                    activity.startActivity(intent)
+                }
+                setTitleText(R.string.version_install_new)
+            }.show()
+        }
     }
 
     override fun slideIn(animPlayer: AnimPlayer) {

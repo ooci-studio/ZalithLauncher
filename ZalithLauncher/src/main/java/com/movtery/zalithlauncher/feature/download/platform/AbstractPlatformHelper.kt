@@ -15,13 +15,9 @@ import com.movtery.zalithlauncher.feature.download.item.SearchResult
 import com.movtery.zalithlauncher.feature.download.item.VersionItem
 import com.movtery.zalithlauncher.feature.log.Logging
 import com.movtery.zalithlauncher.feature.mod.modpack.install.ModPackUtils
-import com.movtery.zalithlauncher.feature.version.GameInstaller
 import com.movtery.zalithlauncher.feature.version.VersionConfig
-import com.movtery.zalithlauncher.feature.version.VersionFolderChecker
-import com.movtery.zalithlauncher.feature.version.VersionInfo
 import com.movtery.zalithlauncher.feature.version.VersionsManager
 import com.movtery.zalithlauncher.task.Task
-import com.movtery.zalithlauncher.task.TaskExecutors
 import com.movtery.zalithlauncher.ui.dialog.EditTextDialog
 import net.kdt.pojavlaunch.Tools
 import net.kdt.pojavlaunch.modloaders.modpacks.api.ApiHandler
@@ -68,13 +64,13 @@ abstract class AbstractPlatformHelper(val api: ApiHandler) {
                     .setTitle(R.string.version_install_new)
                     .setEditText(infoItem.title)
                     .setConfirmListener { editText: EditText ->
-                        val string = editText.text.toString()
-                        if (string.contains("/")) {
+                        val customName = editText.text.toString()
+                        if (customName.contains("/")) {
                             editText.error = context.getString(R.string.generic_input_invalid_character, "/")
                             return@setConfirmListener false
                         }
 
-                        if (VersionsManager.isVersionExists(string, true)) {
+                        if (VersionsManager.isVersionExists(customName, true)) {
                             editText.error = context.getString(R.string.version_install_exists)
                             return@setConfirmListener false
                         }
@@ -84,48 +80,25 @@ abstract class AbstractPlatformHelper(val api: ApiHandler) {
                             val installingVersionEvent = InstallingVersionEvent()
                             Task.runTask {
                                 EventBus.getDefault().postSticky(installingVersionEvent)
-                                val modloader = installModPack(version, string) ?: return@runTask null
+                                val modloader = installModPack(version, customName) ?: return@runTask null
 
-                                val versionPath = VersionsManager.getVersionPath(string)
+                                val versionPath = VersionsManager.getVersionPath(customName)
                                 VersionConfig(versionPath).save()
 
-                                infoItem.iconUrl?.let { DownloadUtils.downloadFile(it, VersionsManager.getVersionIconFile(string)) }
-
-                                val minecraftVersion = modloader.minecraftVersion
+                                infoItem.iconUrl?.let { DownloadUtils.downloadFile(it, VersionsManager.getVersionIconFile(customName)) }
 
                                 modloader.getDownloadTask()?.let { downloadTask ->
-                                    VersionFolderChecker.checkVersionsFolder(forceCheck = true, identifier = string)
-
-                                    VersionInfo(
-                                        minecraftVersion,
-                                        arrayOf(
-                                            VersionInfo.LoaderInfo(
-                                                modloader.modLoader.loaderName,
-                                                modloader.modLoaderVersion
-                                            )
-                                        )
-                                    ).save(versionPath)
-
-                                    Logging.i("Install Version", "Installing ModLoader: ${modloader.modLoader.loaderName}")
-                                    downloadTask.run()?.let { file ->
+                                    Logging.i("Install Version", "Installing ModLoader: ${modloader.modLoaderVersion}")
+                                    downloadTask.run(customName)?.let { file ->
                                         return@runTask Pair(modloader, file)
                                     }
                                 }
 
-                                if (string != minecraftVersion) {
-                                    VersionInfo(minecraftVersion, emptyArray()).save(versionPath)
-                                }
-
                                 return@runTask null
-                            }.ended(TaskExecutors.getAndroidUI()) ended@{ filePair ->
+                            }.ended { filePair ->
                                 filePair?.let {
-                                    ModPackUtils.startModLoaderInstall(it.first, ContextExecutor.getActivity(), it.second)
-                                    return@ended
+                                    ModPackUtils.startModLoaderInstall(it.first, ContextExecutor.getActivity(), it.second, customName)
                                 }
-                                //与GameInstaller那边处理一样，因为Quilt安装采用的旧的方式
-                                GameInstaller.moveVersionFiles()
-                                EventBus.getDefault().removeStickyEvent(installingVersionEvent)
-                                VersionsManager.refresh()
                             }.onThrowable { e ->
                                 Tools.showErrorRemote(context, R.string.modpack_install_download_failed, e)
                             }.finallyTask {
