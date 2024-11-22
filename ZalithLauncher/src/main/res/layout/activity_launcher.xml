@@ -52,7 +52,6 @@
         <ImageButton
             android:id="@+id/setting_button"
             android:layout_width="@dimen/_40sdp"
-            android:layout_width="@dimen/_30sdp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginVertical="@dimen/_3sdp"
