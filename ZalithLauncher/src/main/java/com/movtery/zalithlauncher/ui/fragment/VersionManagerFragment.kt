@@ -8,6 +8,8 @@ import com.movtery.anim.AnimPlayer
 import com.movtery.anim.animations.Animations
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.databinding.FragmentVersionManagerBinding
+import com.movtery.zalithlauncher.feature.version.NoVersionException
+import com.movtery.zalithlauncher.feature.version.Version
 import com.movtery.zalithlauncher.feature.version.VersionsManager
 import com.movtery.zalithlauncher.task.Task
 import com.movtery.zalithlauncher.task.TaskExecutors
@@ -38,7 +40,7 @@ class VersionManagerFragment : FragmentWithAnim(R.layout.fragment_version_manage
         val fragment = this
         binding.apply {
             shortcutsMods.setOnClickListener(fragment)
-            versionPath.setOnClickListener(fragment)
+            gamePath.setOnClickListener(fragment)
             resourcePath.setOnClickListener(fragment)
             worldPath.setOnClickListener(fragment)
             shaderPath.setOnClickListener(fragment)
@@ -46,6 +48,7 @@ class VersionManagerFragment : FragmentWithAnim(R.layout.fragment_version_manage
             crashReportPath.setOnClickListener(fragment)
             versionEdit.setOnClickListener(fragment)
             versionRename.setOnClickListener(fragment)
+            versionCopy.setOnClickListener(fragment)
             versionDelete.setOnClickListener(fragment)
         }
     }
@@ -72,8 +75,12 @@ class VersionManagerFragment : FragmentWithAnim(R.layout.fragment_version_manage
     }
 
     override fun onClick(v: View) {
-        val version = VersionsManager.getCurrentVersion()
-        val gameDirPath = version?.getGameDir() ?: throw RuntimeException("There is no installed version")
+        val activity = requireActivity()
+        val version: Version = VersionsManager.getCurrentVersion() ?: run {
+            Tools.showError(activity, getString(R.string.version_manager_no_installed_version), NoVersionException("There is no installed version"))
+            return
+        }
+        val gameDirPath = version.getGameDir()
 
         binding.apply {
             when (v) {
@@ -87,7 +94,7 @@ class VersionManagerFragment : FragmentWithAnim(R.layout.fragment_version_manage
                     bundle.putString(ModsFragment.BUNDLE_ROOT_PATH, modsPath.absolutePath)
                     ZHTools.swapFragmentWithAnim(this@VersionManagerFragment, ModsFragment::class.java, ModsFragment.TAG, bundle)
                 }
-                versionPath -> swapFilesFragment(gameDirPath, gameDirPath)
+                gamePath -> swapFilesFragment(gameDirPath, gameDirPath)
                 resourcePath -> swapFilesFragment(gameDirPath, File(gameDirPath, "/resourcepacks"))
                 worldPath -> swapFilesFragment(gameDirPath, File(gameDirPath, "/saves"))
                 shaderPath -> swapFilesFragment(gameDirPath, File(gameDirPath, "/shaderpacks"))
@@ -96,28 +103,25 @@ class VersionManagerFragment : FragmentWithAnim(R.layout.fragment_version_manage
 
                 versionEdit -> ZHTools.swapFragmentWithAnim(this@VersionManagerFragment, VersionConfigFragment::class.java, VersionConfigFragment.TAG, null)
                 versionRename -> {
-                    val activity = requireActivity()
                     VersionsManager.openRenameDialog(activity, version) {
                         Tools.backToMainMenu(activity) //重命名前，为了不出现问题，需要退出当前Fragment
                     }
                 }
+                versionCopy -> VersionsManager.openCopyDialog(activity, version)
                 versionDelete -> {
-                    val activity = requireActivity()
                     TipDialog.Builder(activity)
                         .setTitle(R.string.generic_warning)
                         .setMessage(R.string.version_manager_delete_tip)
                         .setConfirmClickListener {
-                            VersionsManager.getCurrentVersion()?.let {
-                                FileDeletionHandler(
-                                    activity,
-                                    listOf(it.getVersionPath()),
-                                    Task.runTask {
-                                        VersionsManager.refresh()
-                                    }.ended(TaskExecutors.getAndroidUI()) {
-                                        Tools.backToMainMenu(activity)
-                                    }
-                                ).start()
-                            }
+                            FileDeletionHandler(
+                                activity,
+                                listOf(version.getVersionPath()),
+                                Task.runTask {
+                                    VersionsManager.refresh()
+                                }.ended(TaskExecutors.getAndroidUI()) {
+                                    Tools.backToMainMenu(activity)
+                                }
+                            ).start()
                         }
                         .buildDialog()
                 }

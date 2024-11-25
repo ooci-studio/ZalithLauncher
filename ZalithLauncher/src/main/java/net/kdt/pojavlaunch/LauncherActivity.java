@@ -190,9 +190,12 @@ public class LauncherActivity extends BaseActivity {
             public void onUsageDenied() {
                 launchGame(version);
 //                if (!AllSettings.getLocalAccountReminders()) {
-//                    launchGame(prof);
+//                    launchGame(version);
 //                } else {
-//                    LocalAccountUtils.openDialog(LauncherActivity.this, () -> launchGame(prof),
+//                    LocalAccountUtils.openDialog(LauncherActivity.this, checked -> {
+//                                LocalAccountUtils.saveReminders(checked);
+//                                launchGame(version);
+//                            },
 //                            getString(R.string.account_no_microsoft_account) + getString(R.string.account_purchase_minecraft_account_tip),
 //                            R.string.account_continue_to_launch_the_game);
 //                }
@@ -255,7 +258,7 @@ public class LauncherActivity extends BaseActivity {
         new EditTextDialog.Builder(this)
                 .setTitle(R.string.version_install_new)
                 .setEditText(dirGameModpackFile.getName())
-                .setConfirmListener(editText -> {
+                .setConfirmListener((editText, checked) -> {
                     String customName = editText.getText().toString();
 
                     if (customName.contains("/")) {
@@ -577,7 +580,7 @@ public class LauncherActivity extends BaseActivity {
         new TipDialog.Builder(this)
                 .setTitle(R.string.notification_permission_dialog_title)
                 .setMessage(R.string.notification_permission_dialog_text)
-                .setConfirmClickListener(() -> askForNotificationPermission(null))
+                .setConfirmClickListener(checked -> askForNotificationPermission(null))
                 .setCancelClickListener(this::handleNoNotificationPermission)
                 .buildDialog();
     }

@@ -113,6 +113,7 @@
     <string name="mod_download_progress">جاري تنزيل مثبت %s</string>
     <string name="mod_forge_searching">جاري البحث عن رقم إصدار Forge</string>
     <string name="mod_neoforge_searching">جاري البحث عن رقم إصدار NeoForge</string>
+    <string name="mod_forge_custom_version">جار تعديل اسم النسخة</string>
     <string name="mod_failed_to_load_list">فشل في تحميل قائمة الإصدارات!</string>
     <string name="mod_optifine_progress">جاري تنزيل %s</string>
     <!-- Controls -->
@@ -209,7 +210,7 @@
     <string name="version_install_optifine_and_forge">قد لا تعمل بعض إصدارات OptiFine مع Forge، في حالة حدوث تعطل أو مشاكل توافق، يرجى النظر أولاً في إزالة OptiFine!</string>
     <string name="version_manager_shortcuts">الاختصارات</string>
     <string name="version_manager_shortcuts_mods">إدارة Mod</string>
-    <string name="version_manager_shortcuts_version_path">مجلد مسار الإصدار</string>
+    <string name="version_manager_shortcuts_version_path">مجلد مسار اللعبة</string>
     <string name="version_manager_shortcuts_resource_path">مجلد حزمة الموارد</string>
     <string name="version_manager_shortcuts_world_path">مجلد حفظ اللعبة</string>
     <string name="version_manager_shortcuts_shader_path">مجلد حزمة الظلال</string>
@@ -217,13 +218,18 @@
     <string name="version_manager_shortcuts_crash_report_path">مجلد تقارير الأعطال</string>
     <string name="version_manager_edit">تحرير الإصدار</string>
     <string name="version_manager_rename">إعادة تسمية الإصدار</string>
+    <string name="version_manager_copy">نسخ النسخة</string>
+    <string name="version_manager_copy_tip">نسخ النسخة الحالية كنسخة جديدة مع تمكين العزل الافتراضي للنسخة. إذا تم تمكين "نسخ جميع الملفات" أدناه، فسيتم نسخ جميع الملفات التي تم إنشاؤها بواسطة النسخة الحالية (الموارد، الحفظ، إعدادات اللعبة، إلخ).</string>
+    <string name="version_manager_copy_all">نسخ جميع الملفات</string>
     <string name="version_manager_delete">حذف الإصدار</string>
     <string name="version_manager_delete_tip">إذا تم تمكين العزل بين الإصدارات، سيتم حذف بياناتك المهمة مثل سجلات اللعبة وحزم الموارد وMod وما إلى ذلك. تأكد من أخذ نسخة احتياطية قبل القيام بهذا الإجراء!</string>
     <string name="version_manager_delete_tip_invalid">الإصدار الحالي يفتقر إلى ملف JSON للإصدار، ولذلك يُعتبر إصدارًا غير صالح. لا يمكنك اختيار هذا الإصدار. اضغط على تأكيد لحذف هذا الإصدار الخاطئ.</string>
     <string name="version_manager_task_in_progress">المهمة قيد التنفيذ، وظيفة إدارة الإصدارات غير متاحة مؤقتًا</string>
     <string name="version_manager_invalid">هذه النسخة غير صالحة</string>
+    <string name="version_manager_no_installed_version">المُحَرّك لم يجد أي Minecraft مُثبّت!</string>
     <!-- Profiles Path -->
     <string name="permissions_manage_external_storage">Zalith Launcher يحتاج إلى إمكانية التحكم في جميع ملفات الجهاز لاستخدام هذه الميزة بشكل صحيح، يرجى تمكين الإذن!</string>
+    <string name="permissions_write_external_storage">يتطلب Zalith Launcher إذن إدارة التخزين. إذا لم يتم تمكين الإذن، فقد يؤدي ذلك إلى مشاكل مثل فشل حفظ ملفات اللعبة أو فك ضغطها بشكل صحيح. يرجى منح الإذن لضمان عمل الوظائف بشكل صحيح.</string>
     <string name="profiles_path_title">إدارة مسارات اللعبة</string>
     <string name="profiles_path_default">المسار الافتراضي</string>
     <string name="profiles_path_settings">فتح إعدادات المسار</string>

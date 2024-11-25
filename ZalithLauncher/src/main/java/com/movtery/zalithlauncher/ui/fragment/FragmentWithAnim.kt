@@ -17,12 +17,13 @@ abstract class FragmentWithAnim : Fragment, SlideAnimation, TaskCountListener {
 
     override fun onStart() {
         super.onStart()
-        slideIn()
         ProgressKeeper.addTaskCountListener(this)
+        slideIn()
     }
 
     override fun onStop() {
         super.onStop()
+        slideOut()
         ProgressKeeper.removeTaskCountListener(this)
     }
 

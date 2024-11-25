@@ -113,6 +113,7 @@
     <string name="mod_download_progress">Загрузка установщика для %s</string>
     <string name="mod_forge_searching">Поиск номера версии Forge</string>
     <string name="mod_neoforge_searching">Поиск номера версии NeoForge</string>
+    <string name="mod_forge_custom_version">Изменение имени версии</string>
     <string name="mod_failed_to_load_list">Не удалось загрузить список версий!</string>
     <string name="mod_optifine_progress">Загрузка %s</string>
     <!-- Controls -->
@@ -209,7 +210,7 @@
     <string name="version_install_optifine_and_forge">Некоторые версии OptiFine могут не работать на Forge, если возникнут сбои или проблемы совместимости, пожалуйста, рассмотрите возможность удаления OptiFine в первую очередь!</string>
     <string name="version_manager_shortcuts">Ярлыки</string>
     <string name="version_manager_shortcuts_mods">Управление модами</string>
-    <string name="version_manager_shortcuts_version_path">Папка пути версии</string>
+    <string name="version_manager_shortcuts_version_path">Папка пути игры</string>
     <string name="version_manager_shortcuts_resource_path">Папка пакета ресурсов</string>
     <string name="version_manager_shortcuts_world_path">Папка сохранений мира</string>
     <string name="version_manager_shortcuts_shader_path">Папка пакета шейдеров</string>
@@ -217,13 +218,18 @@
     <string name="version_manager_shortcuts_crash_report_path">Папка отчетов об ошибках</string>
     <string name="version_manager_edit">Редактировать версию</string>
     <string name="version_manager_rename">Переименовать версию</string>
+    <string name="version_manager_copy">Копировать версию</string>
+    <string name="version_manager_copy_tip">Скопировать текущую версию как новую с включенной изоляцией версий по умолчанию. Если включена опция «Копировать все файлы» ниже, будут скопированы все файлы, созданные текущей версией (ресурсы, сохранения, настройки игры и т. д.).</string>
+    <string name="version_manager_copy_all">Копировать все файлы</string>
     <string name="version_manager_delete">Удалить версию</string>
     <string name="version_manager_delete_tip">Если изоляция версий включена, ваши сохранения, пакеты ресурсов и моды будут удалены вместе с версией. Пожалуйста, сделайте резервную копию перед выполнением этой операции!</string>
     <string name="version_manager_delete_tip_invalid">Текущая версия не содержит файл JSON версии, поэтому она считается недействительной. Вы не можете выбрать эту версию. Нажмите «Подтвердить», чтобы удалить эту ошибочную версию.</string>
     <string name="version_manager_task_in_progress">Задача в процессе, управление версиями временно недоступно</string>
     <string name="version_manager_invalid">Эта версия недействительна</string>
+    <string name="version_manager_no_installed_version">Запускатель не нашёл установленную версию Minecraft!</string>
     <!-- Profiles Path -->
     <string name="permissions_manage_external_storage">Zalith Launcher требует разрешения на управление всеми файлами устройства для правильной работы этой функции, пожалуйста, включите разрешение!</string>
+    <string name="permissions_write_external_storage">Для работы Zalith Launcher требуется разрешение на управление хранилищем. Если разрешение не предоставлено, могут возникнуть проблемы, такие как невозможность сохранения или распаковки игровых файлов. Пожалуйста, предоставьте разрешение для обеспечения корректной работы.</string>
     <string name="profiles_path_title">Управление путями игры</string>
     <string name="profiles_path_default">Путь по умолчанию</string>
     <string name="profiles_path_settings">Открыть настройки пути</string>

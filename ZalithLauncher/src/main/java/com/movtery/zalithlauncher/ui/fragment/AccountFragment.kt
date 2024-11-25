@@ -22,6 +22,7 @@ import com.movtery.zalithlauncher.event.value.LocalLoginEvent
 import com.movtery.zalithlauncher.event.value.OtherLoginEvent
 import com.movtery.zalithlauncher.feature.accounts.AccountUtils
 import com.movtery.zalithlauncher.feature.accounts.AccountsManager
+import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils
 import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils.CheckResultListener
 import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils.Companion.checkUsageAllowed
 import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils.Companion.openDialog
@@ -156,7 +157,10 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
                             } else {
                                 openDialog(
                                     context,
-                                    TipDialog.OnConfirmClickListener { login() },
+                                    TipDialog.OnConfirmClickListener { checked ->
+                                        LocalAccountUtils.saveReminders(checked)
+                                        login()
+                                    },
                                     getString(message) + getString(
                                         R.string.account_purchase_minecraft_account_tip
                                     ),
@@ -233,7 +237,7 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
         EditTextDialog.Builder(requireActivity())
             .setTitle(R.string.account_login_local_name)
             .setConfirmText(R.string.generic_login)
-            .setConfirmListener { editText ->
+            .setConfirmListener { editText, _ ->
                 val string = editText.text.toString()
 
                 if (!checkEditText(string, editText)) return@setConfirmListener false
@@ -307,7 +311,7 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
     private fun showServerTypeSelectDialog(stringId: Int, type: Int) {
         EditTextDialog.Builder(requireActivity())
             .setTitle(stringId)
-            .setConfirmListener { editText ->
+            .setConfirmListener { editText, _ ->
                 if (editText.text.toString().isEmpty()) {
                     editText.error = getString(R.string.generic_error_field_empty)
                     return@setConfirmListener false

@@ -113,6 +113,7 @@
     <string name="mod_download_progress">Baixando instalador de %s</string>
     <string name="mod_forge_searching">Procurando número de versão do Forge</string>
     <string name="mod_neoforge_searching">Procurando número de versão do NeoForge</string>
+    <string name="mod_forge_custom_version">Modificando o nome da versão</string>
     <string name="mod_failed_to_load_list">Falha ao carregar lista de versões!</string>
     <string name="mod_optifine_progress">Baixando %s</string>
     <!-- Controls -->
@@ -209,7 +210,7 @@
     <string name="version_install_optifine_and_forge">Algumas versões do OptiFine podem não funcionar no Forge, se ocorrer uma falha ou problemas de compatibilidade, considere remover o OptiFine primeiro!</string>
     <string name="version_manager_shortcuts">Atalhos</string>
     <string name="version_manager_shortcuts_mods">Gerenciamento de Mods</string>
-    <string name="version_manager_shortcuts_version_path">Pasta do Caminho da Versão</string>
+    <string name="version_manager_shortcuts_version_path">Pasta do caminho do jogo</string>
     <string name="version_manager_shortcuts_resource_path">Pasta do pacote de recursos</string>
     <string name="version_manager_shortcuts_world_path">Pasta de salvamento de mundos</string>
     <string name="version_manager_shortcuts_shader_path">Pasta do pacote de shaders</string>
@@ -217,13 +218,18 @@
     <string name="version_manager_shortcuts_crash_report_path">Pasta de relatórios de falha</string>
     <string name="version_manager_edit">Editar versão</string>
     <string name="version_manager_rename">Renomear versão</string>
+    <string name="version_manager_copy">Copiar versão</string>
+    <string name="version_manager_copy_tip">Copie a versão atual como uma nova versão com o isolamento de versão ativado por padrão. Se "Copiar Todos os Arquivos" abaixo estiver ativado, todos os arquivos gerados pela versão atual (recursos, salvamentos, configurações do jogo, etc.) também serão copiados.</string>
+    <string name="version_manager_copy_all">Copiar Todos os Arquivos</string>
     <string name="version_manager_delete">Excluir versão</string>
     <string name="version_manager_delete_tip">Se o isolamento de versões estiver ativado, seus jogos salvos, pacotes de recursos e mods serão excluídos junto com a versão. Certifique-se de fazer um backup antes de realizar esta operação!</string>
     <string name="version_manager_delete_tip_invalid">A versão atual está faltando o arquivo JSON da versão e, portanto, é considerada uma versão inválida. Você não pode selecionar esta versão. Clique em Confirmar para excluir esta versão errônea.</string>
     <string name="version_manager_task_in_progress">Tarefa em andamento, gerenciamento de versões temporariamente indisponível</string>
     <string name="version_manager_invalid">Esta versão é inválida</string>
+    <string name="version_manager_no_installed_version">O lançador não encontrou nenhum Minecraft instalado!</string>
     <!-- Profiles Path -->
     <string name="permissions_manage_external_storage">Zalith Launcher precisa da permissão para gerenciar todos os arquivos do dispositivo para usar esta funcionalidade corretamente, por favor, habilite a permissão!</string>
+    <string name="permissions_write_external_storage">O Zalith Launcher requer permissão de gerenciamento de armazenamento. Se a permissão não estiver ativada, podem ocorrer problemas como falha ao salvar ou descompactar os arquivos do jogo. Conceda a permissão para garantir o funcionamento correto.</string>
     <string name="profiles_path_title">Gerenciamento de Caminho do Jogo</string>
     <string name="profiles_path_default">Caminho Padrão</string>
     <string name="profiles_path_settings">Abrir configurações de caminho</string>
