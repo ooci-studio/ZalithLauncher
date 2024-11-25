@@ -10,4 +10,6 @@ enum class Components(val component: String, val displayName: String, val summar
     LWJGL3("lwjgl3", "LWJGL 3", R.string.splash_screen_lwjgl, false),
     SECURITY("security", "Pro Grade", R.string.splash_screen_pro_grade, true),
     LOADER_INSTALLERS("installer", "Loader Installers", R.string.splash_screen_loader_installers, true),
+    BACKGROUND("background", "Background", R.string.splash_screen_background, false),
+
 }

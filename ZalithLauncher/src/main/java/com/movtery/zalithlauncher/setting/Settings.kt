@@ -100,11 +100,11 @@ class Settings {
                     valueMap["gameMenuLocation"] = "right_or_bottom";
                     valueMap["zinkPreferSystemDriver"] = "false";
                     valueMap["resolutionRatio"] = "80";
-                    valueMap["renderer"] = "vulkan_zink";
                     valueMap["hotbarType"] = "auto";
                     valueMap["mousescale"] = "100";
                     valueMap["mousespeed"] = "100";
                     valueMap["mouse_start"] = "true";
+                    valueMap["launcherTheme"] = "dark";
                 }
 
                 val currentSettings = settings.toMutableList()

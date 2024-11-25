@@ -177,7 +177,7 @@ class AllSettings {
 
         @JvmStatic
         val launcherTheme: String?
-            get() = Settings.Manager.getString("launcherTheme", "system")
+            get() = Settings.Manager.getString("launcherTheme", "dark")
 
         @JvmStatic
         val animation: Boolean

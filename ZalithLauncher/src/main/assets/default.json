@@ -482,6 +482,29 @@
       "strokeColor": -1,
       "strokeWidth": 0.0,
       "width": 49.904762
+    },
+    {
+      "bgColor": 1291845632,
+      "cornerRadius": 0.0,
+      "displayInGame": true,
+      "displayInMenu": true,
+      "dynamicX": "0.97939354 * ${screen_width} - (px(49.904762) / 100 * ${preferred_scale})",
+      "dynamicY": "0.7103129 * ${screen_height} - (px(49.904762) /100 * ${preferred_scale}) - (px(49.904762) /100 * ${preferred_scale}) - ${margin} - ${height} - ${margin}",
+      "height": 49.904762,
+      "isSwipeable": false,
+      "isToggle": false,
+      "keycodes": [
+        -5,
+        0,
+        0,
+        0
+      ],
+      "name": "虚拟  鼠标",
+      "opacity": 1.0,
+      "passThruEnabled": false,
+      "strokeColor": -1,
+      "strokeWidth": 0.0,
+      "width": 49.904762
     }
   ],
   "mControlInfoDataList": {
