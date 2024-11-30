@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch;
 
+import static com.movtery.zalithlauncher.launch.LaunchGame.preLaunch;
 import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
 
 import android.Manifest;
@@ -78,14 +79,11 @@ import net.kdt.pojavlaunch.authenticator.microsoft.MicrosoftBackgroundLogin;
 import net.kdt.pojavlaunch.contracts.OpenDocumentWithExtension;
 import net.kdt.pojavlaunch.fragments.MainMenuFragment;
 import net.kdt.pojavlaunch.fragments.MicrosoftLoginFragment;
-import net.kdt.pojavlaunch.lifecycle.ContextAwareDoneListener;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.progresskeeper.TaskCountListener;
 import net.kdt.pojavlaunch.services.ProgressServiceKeeper;
-import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader;
 import net.kdt.pojavlaunch.tasks.AsyncVersionList;
-import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
 import net.kdt.pojavlaunch.utils.NotificationUtils;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 
@@ -183,22 +181,21 @@ public class LauncherActivity extends BaseActivity {
         LocalAccountUtils.checkUsageAllowed(new LocalAccountUtils.CheckResultListener() {
             @Override
             public void onUsageAllowed() {
-                launchGame(version);
+                preLaunch(LauncherActivity.this, version);
             }
 
             @Override
             public void onUsageDenied() {
-                launchGame(version);
-//                if (!AllSettings.getLocalAccountReminders()) {
-//                    launchGame(version);
-//                } else {
-//                    LocalAccountUtils.openDialog(LauncherActivity.this, checked -> {
-//                                LocalAccountUtils.saveReminders(checked);
-//                                launchGame(version);
-//                            },
-//                            getString(R.string.account_no_microsoft_account) + getString(R.string.account_purchase_minecraft_account_tip),
-//                            R.string.account_continue_to_launch_the_game);
-//                }
+                if (!AllSettings.getLocalAccountReminders()) {
+                    preLaunch(LauncherActivity.this, version);
+                } else {
+                    LocalAccountUtils.openDialog(LauncherActivity.this, checked -> {
+                                LocalAccountUtils.saveReminders(checked);
+                                preLaunch(LauncherActivity.this, version);
+                            },
+                            getString(R.string.account_no_microsoft_account) + getString(R.string.account_purchase_minecraft_account_tip),
+                            R.string.account_continue_to_launch_the_game);
+                }
             }
         });
     }
@@ -215,14 +212,14 @@ public class LauncherActivity extends BaseActivity {
 
     @Subscribe()
     public void event(OtherLoginEvent event) {
-        try {
-            event.getAccount().updateSkin();
-            event.getAccount().save();
-            Logging.i("Account", "Saved the account : " + event.getAccount().username);
-        } catch (IOException e) {
-            Logging.e("Account", "Failed to save the account : " + e);
-        }
-        accountsManager.getDoneListener().onLoginDone(event.getAccount());
+        Task.runTask(() -> {
+                    event.getAccount().save();
+                    event.getAccount().updateOtherSkin();
+                    Logging.i("Account", "Saved the account : " + event.getAccount().username);
+                    return null;
+                }).onThrowable(e -> Logging.e("Account", "Failed to save the account : " + e))
+                .finallyTask(() -> accountsManager.getDoneListener().onLoginDone(event.getAccount()))
+                .execute();
     }
 
     @Subscribe()
@@ -410,7 +407,7 @@ public class LauncherActivity extends BaseActivity {
         binding.progressLayout.observe(ProgressLayout.DOWNLOAD_MINECRAFT);
         binding.progressLayout.observe(ProgressLayout.UNPACK_RUNTIME);
         binding.progressLayout.observe(ProgressLayout.INSTALL_RESOURCE);
-        binding.progressLayout.observe(ProgressLayout.AUTHENTICATE_MICROSOFT);
+        binding.progressLayout.observe(ProgressLayout.LOGIN_ACCOUNT);
         binding.progressLayout.observe(ProgressLayout.DOWNLOAD_VERSION_LIST);
 
         binding.noticeLayout.findViewById(R.id.notice_got_button).setOnClickListener(v -> {
@@ -536,16 +533,6 @@ public class LauncherActivity extends BaseActivity {
 
     private void refreshBackground() {
         BackgroundManager.setBackgroundImage(this, BackgroundType.MAIN_MENU, findViewById(R.id.background_view));
-    }
-
-    private void launchGame(Version version) {
-        String versionName = version.getVersionName();
-        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(versionName);
-        new MinecraftDownloader().start(
-                mcVersion,
-                versionName,
-                new ContextAwareDoneListener(this, version)
-        );
     }
 
     @SuppressWarnings("SameParameterValue")

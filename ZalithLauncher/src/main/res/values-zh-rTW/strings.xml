@@ -51,11 +51,13 @@
     <string name="error_show_more">顯示詳細資訊</string>
     <string name="error_show_less">關閉詳細資訊</string>
     <!-- Launcher -->
+    <string name="option_category_debug">調試</string>
+    <string name="option_category_control">控制</string>
+    <string name="option_category_hotbar">快捷欄判定框</string>
     <string name="option_force_close">強制關閉</string>
     <string name="option_log_out">日誌輸出</string>
     <string name="option_send_custom_key">發送自訂鍵碼</string>
     <string name="option_edit_controls">編輯控制佈局</string>
-    <string name="option_hotbar">快捷欄判定框</string>
     <string name="option_hotbar_type">快捷欄判定模式</string>
     <string name="option_hotbar_type_auto">自適應（可能不精確）</string>
     <string name="option_hotbar_type_manually">手動調整</string>
@@ -80,7 +82,6 @@
     <string name="notification_game_runs">遊戲正在執行中！</string>
     <string name="tasks_ongoing">任務正在進行中，請稍候</string>
     <string name="mc_download_failed">下載 Minecraft 失敗！這可能是由於網路連線不良、檔案位置錯誤等原因</string>
-    <string name="toast_turn_on_gyro">需要先啟用陀螺儀控制才能使用！</string>
     <string name="microsoft_login_retry_later">你的操作過於頻繁，請稍後再試</string>
     <string name="storage_required">Zalith Launcher 需要連接外部儲存，請重新連接並重新啟動軟體</string>
     <string name="dialog_select_jar">選擇 Jar 檔案</string>
@@ -110,6 +111,7 @@
     <string name="log_view_label_log_output">日誌輸出:</string>
     <string name="execute_jar_failed_to_read_file">讀取 .jar 檔案失敗</string>
     <string name="execute_jar_incompatible_runtime">執行 .jar 功能與 Java %d 不相容</string>
+    <string name="open_link">將在瀏覽器中訪問此連結:</string>
     <string name="mod_download_progress">正在下載 %s 的安裝程式</string>
     <string name="mod_forge_searching">正在搜尋 Forge 版本號</string>
     <string name="mod_neoforge_searching">正在搜尋 NeoForge 版本號</string>
@@ -200,16 +202,17 @@
     <string name="version_manager_title">版本管理</string>
     <string name="version_no_versions">沒有安裝版本</string>
     <string name="version_install_new">安裝新版本</string>
+    <string name="version_install_new_modloader">為新版本安裝 %s</string>
     <string name="version_install_not_install">不安裝</string>
     <string name="version_install_incompatible">與 %s 不相容</string>
     <string name="version_install_exists">此名稱的版本已存在！</string>
     <string name="version_install_no_versions">沒有可選擇的版本！</string>
     <string name="version_install_cannot_use_mc_name">已選擇附加內容，需確保原版核心的獨立性，請勿使用原版名稱！</string>
     <string name="version_install_type_version">作為版本下載並安裝</string>
-    <string name="version_install_type_mod">作為 Mod 下載並安裝</string>
+    <string name="version_install_type_mod">作為模組下載並安裝</string>
     <string name="version_install_optifine_and_forge">OptiFine 的某些版本在 Forge 上可能無法運行，如果出現崩潰或相容性問題，請優先考慮刪除 OptiFine！</string>
     <string name="version_manager_shortcuts">快捷功能</string>
-    <string name="version_manager_shortcuts_mods">Mod 管理</string>
+    <string name="version_manager_shortcuts_mods">模組管理</string>
     <string name="version_manager_shortcuts_version_path">遊戲路徑資料夾</string>
     <string name="version_manager_shortcuts_resource_path">資源包資料夾</string>
     <string name="version_manager_shortcuts_world_path">遊戲存檔資料夾</string>
@@ -219,10 +222,10 @@
     <string name="version_manager_edit">編輯版本</string>
     <string name="version_manager_rename">重新命名版本</string>
     <string name="version_manager_copy">複製版本</string>
-    <string name="version_manager_copy_tip">將當前版本複製為一個新的版本，並且默認開啟版本隔離。若開啟下方的「複製所有文件」，那麼將同時複製當前版本產生的所有文件（資源版、存檔、遊戲設定等）。</string>
-    <string name="version_manager_copy_all">複製所有文件</string>
+    <string name="version_manager_copy_tip">將當前版本復製為一個新版本，並預設開啟版本隔離。若開啟下方的“復製所有檔案”，則會同時復製當前版本產生的所有檔案（資源包、存檔、遊戲設置等）。</string>
+    <string name="version_manager_copy_all">復製所有檔案</string>
     <string name="version_manager_delete">刪除版本</string>
-    <string name="version_manager_delete_tip">如果開啟了版本隔離功能，刪除版本時會一併刪除你的遊戲存檔、資源包和 Mod 等重要資料，請務必先做好備份再進行此操作！</string>
+    <string name="version_manager_delete_tip">刪除版本時會一併刪除\"./versions/%s\"目錄內的所有檔案，包括遊戲存檔、資源包、模組等重要資源，即使未開啟版本隔離，所以請務必先做好備份再進行此操作！</string>
     <string name="version_manager_delete_tip_invalid">當前版本缺少版本 JSON 檔案，因此被判定為無效的版本，無法選擇此版本！點擊確認，刪除這個錯誤的版本。</string>
     <string name="version_manager_task_in_progress">任務執行中，暫時無法使用版本管理功能</string>
     <string name="version_manager_invalid">該版本無效</string>
@@ -243,10 +246,10 @@
     <string name="pedit_reset_icon">這將會重置你設定的自訂圖示，且操作不可逆，你確定要重置版本圖示嗎？</string>
     <string name="pedit_control">控制佈局</string>
     <string name="pedit_default">（使用全域預設值）</string>
-    <string name="profile_mods_download_mod">下載 Mod</string>
+    <string name="profile_mods_download_mod">下載模組</string>
     <string name="profile_mods_download_mod_release_version">僅展示 Minecraft 正式版本</string>
-    <string name="profile_mods_add_mod">添加 Mod</string>
-    <string name="profile_mods_added_mod">成功添加 Mod</string>
+    <string name="profile_mods_add_mod">添加模組</string>
+    <string name="profile_mods_added_mod">成功添加模組</string>
     <string name="profile_mods_disable">禁用</string>
     <string name="profile_mods_enable">啟用</string>
     <string name="profile_mods_disable_or_enable">禁用/啟用</string>
@@ -259,9 +262,11 @@
     <string name="account_microsoft_xerr_unauthorized">你的微軟帳號登入資訊貌似已過期，這種情況常出現在帳號密碼被修改之後，請移除當前帳號並重新登入你的帳號，以重置你的登入資訊。</string>
     <string name="account_local_account">離線帳號</string>
     <string name="account_local_account_empty">使用者名稱不能為空！</string>
-    <string name="account_local_account_invalid">正常的使用者名稱僅支持英文字母（大小寫皆可）、數字以及底線作為使用者名稱，長度不允許少於 3 個字元，超過 16 個字元。\n正確的使用者名稱範例：Name、Name_、Name123\n錯誤的使用者名稱範例：Name@、N ame、name_name_name_name\n但如果你使用了相關的 Mod 或者插件能夠解除這一機制，那麼你可以繼續使用這個名稱，否則請重新命名！</string>
+    <string name="account_local_account_invalid">有效的使用者名稱僅支援英文大小寫字母、數字及下劃線。長度需在3至16個字元之間，否則遊戲可能無法正常運行。\n正確的使用者名稱範例：Name、Name_、Name123\n錯誤的使用者名稱範例：Name@、N ame、name_name_name_name\n但如果您已使用相關模組或插件來解除這項限制，則可繼續使用該名稱。否則，請重新命名！</string>
     <string name="account_login_local_name">使用者名稱</string>
     <string name="account_login_start">開始登入！</string>
+    <string name="account_login_no_network">未連接到網路，登入已跳過！</string>
+    <string name="account_login_skip">帳號登入失敗，是否要跳過登入步驟？</string>
     <string name="account_no_microsoft_account">請至少登入一個 Minecraft 正版帳號，我們不提倡用戶在沒有正版帳號的情況下啟動 Minecraft。</string>
     <string name="account_no_microsoft_account_local">你似乎沒有登入正版帳號！離線帳號是為玩家在無法連線時提供的一種備用方案，而不是給沒有正版帳號的玩家使用的。</string>
     <string name="account_no_microsoft_account_other">你似乎沒有登入正版帳號！你確定要在沒有登入正版帳號的情況下使用外部登入嗎？</string>
@@ -290,13 +295,13 @@
     <string name="multirt_nojava8rt">無法找到 Java 8，要使用此選項，你必須安裝 Java 8</string>
     <string name="multirt_delete_runtime">刪除執行環境</string>
     <!-- Custom Mouse & Background -->
-    <string name="mouse_settings_title">虛擬滑鼠設定</string>
     <string name="mouse_settings_speed_name">虛擬滑鼠速度</string>
     <string name="mouse_settings_scale_name">虛擬滑鼠縮放</string>
     <string name="custom_mouse_add">添加虛擬滑鼠</string>
     <string name="custom_mouse_added">成功設定虛擬滑鼠:</string>
     <string name="custom_mouse_default">預設虛擬滑鼠</string>
     <string name="custom_mouse_title">自訂虛擬滑鼠</string>
+    <string name="custom_mouse_dialog">您可以在（啟動器設定 - %s- %s）內加入滑鼠圖片</string>
     <string name="custom_mouse_desc">打開虛擬滑鼠管理介面，你可以自行添加喜歡的虛擬滑鼠貼圖，並使用它們</string>
     <string name="custom_mouse_message_default">當前選中的虛擬滑鼠為預設虛擬滑鼠，不支援分享、重新命名或刪除操作</string>
     <string name="custom_background_add">添加背景圖片</string>
@@ -347,7 +352,7 @@
     <string name="main_share_log_title">請選擇日誌檔案類型</string>
     <string name="main_share_launcher_log">啟動器日誌檔案</string>
     <string name="main_share_game_log">上一次遊戲運行日誌</string>
-    <string name="main_play">啟動遊戲</string>
+    <string name="main_launch">啟動遊戲</string>
     <string name="setting_category_control">控制設定</string>
     <string name="setting_category_virtual_mouse">虛擬滑鼠</string>
     <string name="setting_category_gyro_controls">陀螺儀控制</string>
@@ -484,8 +489,8 @@
     <string name="game_tip_version">當前啟動的遊戲版本:</string>
     <string name="game_tip_mc_info">Minecraft 資訊:</string>
     <!-- Download -->
-    <string name="download_classify_mod">下載 Mod</string>
-    <string name="download_classify_modpack">下載整合包</string>
+    <string name="download_classify_mod">下載模組</string>
+    <string name="download_classify_modpack">下載模組包</string>
     <string name="download_classify_resource_pack">下載資源包</string>
     <string name="download_classify_world">下載世界</string>
     <string name="download_classify_shader_pack">下載光影包</string>
@@ -495,7 +500,7 @@
     <string name="download_ui_platform">搜尋平台</string>
     <string name="download_ui_sort_by">排序方式</string>
     <string name="download_ui_category">類別篩選</string>
-    <string name="download_ui_modloader">Mod 載入器</string>
+    <string name="download_ui_modloader">模組載入器</string>
     <string name="download_ui_sort_by_relevant">相關性</string>
     <string name="download_ui_sort_by_total_downloads">總下載量</string>
     <string name="download_ui_sort_by_popularity">人氣</string>
@@ -513,8 +518,8 @@
     <string name="download_search_platform_not_supported">當前平台不支持下載這類資源，或不支持此類別篩選！</string>
     <string name="download_install_custom_name">自訂檔案名稱</string>
     <string name="download_install_download_file">正在下載資源檔案（%.2fMB / %.2fMB）</string>
-    <string name="download_install_dependencies">%s 有以下的依賴 Mod</string>
-    <string name="download_install_dependencies_tip">請根據需求下載對應的依賴 Mod，缺少必要的依賴 Mod 將導致遊戲無法運行！</string>
+    <string name="download_install_dependencies">%s 有以下的依賴模組</string>
+    <string name="download_install_dependencies_tip">請根據需求下載對應的依賴模組，缺少必要的依賴模組將導致遊戲無法運行！</string>
     <string name="download_install_dependencies_required">需裝</string>
     <string name="download_install_dependencies_optional">可選</string>
     <string name="download_install_dependencies_incompatible">不兼容</string>
@@ -525,7 +530,7 @@
     <string name="download_install_unpack_world_error">無法識別文件結構，自動解壓失敗，請自行處理此文件！</string>
     <!-- ModPack -->
     <string name="select_modpack_local_tip">請選擇一個啟動器支持導入的模組包檔案！</string>
-    <string name="select_modpack_local_not_supported">此檔案不受啟動器支持！</string>
+    <string name="select_modpack_local_not_supported">此模組包不受啟動器支援！啟動器僅支援導入 Modrinth、CurseForge、MCBBS 格式的模組包，請檢查您的模組包是否依照規定格式製作！</string>
     <string name="select_modpack_local_installing_files">安裝遊戲檔案中… (%d / %d)</string>
     <string name="modpack_download_downloading_metadata">正在下載模組包元數據（%.2fMB / %.2fMB）</string>
     <string name="modpack_download_downloading_mods">正在下載模組（%.2fMB / %.2fMB）</string>
@@ -569,6 +574,7 @@
     <string name="other_login_select_role_title">選擇角色</string>
     <string name="other_login_select_role_message">當前帳號存在多個角色，請選擇想要使用的角色</string>
     <string name="other_login_registry_now">沒有帳號？點我跳轉註冊一個！</string>
+    <string name="other_login_role_not_found">未找到與當前帳號相匹配的角色，請在您使用的伺服器上檢查該角色是否存在！</string>
     <!-- Splash -->
     <string name="splash_screen_desc">啟動器需要安裝這些內容，以確保 Minecraft 能夠正常啟動。這些內容已包含在應用中，需要解壓縮後才能正常使用，請點擊下方按鈕開始解壓縮並更新這些內容。</string>
     <string name="splash_screen_installing">啟動器正在解壓縮這些內容，解壓縮完成後將自動進入主界面，請耐心等待。</string>
@@ -593,7 +599,7 @@
     <string name="about_button_support_development">贊助開發</string>
     <string name="about_MovTery_desc">啟動器的主要作者</string>
     <string name="about_PojavLauncher_desc">PojavLauncher 的開發團隊，開發並開源了 PojavLauncher</string>
-    <string name="about_mcmod_desc">啟動器使用了來自 MC 百科的 Mod 以及模組包中文翻譯</string>
+    <string name="about_mcmod_desc">啟動器使用了來自 MC 百科的模組以及模組包中文翻譯</string>
     <string name="about_VeraFirefly_desc">為啟動器提供渲染方面的技術支持</string>
     <string name="about_LingMuQiuZhu_desc">為啟動器提供了技術支持</string>
     <string name="about_ShirosakiMio_desc">為啟動器提供了技術支持，修復了一些漏洞</string>
@@ -619,9 +625,9 @@
     <string name="newbie_guide_file_import">點擊可進入 Android 的檔案管理器，選擇你想要匯入的檔案，即可匯入進入啟動器！</string>
     <string name="newbie_guide_file_create_folder">點擊此按鈕，可以在當前所在的目錄內新建一個資料夾。</string>
     <string name="newbie_guide_file_select">點擊以確認選擇為此目錄。</string>
-    <string name="newbie_guide_mod_search">點擊可召喚搜尋框，使用它可以快速搜尋到你想要尋找的 Mod。</string>
-    <string name="newbie_guide_mod_import">在原生的檔案管理器內選擇一個 Mod 檔案，可將其匯入當前 Mod 資料夾。</string>
-    <string name="newbie_guide_mod_download">點擊可以進入 Mod 下載頁面，你可以在那裡線上搜尋與下載 Mod。</string>
+    <string name="newbie_guide_mod_search">點擊可召喚搜尋框，使用它可以快速搜尋到你想要尋找的模組。</string>
+    <string name="newbie_guide_mod_import">在原生的檔案管理器內選擇一個模組檔案，可將其匯入當前模組資料夾。</string>
+    <string name="newbie_guide_mod_download">點擊可以進入模組下載頁面，你可以在那裡線上搜尋與下載模組。</string>
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">支持我的開發</string>
     <string name="request_sponsorship_message">這款軟體的大部分內容都是我一個人開發和維護的。如果你覺得這款軟體對你有幫助，並且條件允許的話，希望你能考慮贊助我，讓我有更多動力繼續開發和改進，謝謝你的支持！</string>

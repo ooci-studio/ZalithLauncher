@@ -51,11 +51,13 @@
     <string name="error_show_more">Hiển thị chi tiết</string>
     <string name="error_show_less">Đóng chi tiết</string>
     <!-- Launcher -->
+    <string name="option_category_debug">Điều chỉnh</string>
+    <string name="option_category_control">Kiểm soát</string>
+    <string name="option_category_hotbar">Hộp kiểm tra thanh công cụ</string>
     <string name="option_force_close">Buộc đóng</string>
     <string name="option_log_out">Ghi log ra</string>
     <string name="option_send_custom_key">Gửi mã phím tùy chỉnh</string>
     <string name="option_edit_controls">Chỉnh sửa bố cục điều khiển</string>
-    <string name="option_hotbar">Hộp kiểm tra thanh công cụ</string>
     <string name="option_hotbar_type">Chế độ kiểm tra thanh công cụ</string>
     <string name="option_hotbar_type_auto">Tự động (có thể không chính xác)</string>
     <string name="option_hotbar_type_manually">Điều chỉnh thủ công</string>
@@ -80,7 +82,6 @@
     <string name="notification_game_runs">Trò chơi đang chạy!</string>
     <string name="tasks_ongoing">Nhiệm vụ đang được thực hiện, vui lòng chờ</string>
     <string name="mc_download_failed">Tải xuống Minecraft thất bại! Điều này có thể do kết nối mạng kém, đặt tệp sai vị trí, v.v.</string>
-    <string name="toast_turn_on_gyro">Cần bật điều khiển con quay hồi chuyển trước khi sử dụng!</string>
     <string name="microsoft_login_retry_later">Hoạt động của bạn quá nhiều, vui lòng thử lại sau</string>
     <string name="storage_required">Zalith Launcher yêu cầu kết nối bộ nhớ ngoài, vui lòng kết nối lại và khởi động lại phần mềm</string>
     <string name="dialog_select_jar">Chọn tệp Jar</string>
@@ -110,6 +111,7 @@
     <string name="log_view_label_log_output">Đầu ra nhật ký:</string>
     <string name="execute_jar_failed_to_read_file">Không thể đọc tệp .jar</string>
     <string name="execute_jar_incompatible_runtime">Chức năng thực thi .jar không tương thích với Java %d</string>
+    <string name="open_link">Sẽ truy cập vào liên kết này trong trình duyệt:</string>
     <string name="mod_download_progress">Đang tải trình cài đặt cho %s</string>
     <string name="mod_forge_searching">Đang tìm kiếm số phiên bản Forge</string>
     <string name="mod_neoforge_searching">Đang tìm kiếm số phiên bản NeoForge</string>
@@ -200,6 +202,7 @@
     <string name="version_manager_title">Quản lý Phiên bản</string>
     <string name="version_no_versions">Chưa cài đặt phiên bản nào</string>
     <string name="version_install_new">Cài đặt phiên bản mới</string>
+    <string name="version_install_new_modloader">Cài đặt %s cho phiên bản mới</string>
     <string name="version_install_not_install">Không cài đặt</string>
     <string name="version_install_incompatible">Không tương thích với %s</string>
     <string name="version_install_exists">Đã có phiên bản với tên này!</string>
@@ -219,10 +222,10 @@
     <string name="version_manager_edit">Chỉnh sửa phiên bản</string>
     <string name="version_manager_rename">Đổi tên phiên bản</string>
     <string name="version_manager_copy">Sao chép phiên bản</string>
-    <string name="version_manager_copy_tip">Sao chép phiên bản hiện tại thành một phiên bản mới với tính năng tách biệt phiên bản được bật mặc định. Nếu "Sao chép tất cả các tệp" bên dưới được bật, tất cả các tệp được tạo ra bởi phiên bản hiện tại (tài nguyên, lưu trữ, cài đặt trò chơi, v.v.) cũng sẽ được sao chép.</string>
-    <string name="version_manager_copy_all">Sao chép tất cả các tệp</string>
+    <string name="version_manager_copy_tip">Sao chép phiên bản hiện tại thành một phiên bản mới với cách ly phiên bản được kích hoạt mặc định. Nếu "Sao chép tất cả tệp" bên dưới được kích hoạt, tất cả tệp được tạo bởi phiên bản hiện tại (gói tài nguyên, lưu trữ, thiết lập trò chơi, v.v.) cũng sẽ được sao chép.</string>
+    <string name="version_manager_copy_all">Sao chép tất cả tệp</string>
     <string name="version_manager_delete">Xóa phiên bản</string>
-    <string name="version_manager_delete_tip">Nếu chức năng cách ly phiên bản được bật, khi xóa sẽ xóa luôn các dữ liệu quan trọng như lưu game, gói tài nguyên, mod. Vui lòng sao lưu trước khi thực hiện thao tác này!</string>
+    <string name="version_manager_delete_tip">Xóa phiên bản sẽ đồng thời xóa tất cả các tệp trong thư mục \"./versions/%s\", bao gồm các tài nguyên quan trọng như lưu trữ trò chơi, gói tài nguyên, mô-đun vv, ngay cả khi không bật cách ly phiên bản. Vì vậy, vui lòng chắc chắn đã sao lưu trước khi thực hiện thao tác này!</string>
     <string name="version_manager_delete_tip_invalid">Phiên bản hiện tại thiếu tệp JSON phiên bản và vì vậy được coi là phiên bản không hợp lệ. Bạn không thể chọn phiên bản này. Nhấn Xác nhận để xóa phiên bản sai này.</string>
     <string name="version_manager_task_in_progress">Đang thực hiện tác vụ, quản lý phiên bản tạm thời không khả dụng</string>
     <string name="version_manager_invalid">Phiên bản này không hợp lệ</string>
@@ -259,9 +262,11 @@
     <string name="account_microsoft_xerr_unauthorized">Thông tin đăng nhập tài khoản Microsoft của bạn có vẻ đã hết hạn, tình huống này thường xảy ra khi mật khẩu tài khoản bị thay đổi. Vui lòng xóa tài khoản hiện tại và đăng nhập lại để đặt lại thông tin đăng nhập của bạn.</string>
     <string name="account_local_account">Tài khoản ngoại tuyến</string>
     <string name="account_local_account_empty">Tên người dùng không được để trống!</string>
-    <string name="account_local_account_invalid">Tên người dùng hợp lệ chỉ hỗ trợ chữ cái tiếng Anh (không phân biệt chữ hoa chữ thường), số và dấu gạch dưới. Độ dài không được ít hơn 3 ký tự và không quá 16 ký tự.\nVí dụ tên người dùng hợp lệ: Name, Name_, Name123\nVí dụ tên người dùng không hợp lệ: Name@, N ame, name_name_name_name\nTuy nhiên, nếu bạn sử dụng các Mod hoặc plugin liên quan có thể vượt qua hạn chế này, bạn có thể tiếp tục sử dụng tên này. Nếu không, vui lòng đổi tên!</string>
+    <string name="account_local_account_invalid">Tên người dùng hợp lệ chỉ hỗ trợ các chữ cái Anh (đại chữ và thường chữ), số và dấu gạch dưới. Độ dài phải trong khoảng 3 đến 16 ký tự, nếu không, trò chơi có thể không chạy đúng.\nVí dụ tên người dùng đúng: Name, Name_, Name123\nVí dụ tên người dùng sai: Name@, N ame, name_name_name_name\nNhưng nếu bạn đã sử dụng các mô-đun hoặc plugin liên quan để bỏ qua cơ chế này, thì bạn có thể tiếp tục sử dụng tên này. Nếu không, vui lòng đổi tên lại!</string>
     <string name="account_login_local_name">Tên người dùng</string>
     <string name="account_login_start">Bắt đầu đăng nhập!</string>
+    <string name="account_login_no_network">Không kết nối đến internet, đăng nhập đã bỏ qua!</string>
+    <string name="account_login_skip">Đăng nhập tài khoản thất bại, bạn có muốn bỏ qua bước đăng nhập không?</string>
     <string name="account_no_microsoft_account">Vui lòng đăng nhập ít nhất một tài khoản Minecraft bản quyền, chúng tôi không khuyến khích người dùng khởi động Minecraft mà không có tài khoản bản quyền.</string>
     <string name="account_no_microsoft_account_local">Có vẻ như bạn chưa đăng nhập vào tài khoản bản quyền! Tài khoản ngoại tuyến là một giải pháp thay thế cho người chơi khi không thể kết nối mạng, không phải dành cho người chơi không có tài khoản bản quyền.</string>
     <string name="account_no_microsoft_account_other">Có vẻ như bạn chưa đăng nhập vào tài khoản bản quyền! Bạn có chắc chắn muốn sử dụng đăng nhập bên ngoài mà không có tài khoản bản quyền không?</string>
@@ -290,13 +295,13 @@
     <string name="multirt_nojava8rt">Không thể tìm thấy Java 8, để sử dụng tùy chọn này, bạn phải cài đặt Java 8</string>
     <string name="multirt_delete_runtime">Xóa môi trường thực thi</string>
     <!-- Custom Mouse & Background -->
-    <string name="mouse_settings_title">Cài đặt chuột ảo</string>
     <string name="mouse_settings_speed_name">Tốc độ chuột ảo</string>
     <string name="mouse_settings_scale_name">Tỷ lệ chuột ảo</string>
     <string name="custom_mouse_add">Thêm chuột ảo</string>
     <string name="custom_mouse_added">Đã thiết lập thành công chuột ảo:</string>
     <string name="custom_mouse_default">Chuột ảo mặc định</string>
     <string name="custom_mouse_title">Tùy chỉnh chuột ảo</string>
+    <string name="custom_mouse_dialog">Bạn có thể thêm hình ảnh chuột trong (Cài đặt khởi động - %s - %s)</string>
     <string name="custom_mouse_desc">Mở giao diện quản lý chuột ảo, bạn có thể tự thêm các hình ảnh chuột ảo yêu thích của mình và sử dụng chúng</string>
     <string name="custom_mouse_message_default">Chuột ảo hiện đang chọn là chuột ảo mặc định, không hỗ trợ chia sẻ, đổi tên, xóa</string>
     <string name="custom_background_add">Thêm hình nền</string>
@@ -347,7 +352,7 @@
     <string name="main_share_log_title">Vui lòng chọn loại tệp nhật ký</string>
     <string name="main_share_launcher_log">Tệp nhật ký trình khởi chạy</string>
     <string name="main_share_game_log">Nhật ký chạy game lần trước</string>
-    <string name="main_play">Khởi chạy game</string>
+    <string name="main_launch">Bắt đầu trò chơi</string>
     <string name="setting_category_control">Cài đặt điều khiển</string>
     <string name="setting_category_virtual_mouse">Chuột ảo</string>
     <string name="setting_category_gyro_controls">Điều khiển con quay hồi chuyển</string>
@@ -525,7 +530,7 @@
     <string name="download_install_unpack_world_error">Không thể nhận dạng cấu trúc tệp, giải nén tự động thất bại, vui lòng xử lý tệp thủ công!</string>
     <!-- ModPack -->
     <string name="select_modpack_local_tip">Vui lòng chọn một tệp gói tích hợp được hỗ trợ bởi trình khởi chạy!</string>
-    <string name="select_modpack_local_not_supported">Tệp này không được hỗ trợ bởi trình khởi chạy!</string>
+    <string name="select_modpack_local_not_supported">Gói mod này không được hỗ trợ bởi trình khởi chạy! Trình khởi chạy chỉ hỗ trợ nhập gói mod ở định dạng Modrinth, CurseForge và MCBBS. Vui lòng kiểm tra xem gói mod của bạn có tuân thủ định dạng quy định không!</string>
     <string name="select_modpack_local_installing_files">Đang cài đặt tệp trò chơi… (%d / %d)</string>
     <string name="modpack_download_downloading_metadata">Đang tải siêu dữ liệu gói tích hợp (%.2fMB / %.2fMB)</string>
     <string name="modpack_download_downloading_mods">Đang tải mod (%.2fMB / %.2fMB)</string>
@@ -569,6 +574,7 @@
     <string name="other_login_select_role_title">Chọn vai trò</string>
     <string name="other_login_select_role_message">Tài khoản hiện tại có nhiều vai trò, vui lòng chọn vai trò bạn muốn sử dụng</string>
     <string name="other_login_registry_now">Chưa có tài khoản? Nhấn vào đây để đăng ký!</string>
+    <string name="other_login_role_not_found">Không tìm thấy vai trò phù hợp với tài khoản hiện tại, vui lòng kiểm tra vai trò này có tồn tại trên máy chủ mà bạn đang sử dụng không!</string>
     <!-- Splash -->
     <string name="splash_screen_desc">Trình khởi chạy cần cài đặt những nội dung này để đảm bảo Minecraft có thể khởi chạy bình thường. Những nội dung này đã được bao gồm trong ứng dụng và cần được giải nén trước khi có thể sử dụng bình thường, hãy nhấp vào nút bên dưới để bắt đầu giải nén và cập nhật những nội dung này.</string>
     <string name="splash_screen_installing">Trình khởi chạy đang giải nén những nội dung này, sau khi giải nén xong sẽ tự động vào giao diện chính, vui lòng chờ đợi.</string>

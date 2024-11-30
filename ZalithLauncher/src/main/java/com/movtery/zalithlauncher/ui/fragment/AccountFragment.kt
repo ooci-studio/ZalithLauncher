@@ -26,6 +26,7 @@ import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils
 import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils.CheckResultListener
 import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils.Companion.checkUsageAllowed
 import com.movtery.zalithlauncher.feature.accounts.LocalAccountUtils.Companion.openDialog
+import com.movtery.zalithlauncher.feature.accounts.OtherLoginHelper
 import com.movtery.zalithlauncher.feature.log.Logging
 import com.movtery.zalithlauncher.feature.login.OtherLoginApi
 import com.movtery.zalithlauncher.feature.login.Servers
@@ -43,6 +44,7 @@ import com.movtery.zalithlauncher.ui.subassembly.account.AccountViewWrapper
 import com.movtery.zalithlauncher.ui.subassembly.account.SelectAccountListener
 import com.movtery.zalithlauncher.utils.PathAndUrlManager
 import com.movtery.zalithlauncher.utils.ZHTools
+import com.movtery.zalithlauncher.utils.http.NetworkUtils
 import com.movtery.zalithlauncher.utils.stringutils.StringUtils
 import net.kdt.pojavlaunch.Tools
 import net.kdt.pojavlaunch.fragments.MicrosoftLoginFragment
@@ -50,6 +52,7 @@ import net.kdt.pojavlaunch.value.MinecraftAccount
 import org.apache.commons.io.FileUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import java.io.File
 import java.util.regex.Pattern
@@ -95,7 +98,7 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAccountBinding.inflate(layoutInflater)
-        mAccountViewWrapper = AccountViewWrapper(mainView = binding.viewAccount.root)
+        mAccountViewWrapper = AccountViewWrapper(binding = binding.viewAccount)
         mProgressDialog = ZHTools.createTaskRunningDialog(binding.root.context)
         return binding.root
     }
@@ -110,7 +113,11 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
 
             override fun onRefresh(account: MinecraftAccount) {
                 if (!isTaskRunning()) {
-                    mAccountManager.performLogin(account, true)
+                    if (!NetworkUtils.isNetworkAvailable(context)) {
+                        Toast.makeText(context, R.string.account_login_no_network, Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    mAccountManager.performLogin(account)
                 } else {
                     Toast.makeText(context, R.string.tasks_ongoing, Toast.LENGTH_SHORT).show()
                 }
@@ -260,7 +267,7 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
     private fun otherLogin(index: Int) {
         val server = mOtherServerList[index]
         OtherLoginDialog(requireActivity(), server,
-            object : OtherLoginDialog.OnLoginListener {
+            object : OtherLoginHelper.OnLoginListener {
                 override fun onLoading() {
                     mProgressDialog.show()
                 }
@@ -311,12 +318,8 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
     private fun showServerTypeSelectDialog(stringId: Int, type: Int) {
         EditTextDialog.Builder(requireActivity())
             .setTitle(stringId)
+            .setAsRequired()
             .setConfirmListener { editText, _ ->
-                if (editText.text.toString().isEmpty()) {
-                    editText.error = getString(R.string.generic_error_field_empty)
-                    return@setConfirmListener false
-                }
-
                 addOtherServer(editText, type)
                 true
             }.buildDialog()
@@ -426,7 +429,7 @@ class AccountFragment : FragmentWithAnim(R.layout.fragment_account), View.OnClic
         EventBus.getDefault().unregister(this)
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun event(event: AccountUpdateEvent) {
         mAccountViewWrapper.refreshAccountInfo()
         reloadRecyclerView()

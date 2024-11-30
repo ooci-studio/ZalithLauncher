@@ -8,6 +8,7 @@ import com.movtery.zalithlauncher.feature.accounts.AccountsManager;
 import com.movtery.zalithlauncher.feature.log.Logging;
 import com.movtery.zalithlauncher.utils.PathAndUrlManager;
 import com.movtery.zalithlauncher.utils.skin.SkinFileDownloader;
+import com.movtery.zalithlauncher.utils.stringutils.StringUtilsKt;
 
 import net.kdt.pojavlaunch.Tools;
 
@@ -27,29 +28,29 @@ public class MinecraftAccount {
     public String username = "Steve";
     public String msaRefreshToken = "0";
     public String xuid;
-    public long expiresAt;
     public String otherBaseUrl;
     public String otherAccount;
+    public String otherPassword;
     public String accountType;
     private final String uniqueUUID = UUID.randomUUID().toString().toLowerCase(Locale.ROOT);
 
-    void updateSkin(String uuid) {
+    public void updateMicrosoftSkin() {
+        updateSkin("https://sessionserver.mojang.com");
+    }
+
+    public void updateOtherSkin() {
+        updateSkin(StringUtilsKt.removeSuffix(otherBaseUrl, "/") + "/sessionserver/");
+    }
+
+    private void updateSkin(String url) {
         File skinFile = new File(PathAndUrlManager.DIR_USER_SKIN, uniqueUUID + ".png");
-        if(skinFile.exists()) FileUtils.deleteQuietly(skinFile); //清除一次皮肤文件
+        if (skinFile.exists()) FileUtils.deleteQuietly(skinFile); //清除一次皮肤文件
         try {
-            if (accountType.equals("Ooci Network")){
-                SkinFileDownloader.ooci_co(skinFile, uuid);
-            }else {
-                SkinFileDownloader.microsoft(skinFile, uuid);
-            }
+            SkinFileDownloader.yggdrasil(url, skinFile, profileId);
             Logging.i("SkinLoader", "Update skin success");
         } catch (Exception e) {
             Logging.i("SkinLoader", "Could not update skin\n" + Tools.printToString(e));
         }
-    }
-
-    public void updateSkin() {
-        updateSkin(profileId);
     }
 
     public void save() throws IOException {

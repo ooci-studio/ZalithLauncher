@@ -1,15 +1,15 @@
 package com.movtery.zalithlauncher.feature.accounts
 
 import android.content.Context
-import com.movtery.zalithlauncher.event.value.OtherLoginEvent
+import com.kdt.mcgui.ProgressLayout
+import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.feature.log.Logging
-import com.movtery.zalithlauncher.feature.login.AuthResult
-import com.movtery.zalithlauncher.feature.login.OtherLoginApi
 import com.movtery.zalithlauncher.task.Task
 import net.kdt.pojavlaunch.Tools
+import net.kdt.pojavlaunch.authenticator.listener.DoneListener
+import net.kdt.pojavlaunch.authenticator.listener.ErrorListener
 import net.kdt.pojavlaunch.authenticator.microsoft.MicrosoftBackgroundLogin
 import net.kdt.pojavlaunch.value.MinecraftAccount
-import org.greenrobot.eventbus.EventBus
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Locale
@@ -18,7 +18,7 @@ import java.util.Objects
 class AccountUtils {
     companion object {
         @JvmStatic
-        fun microsoftLogin(account: MinecraftAccount) {
+        fun microsoftLogin(account: MinecraftAccount, doneListener: DoneListener, errorListener: ErrorListener) {
             val accountsManager = AccountsManager.getInstance()
 
             // Perform login only if needed
@@ -26,28 +26,41 @@ class AccountUtils {
                 .performLogin(
                     account,
                     accountsManager.progressListener,
-                    accountsManager.doneListener,
-                    accountsManager.errorListener
+                    doneListener,
+                    errorListener
                 )
         }
 
         @JvmStatic
-        fun otherLogin(context: Context, account: MinecraftAccount) {
-            val errorListener = AccountsManager.getInstance().errorListener
+        fun otherLogin(context: Context, account: MinecraftAccount, doneListener: DoneListener, errorListener: ErrorListener) {
+            fun clearProgress() = ProgressLayout.clearProgress(ProgressLayout.LOGIN_ACCOUNT)
 
-            OtherLoginApi.setBaseUrl(account.otherBaseUrl)
             Task.runTask {
-                OtherLoginApi.refresh(context, account, false, object : OtherLoginApi.Listener {
-                    override fun onSuccess(authResult: AuthResult) {
-                        account.accessToken = authResult.accessToken
-                        EventBus.getDefault().post(OtherLoginEvent(account))
-                    }
+                OtherLoginHelper(account.otherBaseUrl, account.accountType, account.otherAccount, account.otherPassword,
+                    object : OtherLoginHelper.OnLoginListener {
+                        override fun onLoading() {
+                            ProgressLayout.setProgress(ProgressLayout.LOGIN_ACCOUNT, 0, R.string.account_login_start)
+                        }
 
-                    override fun onFailed(error: String) {
-                        errorListener.onLoginError(Throwable(error))
-                    }
-                })
-            }.onThrowable { t -> errorListener.onLoginError(t) }.execute()
+                        override fun unLoading() {}
+
+                        override fun onSuccess(account: MinecraftAccount) {
+                            Task.runTask {
+                                account.save()
+                                account.updateOtherSkin()
+                            }.finallyTask {
+                                clearProgress()
+                                doneListener.onLoginDone(account)
+                            }.execute()
+                        }
+
+                        override fun onFailed(error: String) {
+                            clearProgress()
+                            errorListener.onLoginError(RuntimeException(error))
+                            ProgressLayout.clearProgress(ProgressLayout.LOGIN_ACCOUNT)
+                        }
+                    }).justLogin(context, account)
+            }.onThrowable { t -> errorListener.onLoginError(RuntimeException(t.message)) }.execute()
         }
 
         @JvmStatic
@@ -63,6 +76,17 @@ class AccountUtils {
         @JvmStatic
         fun isNoLoginRequired(account: MinecraftAccount?): Boolean {
             return account == null || account.accountType == "Local"
+        }
+
+        @JvmStatic
+        fun getAccountTypeName(context: Context, account: MinecraftAccount): String {
+            return if (isMicrosoftAccount(account)) {
+                context.getString(R.string.account_microsoft_account)
+            } else if (isOtherLoginAccount(account)) {
+                account.accountType
+            } else {
+                context.getString(R.string.account_local_account)
+            }
         }
 
         //修改自源代码：https://github.com/HMCL-dev/HMCL/blob/main/HMCLCore/src/main/java/org/jackhuang/hmcl/auth/authlibinjector/AuthlibInjectorServer.java#L60-#L76

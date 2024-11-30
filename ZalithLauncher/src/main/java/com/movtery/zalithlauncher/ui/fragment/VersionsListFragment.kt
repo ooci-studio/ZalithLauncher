@@ -56,12 +56,9 @@ class VersionsListFragment : FragmentWithAnim(R.layout.fragment_versions_list) {
                 if (path.isNotEmpty() && !isAddedPath(path)) {
                     EditTextDialog.Builder(requireContext())
                         .setTitle(R.string.profiles_path_create_new_title)
+                        .setAsRequired()
                         .setConfirmListener { editBox, _ ->
                             val string = editBox.text.toString()
-                            if (string.isEmpty()) {
-                                editBox.error = getString(R.string.generic_error_field_empty)
-                                return@setConfirmListener false
-                            }
 
                             profilePathData.add(ProfileItem(UUID.randomUUID().toString(), string, path))
                             val nomediaFile = File(path, ".nomedia")
@@ -159,7 +156,7 @@ class VersionsListFragment : FragmentWithAnim(R.layout.fragment_versions_list) {
     private fun refreshVersions() {
         versionsAdapter?.let {
             val versions = VersionsManager.getVersions()
-            versions.add(null)
+            versions.add(0, null)
             it.refreshVersions(versions)
             binding.versions.scheduleLayoutAnimation()
         }
@@ -183,6 +180,12 @@ class VersionsListFragment : FragmentWithAnim(R.layout.fragment_versions_list) {
     override fun onStop() {
         super.onStop()
         EventBus.getDefault().unregister(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        versionsAdapter?.closeAllPopupWindow()
+        profilePathAdapter?.closeAllPopupWindow()
     }
 
     override fun slideIn(animPlayer: AnimPlayer) {

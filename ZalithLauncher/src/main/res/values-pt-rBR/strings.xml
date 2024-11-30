@@ -51,11 +51,13 @@
     <string name="error_show_more">Mostrar detalhes</string>
     <string name="error_show_less">Ocultar detalhes</string>
     <!-- Launcher -->
+    <string name="option_category_debug">Depuração</string>
+    <string name="option_category_control">Controle</string>
+    <string name="option_category_hotbar">Caixa de Detecção da Barra de Atalhos</string>
     <string name="option_force_close">Forçar fechamento</string>
     <string name="option_log_out">Registro de saída</string>
     <string name="option_send_custom_key">Enviar código de tecla personalizado</string>
     <string name="option_edit_controls">Editar Layout de Controles</string>
-    <string name="option_hotbar">Caixa de Detecção da Barra de Atalhos</string>
     <string name="option_hotbar_type">Modo de Detecção da Barra de Atalhos</string>
     <string name="option_hotbar_type_auto">Adaptativo (pode ser impreciso)</string>
     <string name="option_hotbar_type_manually">Ajuste Manual</string>
@@ -80,7 +82,6 @@
     <string name="notification_game_runs">O jogo está em execução!</string>
     <string name="tasks_ongoing">Tarefas em andamento, aguarde</string>
     <string name="mc_download_failed">Falha ao baixar o Minecraft! Isso pode ser devido a uma conexão de rede ruim, localização incorreta do arquivo, etc.</string>
-    <string name="toast_turn_on_gyro">É necessário ativar o controle de giroscópio primeiro para usar!</string>
     <string name="microsoft_login_retry_later">Suas ações estão sendo realizadas com muita frequência, tente novamente mais tarde</string>
     <string name="storage_required">O Zalith Launcher requer armazenamento externo, reconecte e reinicie o software</string>
     <string name="dialog_select_jar">Selecionar Arquivo Jar</string>
@@ -110,6 +111,7 @@
     <string name="log_view_label_log_output">Saída de log:</string>
     <string name="execute_jar_failed_to_read_file">Falha ao ler arquivo .jar</string>
     <string name="execute_jar_incompatible_runtime">A funcionalidade de execução de .jar é incompatível com o Java %d</string>
+    <string name="open_link">Acessará este link no navegador:</string>
     <string name="mod_download_progress">Baixando instalador de %s</string>
     <string name="mod_forge_searching">Procurando número de versão do Forge</string>
     <string name="mod_neoforge_searching">Procurando número de versão do NeoForge</string>
@@ -200,6 +202,7 @@
     <string name="version_manager_title">Gerenciamento de Versões</string>
     <string name="version_no_versions">Nenhuma versão instalada</string>
     <string name="version_install_new">Instalar nova versão</string>
+    <string name="version_install_new_modloader">Instale %s para a nova versão</string>
     <string name="version_install_not_install">Não instalar</string>
     <string name="version_install_incompatible">Incompatível com %s</string>
     <string name="version_install_exists">Já existe uma versão com este nome!</string>
@@ -219,10 +222,10 @@
     <string name="version_manager_edit">Editar versão</string>
     <string name="version_manager_rename">Renomear versão</string>
     <string name="version_manager_copy">Copiar versão</string>
-    <string name="version_manager_copy_tip">Copie a versão atual como uma nova versão com o isolamento de versão ativado por padrão. Se "Copiar Todos os Arquivos" abaixo estiver ativado, todos os arquivos gerados pela versão atual (recursos, salvamentos, configurações do jogo, etc.) também serão copiados.</string>
-    <string name="version_manager_copy_all">Copiar Todos os Arquivos</string>
+    <string name="version_manager_copy_tip">Copiar a versão atual como uma nova, com isolamento de versão ativado por padrão. Se "Copiar todos os arquivos" abaixo estiver ativado, todos os arquivos gerados pela versão atual (pacotes de recursos, arquivos salvos, configurações do jogo, etc.) também serão copiados.</string>
+    <string name="version_manager_copy_all">Copiar todos os arquivos</string>
     <string name="version_manager_delete">Excluir versão</string>
-    <string name="version_manager_delete_tip">Se o isolamento de versões estiver ativado, seus jogos salvos, pacotes de recursos e mods serão excluídos junto com a versão. Certifique-se de fazer um backup antes de realizar esta operação!</string>
+    <string name="version_manager_delete_tip">Excluir uma versão também excluirá todos os arquivos no diretório \"./versions/%s\", incluindo recursos importantes como salvamentos de jogos, pacotes de recursos, mods, etc., mesmo se a isolamento de versão não estiver ativado. Portanto, certifique-se de fazer um backup antes de executar essa operação!</string>
     <string name="version_manager_delete_tip_invalid">A versão atual está faltando o arquivo JSON da versão e, portanto, é considerada uma versão inválida. Você não pode selecionar esta versão. Clique em Confirmar para excluir esta versão errônea.</string>
     <string name="version_manager_task_in_progress">Tarefa em andamento, gerenciamento de versões temporariamente indisponível</string>
     <string name="version_manager_invalid">Esta versão é inválida</string>
@@ -259,9 +262,11 @@
     <string name="account_microsoft_xerr_unauthorized">As informações de login da sua conta Microsoft parecem estar expiradas. Isso geralmente acontece quando a senha da conta foi alterada. Por favor, remova a conta atual e faça login novamente para redefinir suas informações de login.</string>
     <string name="account_local_account">Conta offline</string>
     <string name="account_local_account_empty">O nome de usuário não pode estar vazio!</string>
-    <string name="account_local_account_invalid">Um nome de usuário válido suporta apenas letras inglesas (maiúsculas ou minúsculas), números e underscores. O comprimento deve ser entre 3 e 16 caracteres.\nExemplos de nomes de usuário corretos: Name, Name_, Name123\nExemplos de nomes de usuário incorretos: Name@, N ame, name_name_name_name\nNo entanto, se você estiver usando mods ou plugins relevantes que possam contornar essa restrição, poderá continuar usando este nome. Caso contrário, renomeie-o!</string>
+    <string name="account_local_account_invalid">Nomes de usuário válidos só podem conter letras inglesas (maiúsculas e minúsculas), números e underscores. Seu comprimento deve ser entre 3 e 16 caracteres, caso contrário, o jogo pode não funcionar corretamente.\nExemplos de nomes de usuário corretos: Name, Name_, Name123\nExemplos de nomes de usuário incorretos: Name@, N ame, name_name_name_name\nMas, se você usou mods ou plugins relevantes para ignorar essa regra, pode continuar usando esse nome. Caso contrário, por favor, renomeie-o!</string>
     <string name="account_login_local_name">Nome de usuário</string>
     <string name="account_login_start">Iniciar login!</string>
+    <string name="account_login_no_network">Não conectado à internet, login ignorado!</string>
+    <string name="account_login_skip">Falha na login da conta, você deseja ignorar o passo de login?</string>
     <string name="account_no_microsoft_account">Por favor, faça login em pelo menos uma conta oficial do Minecraft. Não incentivamos os usuários a iniciarem o Minecraft sem uma conta oficial.</string>
     <string name="account_no_microsoft_account_local">Você parece não estar logado em uma conta oficial! A conta offline é uma alternativa para jogadores que não conseguem se conectar, e não é destinada a jogadores sem conta oficial.</string>
     <string name="account_no_microsoft_account_other">Você parece não estar logado em uma conta oficial! Você tem certeza de que deseja usar o login externo sem estar logado em uma conta oficial?</string>
@@ -290,13 +295,13 @@
     <string name="multirt_nojava8rt">Java 8 não encontrado, para usar esta opção, você deve instalar o Java 8</string>
     <string name="multirt_delete_runtime">Excluir ambiente de execução</string>
     <!-- Custom Mouse & Background -->
-    <string name="mouse_settings_title">Configurações do Mouse Virtual</string>
     <string name="mouse_settings_speed_name">Velocidade do Mouse Virtual</string>
     <string name="mouse_settings_scale_name">Escala do Mouse Virtual</string>
     <string name="custom_mouse_add">Adicionar Mouse Virtual</string>
     <string name="custom_mouse_added">Mouse Virtual configurado com sucesso:</string>
     <string name="custom_mouse_default">Mouse Virtual Padrão</string>
     <string name="custom_mouse_title">Mouse Virtual Personalizado</string>
+    <string name="custom_mouse_dialog">Você pode adicionar imagens de mouse em (Configurações do Iniciador - %s - %s)</string>
     <string name="custom_mouse_desc">Abra a interface de gerenciamento do mouse virtual, onde você pode adicionar suas próprias texturas de mouse virtual e usá-las</string>
     <string name="custom_mouse_message_default">O mouse virtual selecionado atualmente é o padrão, não suporta compartilhamento, renomeação ou exclusão</string>
     <string name="custom_background_add">Adicionar Imagem de Fundo</string>
@@ -347,7 +352,7 @@
     <string name="main_share_log_title">Selecione o tipo de arquivo de log</string>
     <string name="main_share_launcher_log">Arquivo de log do launcher</string>
     <string name="main_share_game_log">Log da última execução do jogo</string>
-    <string name="main_play">Iniciar jogo</string>
+    <string name="main_launch">Iniciar Jogo</string>
     <string name="setting_category_control">Configurações de controle</string>
     <string name="setting_category_virtual_mouse">Mouse virtual</string>
     <string name="setting_category_gyro_controls">Controles de giroscópio</string>
@@ -525,7 +530,7 @@
     <string name="download_install_unpack_world_error">Não foi possível reconhecer a estrutura do arquivo, falha ao descompactar automaticamente, por favor, manuseie o arquivo manualmente!</string>
     <!-- ModPack -->
     <string name="select_modpack_local_tip">Por favor, selecione um arquivo de pacote compatível com o launcher para importação!</string>
-    <string name="select_modpack_local_not_supported">Este arquivo não é suportado pelo launcher!</string>
+    <string name="select_modpack_local_not_supported">Este modpack não é suportado pelo lançador! O lançador apenas suporta a importação de modpacks nos formatos Modrinth, CurseForge e MCBBS. Por favor, verifique se o seu modpack foi criado conforme os formatos especificados!</string>
     <string name="select_modpack_local_installing_files">Instalando arquivos do jogo… (%d / %d)</string>
     <string name="modpack_download_downloading_metadata">Baixando metadados do modpack (%.2fMB / %.2fMB)</string>
     <string name="modpack_download_downloading_mods">Baixando mods (%.2fMB / %.2fMB)</string>
@@ -569,6 +574,7 @@
     <string name="other_login_select_role_title">Selecionar Personagem</string>
     <string name="other_login_select_role_message">A conta atual possui vários personagens, selecione o personagem que deseja usar</string>
     <string name="other_login_registry_now">Não tem uma conta? Clique aqui para se registrar!</string>
+    <string name="other_login_role_not_found">Não foi encontrada uma função correspondente à conta atual, por favor, verifique se essa função existe no servidor que você está usando!</string>
     <!-- Splash -->
     <string name="splash_screen_desc">O lançador precisa instalar esses conteúdos para garantir que o Minecraft inicie corretamente. Esses conteúdos já estão incluídos no aplicativo e precisam ser descompactados para uso adequado. Clique no botão abaixo para começar a descompactar e atualizar esses conteúdos.</string>
     <string name="splash_screen_installing">O lançador está descompactando esses conteúdos. Após a descompactação, você será levado automaticamente à tela principal, por favor, aguarde.</string>

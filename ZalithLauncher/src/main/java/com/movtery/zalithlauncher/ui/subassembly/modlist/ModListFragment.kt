@@ -23,7 +23,6 @@ import com.movtery.zalithlauncher.utils.ZHTools
 import com.movtery.zalithlauncher.utils.anim.AnimUtils
 import com.movtery.zalithlauncher.utils.anim.AnimUtils.Companion.playVisibilityAnim
 import com.movtery.zalithlauncher.utils.stringutils.StringUtils
-import net.kdt.pojavlaunch.Tools
 import java.util.concurrent.Future
 
 
@@ -109,8 +108,8 @@ abstract class ModListFragment : FragmentWithAnim(R.layout.fragment_mod_download
         cancelTask()
 
         binding.apply {
-            refreshButton.isClickable = !hide
-            releaseVersion.isClickable = !hide
+            refreshButton.isEnabled = !hide
+            releaseVersion.isEnabled = !hide
 
             parentElementAnimPlayer.clearEntries()
             parentElementAnimPlayer
@@ -154,20 +153,17 @@ abstract class ModListFragment : FragmentWithAnim(R.layout.fragment_mod_download
         binding.apply {
             playVisibilityAnim(loadingLayout, state)
             recyclerView.visibility = if (state) View.GONE else View.VISIBLE
-            refreshButton.isClickable = !state
-            releaseVersion.isClickable = !state
+            refreshButton.isEnabled = !state
+            releaseVersion.isEnabled = !state
         }
     }
 
     /**
-     * 如果一个Map中没有包含指定Title的List集合，则创建一个新的ArrayList，并将元素添加进去
+     * 如果一个Map中没有包含指定Key的List集合，则创建一个新的ArrayList，并将元素添加进去
      * 如果这个Map中存在这个集合，则直接将元素添加进去
-     * @param map 存储Title和List集合的Map
-     * @param title 标题
-     * @param element 需要添加的元素
      */
-    protected fun <E> addIfAbsent(map: MutableMap<String, MutableList<E>>, title: String, element: E) {
-        map.computeIfAbsent(title) { ArrayList() }
+    protected fun <K, E> addIfAbsent(map: MutableMap<K, MutableList<E>>, key: K, element: E) {
+        map.computeIfAbsent(key) { ArrayList() }
             .add(element)
     }
 
@@ -206,7 +202,7 @@ abstract class ModListFragment : FragmentWithAnim(R.layout.fragment_mod_download
     protected fun setLink(link: String?) {
         link?.let { uri ->
             binding.launchLink.apply {
-                this.setOnClickListener { Tools.openURL(fragmentActivity, uri) }
+                this.setOnClickListener { ZHTools.openLink(fragmentActivity, uri) }
                 AnimUtils.setVisibilityAnim(this, true)
             }
         }
@@ -218,7 +214,7 @@ abstract class ModListFragment : FragmentWithAnim(R.layout.fragment_mod_download
                 binding.mcmodLink.apply {
                     this.visibility = View.VISIBLE
                     this.paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
-                    this.setOnClickListener { Tools.openURL(fragmentActivity, uri) }
+                    this.setOnClickListener { ZHTools.openLink(fragmentActivity, uri) }
                 }
             }
         }
@@ -251,6 +247,7 @@ abstract class ModListFragment : FragmentWithAnim(R.layout.fragment_mod_download
                 .apply(AnimPlayer.Entry(operateLayout, Animations.BounceInLeft))
                 .apply(AnimPlayer.Entry(icon, Animations.Wobble))
                 .apply(AnimPlayer.Entry(title, Animations.FadeInLeft))
+                .apply(AnimPlayer.Entry(description, Animations.FadeInLeft))
                 .apply(AnimPlayer.Entry(returnButton, Animations.FadeInLeft))
                 .apply(AnimPlayer.Entry(refreshButton, Animations.FadeInLeft))
                 .apply(AnimPlayer.Entry(releaseVersion, Animations.FadeInLeft))

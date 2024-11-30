@@ -57,14 +57,23 @@ public class SponsorRecyclerAdapter extends RecyclerView.Adapter<SponsorRecycler
 
         @SuppressLint("UseCompatLoadingForDrawables")
         public void setData(SponsorItemBean itemBean) {
+            float amount = itemBean.getAmount();
+
             binding.nameView.setText(itemBean.getName());
             binding.timeView.setText(itemBean.getTime());
-            binding.amountView.setText(String.format("￥%s", itemBean.getAmount()));
+            binding.amountView.setText(String.format("￥%s", amount));
 
-            if (itemBean.getAmount() >= 12.0f) {
-                Drawable background = itemView.getBackground();
-                background.setTint(ContextCompat.getColor(itemView.getContext(), R.color.background_sponsor_advanced));
-                itemView.setBackground(background);
+            Drawable background = itemView.getBackground();
+            if (amount >= 12.0f) {
+                int color;
+                if (amount >= 18.0f) {
+                    color = ContextCompat.getColor(itemView.getContext(), R.color.background_sponsor_advanced);
+                } else {
+                    color = ContextCompat.getColor(itemView.getContext(), R.color.background_sponsor_intermediate);
+                }
+                background.setTint(color);
+            } else {
+                background.setTintList(null);
             }
         }
     }

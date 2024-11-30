@@ -2,10 +2,12 @@ package com.movtery.zalithlauncher.utils;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.opengl.EGL14;
 import android.opengl.EGLConfig;
 import android.opengl.EGLContext;
@@ -35,6 +37,10 @@ import com.movtery.zalithlauncher.R;
 import com.movtery.zalithlauncher.context.ContextExecutor;
 import com.movtery.zalithlauncher.feature.log.Logging;
 import com.movtery.zalithlauncher.setting.AllSettings;
+import com.movtery.zalithlauncher.ui.dialog.TipDialog;
+import com.movtery.zalithlauncher.ui.fragment.FragmentWithAnim;
+
+import net.kdt.pojavlaunch.Tools;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -89,13 +95,58 @@ public final class ZHTools {
         return new File(PathAndUrlManager.DIR_CUSTOM_MOUSE, customMouse);
     }
 
+    public static void dialogForceClose(Context ctx) {
+        new TipDialog.Builder(ctx)
+                .setMessage(R.string.force_exit_confirm)
+                .setConfirmClickListener(checked -> {
+                    try {
+                        ZHTools.killProcess();
+                    } catch (Throwable th) {
+                        Logging.w(Tools.APP_NAME, "Could not enable System.exit() method!", th);
+                    }
+                }).buildDialog();
+    }
+
+    /**
+     * 展示一个提示弹窗，告知用户接下来将要在浏览器内访问的链接，用户可以选择不进行访问
+     * @param link 要访问的链接
+     */
+    public static void openLink(Context context, String link) {
+        openLink(context, link, null);
+    }
+
+    /**
+     * 展示一个提示弹窗，告知用户接下来将要在浏览器内访问的链接，用户可以选择不进行访问
+     * @param link 要访问的链接
+     * @param dataType 设置 intent 的数据以及显式 MIME 数据类型
+     */
+    public static void openLink(Context context, String link, String dataType) {
+        new TipDialog.Builder(context)
+                .setTitle(R.string.open_link)
+                .setMessage(link)
+                .setConfirmClickListener(checked -> {
+                    Uri uri = Uri.parse(link);
+                    Intent browserIntent;
+                    if (dataType != null) {
+                        browserIntent = new Intent(Intent.ACTION_VIEW);
+                        browserIntent.setDataAndType(uri, dataType);
+                    } else {
+                        browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+                    }
+                    context.startActivity(browserIntent);
+                }).buildDialog();
+    }
+
     public static void swapFragmentWithAnim(
             Fragment fragment,
             Class<? extends Fragment> fragmentClass,
             @Nullable String fragmentTag,
             @Nullable Bundle bundle
     ) {
-        getTransaction(fragment)
+        if (fragment instanceof FragmentWithAnim) {
+            ((FragmentWithAnim) fragment).slideOut();
+        }
+        getFragmentTransaction(fragment)
                 .replace(R.id.container_fragment, fragmentClass, bundle, fragmentTag)
                 .addToBackStack(fragmentClass.getName())
                 .commit();
@@ -107,14 +158,14 @@ public final class ZHTools {
             @Nullable String fragmentTag,
             @Nullable Bundle bundle
     ) {
-        getTransaction(fragment)
+        getFragmentTransaction(fragment)
                 .addToBackStack(fragmentClass.getName())
                 .add(R.id.container_fragment, fragmentClass, bundle, fragmentTag)
                 .hide(fragment)
                 .commit();
     }
 
-    private static FragmentTransaction getTransaction(Fragment fragment) {
+    private static FragmentTransaction getFragmentTransaction(Fragment fragment) {
         FragmentTransaction transaction = fragment.requireActivity().getSupportFragmentManager().beginTransaction();
         if (AllSettings.getAnimation()) {
             transaction.setCustomAnimations(R.anim.cut_into, R.anim.cut_out, R.anim.cut_into, R.anim.cut_out);

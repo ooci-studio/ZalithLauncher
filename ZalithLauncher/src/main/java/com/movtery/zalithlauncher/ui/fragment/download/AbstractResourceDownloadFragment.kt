@@ -18,7 +18,10 @@ import com.movtery.anim.animations.Animations
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.databinding.FragmentDownloadResourceBinding
 import com.movtery.zalithlauncher.event.value.DownloadPageSwapEvent
+import com.movtery.zalithlauncher.event.value.DownloadPageSwapEvent.Companion.IN
+import com.movtery.zalithlauncher.event.value.DownloadPageSwapEvent.Companion.OUT
 import com.movtery.zalithlauncher.event.value.DownloadRecyclerEnableEvent
+import com.movtery.zalithlauncher.event.value.InDownloadFragmentEvent
 import com.movtery.zalithlauncher.feature.download.Filters
 import com.movtery.zalithlauncher.feature.download.InfoAdapter
 import com.movtery.zalithlauncher.feature.download.SelfReferencingFuture
@@ -166,28 +169,22 @@ abstract class AbstractResourceDownloadFragment(
                 mCurrentPlatform = it
                 search()
             }
-            platformSpinner.selectItemByIndex(recommendedPlatform.ordinal)
 
             sortSpinner.setSpinnerAdapter(mSortAdapter)
             setSpinnerListener<Sort>(sortSpinner) { mFilters.sort = it }
-            sortSpinner.selectItemByIndex(0)
 
             categorySpinner.setSpinnerAdapter(mCategoryAdapter)
             setSpinnerListener<Category>(binding.categorySpinner) { mFilters.category = it }
-            categorySpinner.selectItemByIndex(0)
 
             modloaderSpinner.setSpinnerAdapter(mModLoaderAdapter)
             setSpinnerListener<ModLoader>(modloaderSpinner) {
                 mFilters.modloader = it.takeIf { loader -> loader != ModLoader.ALL }
             }
-            modloaderSpinner.selectItemByIndex(0)
+            initSpinnerIndex()
 
             reset.setOnClickListener {
                 nameEdit.setText("")
-                platformSpinner.selectItemByIndex(0)
-                sortSpinner.selectItemByIndex(0)
-                categorySpinner.selectItemByIndex(0)
-                modloaderSpinner.selectItemByIndex(0)
+                initSpinnerIndex()
                 binding.selectedMcVersionView.text = null
                 mFilters.mcVersion = null
             }
@@ -197,6 +194,15 @@ abstract class AbstractResourceDownloadFragment(
 
         showModLoader()
         checkSearch()
+    }
+
+    private fun initSpinnerIndex() {
+        binding.apply {
+            platformSpinner.selectItemByIndex(recommendedPlatform.ordinal)
+            sortSpinner.selectItemByIndex(0)
+            categorySpinner.selectItemByIndex(0)
+            modloaderSpinner.selectItemByIndex(0)
+        }
     }
 
     override fun onStart() {
@@ -320,7 +326,19 @@ abstract class AbstractResourceDownloadFragment(
 
     @Subscribe
     fun event(event: DownloadPageSwapEvent) {
-        if (event.index == classify.type) slideIn()
+        if (event.index == classify.type) {
+            when (event.classify) {
+                IN -> slideIn()
+                OUT -> slideOut()
+                else -> {}
+            }
+        }
+    }
+
+    @Subscribe
+    fun event(event: InDownloadFragmentEvent) {
+        //确保父Fragment退出时，这里的Spinner能够正常且及时的关闭
+        if (!event.isIn) closeSpinner()
     }
 
     private inner class SearchApiTask(

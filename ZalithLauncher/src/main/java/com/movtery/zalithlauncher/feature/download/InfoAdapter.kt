@@ -110,7 +110,7 @@ class InfoAdapter(
                         infoViewModel.infoItem = item.copy()
                         infoViewModel.platformHelper = item.platform.helper.copy()
 
-                        ZHTools.addFragment(fragment, DownloadModFragment::class.java, DownloadModFragment.TAG, null)
+                        ZHTools.swapFragmentWithAnim(fragment, DownloadModFragment::class.java, DownloadModFragment.TAG, null)
                     }
                 }
 
@@ -122,6 +122,7 @@ class InfoAdapter(
                     }
                 descriptionTextview.text = item.description
                 platformImageview.setImageDrawable(getPlatformIcon(item.platform))
+                platformTextview.text = item.platform.pName
                 //设置类别
                 categoriesLayout.removeAllViews()
                 item.category.forEach { item ->

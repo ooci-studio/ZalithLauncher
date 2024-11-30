@@ -51,11 +51,13 @@
     <string name="error_show_more">Показать подробности</string>
     <string name="error_show_less">Скрыть подробности</string>
     <!-- Launcher -->
+    <string name="option_category_debug">Отладка</string>
+    <string name="option_category_control">Управление</string>
+    <string name="option_category_hotbar">Коробка обнаружения панели быстрого доступа</string>
     <string name="option_force_close">Принудительное закрытие</string>
     <string name="option_log_out">Выход из системы</string>
     <string name="option_send_custom_key">Отправить пользовательский код клавиши</string>
     <string name="option_edit_controls">Редактировать раскладку управления</string>
-    <string name="option_hotbar">Коробка обнаружения панели быстрого доступа</string>
     <string name="option_hotbar_type">Режим обнаружения панели быстрого доступа</string>
     <string name="option_hotbar_type_auto">Адаптивный (может быть неточным)</string>
     <string name="option_hotbar_type_manually">Ручная настройка</string>
@@ -80,7 +82,6 @@
     <string name="notification_game_runs">Игра запущена!</string>
     <string name="tasks_ongoing">Задачи выполняются, пожалуйста, подождите</string>
     <string name="mc_download_failed">Не удалось загрузить Minecraft! Это может быть связано с плохим подключением к интернету, неправильным размещением файлов и т.д.</string>
-    <string name="toast_turn_on_gyro">Необходимо включить гироскопический контроль для использования!</string>
     <string name="microsoft_login_retry_later">Ваши действия слишком часты, попробуйте позже</string>
     <string name="storage_required">Zalith Launcher требует подключения внешнего хранилища, пожалуйста, подключите его и перезапустите программу</string>
     <string name="dialog_select_jar">Выбрать файл Jar</string>
@@ -110,6 +111,7 @@
     <string name="log_view_label_log_output">Вывод журнала:</string>
     <string name="execute_jar_failed_to_read_file">Не удалось прочитать файл .jar</string>
     <string name="execute_jar_incompatible_runtime">Выполнение функции .jar несовместимо с Java %d</string>
+    <string name="open_link">Открыть этот ссылку в браузере:</string>
     <string name="mod_download_progress">Загрузка установщика для %s</string>
     <string name="mod_forge_searching">Поиск номера версии Forge</string>
     <string name="mod_neoforge_searching">Поиск номера версии NeoForge</string>
@@ -200,6 +202,7 @@
     <string name="version_manager_title">Управление версиями</string>
     <string name="version_no_versions">Нет установленных версий</string>
     <string name="version_install_new">Установить новую версию</string>
+    <string name="version_install_new_modloader">Установить %s для новой версии</string>
     <string name="version_install_not_install">Не устанавливать</string>
     <string name="version_install_incompatible">Не совместимо с %s</string>
     <string name="version_install_exists">Версия с таким именем уже существует!</string>
@@ -219,10 +222,10 @@
     <string name="version_manager_edit">Редактировать версию</string>
     <string name="version_manager_rename">Переименовать версию</string>
     <string name="version_manager_copy">Копировать версию</string>
-    <string name="version_manager_copy_tip">Скопировать текущую версию как новую с включенной изоляцией версий по умолчанию. Если включена опция «Копировать все файлы» ниже, будут скопированы все файлы, созданные текущей версией (ресурсы, сохранения, настройки игры и т. д.).</string>
+    <string name="version_manager_copy_tip">Копировать текучую версию в качестве новой, с по умолчанию включенным изоляцией версий. Если ниже включено "Копировать все файлы", то будут также скопированы все файлы, сгенерированные текучую версию (пакеты ресурсов, сохранения, настройки игры и др.).</string>
     <string name="version_manager_copy_all">Копировать все файлы</string>
     <string name="version_manager_delete">Удалить версию</string>
-    <string name="version_manager_delete_tip">Если изоляция версий включена, ваши сохранения, пакеты ресурсов и моды будут удалены вместе с версией. Пожалуйста, сделайте резервную копию перед выполнением этой операции!</string>
+    <string name="version_manager_delete_tip">При удалении версии также будут удалены все файлы в каталог \"./versions/%s\", включая важные ресурсы, такие как сохранения игр, пакеты ресурсов, моды и другое. Даже если изоляция версий не включена. Поэтому обязательно создайте резервную копию перед выполнением этой операции!</string>
     <string name="version_manager_delete_tip_invalid">Текущая версия не содержит файл JSON версии, поэтому она считается недействительной. Вы не можете выбрать эту версию. Нажмите «Подтвердить», чтобы удалить эту ошибочную версию.</string>
     <string name="version_manager_task_in_progress">Задача в процессе, управление версиями временно недоступно</string>
     <string name="version_manager_invalid">Эта версия недействительна</string>
@@ -259,9 +262,11 @@
     <string name="account_microsoft_xerr_unauthorized">Ваша информация для входа в аккаунт Microsoft, похоже, устарела. Это часто происходит, когда пароль аккаунта был изменён. Пожалуйста, удалите текущий аккаунт и войдите в свой аккаунт снова, чтобы сбросить вашу информацию для входа.</string>
     <string name="account_local_account">Локальный аккаунт</string>
     <string name="account_local_account_empty">Имя пользователя не может быть пустым!</string>
-    <string name="account_local_account_invalid">Допустимое имя пользователя поддерживает только английские буквы (регистр не важен), цифры и подчеркивания. Длина имени не должна быть меньше 3 символов и больше 16 символов.\nПримеры правильных имен пользователей: Name, Name_, Name123\nПримеры неправильных имен пользователей: Name@, N ame, name_name_name_name\nОднако, если вы используете соответствующие моды или плагины, которые могут обойти это ограничение, вы можете продолжать использовать это имя. В противном случае переименуйте его!</string>
+    <string name="account_local_account_invalid">Допустимые имена пользователей поддерживают только английские буквы (большие и малые), цифры и подчеркивания. Длина должна быть не менее 3 и не более 16 символов, иначе игра может не запуститься.\nПримеры правильных имен: Name, Name_, Name123\nПримеры неправильных имен: Name@, N ame, name_name_name_name\nОднако, если вы использовали соответствующие моды или плагины, чтобы обойти этот механизм, то можете продолжать использовать это имя. В противном случае, попробуйте переименовать!</string>
     <string name="account_login_local_name">Имя пользователя</string>
     <string name="account_login_start">Начать вход!</string>
+    <string name="account_login_no_network">Не подключен к Интернету, вход пропущен!</string>
+    <string name="account_login_skip">Авторизация на учетную запись не удалась, хотите ли вы пропустить шаг авторизации?</string>
     <string name="account_no_microsoft_account">Пожалуйста, войдите хотя бы в один лицензионный аккаунт Minecraft, мы не рекомендуем запускать Minecraft без лицензионного аккаунта.</string>
     <string name="account_no_microsoft_account_local">Похоже, вы не вошли в лицензионный аккаунт! Локальный аккаунт — это резервный вариант для игроков, когда они не могут подключиться к сети, а не предназначен для игроков, у которых нет лицензионного аккаунта.</string>
     <string name="account_no_microsoft_account_other">Похоже, вы не вошли в лицензионный аккаунт! Вы уверены, что хотите использовать внешний вход без лицензионного аккаунта?</string>
@@ -290,13 +295,13 @@
     <string name="multirt_nojava8rt">Не удалось найти Java 8, для использования этой опции необходимо установить Java 8</string>
     <string name="multirt_delete_runtime">Удалить среду выполнения</string>
     <!-- Custom Mouse & Background -->
-    <string name="mouse_settings_title">Настройки виртуальной мыши</string>
     <string name="mouse_settings_speed_name">Скорость виртуальной мыши</string>
     <string name="mouse_settings_scale_name">Масштаб виртуальной мыши</string>
     <string name="custom_mouse_add">Добавить виртуальную мышь</string>
     <string name="custom_mouse_added">Виртуальная мышь успешно установлена:</string>
     <string name="custom_mouse_default">Виртуальная мышь по умолчанию</string>
     <string name="custom_mouse_title">Пользовательская виртуальная мышь</string>
+    <string name="custom_mouse_dialog">Вы можете добавить изображения мыши в (Настройки запуска - %s - %s)</string>
     <string name="custom_mouse_desc">Откройте интерфейс управления виртуальной мышью, где вы сможете добавить свои любимые текстуры мыши и использовать их</string>
     <string name="custom_mouse_message_default">Выбранная виртуальная мышь является мышью по умолчанию, её нельзя делиться, переименовывать или удалять</string>
     <string name="custom_background_add">Добавить фоновое изображение</string>
@@ -347,7 +352,7 @@
     <string name="main_share_log_title">Выберите тип файла логов</string>
     <string name="main_share_launcher_log">Лог запуска программы</string>
     <string name="main_share_game_log">Лог последнего запуска игры</string>
-    <string name="main_play">Запустить игру</string>
+    <string name="main_launch">Запустить игру</string>
     <string name="setting_category_control">Настройки управления</string>
     <string name="setting_category_virtual_mouse">Виртуальная мышь</string>
     <string name="setting_category_gyro_controls">Гироскоп</string>
@@ -525,7 +530,7 @@
     <string name="download_install_unpack_world_error">Не удалось распознать структуру файла, автоматическая распаковка не удалась, пожалуйста, обработайте файл вручную!</string>
     <!-- ModPack -->
     <string name="select_modpack_local_tip">Пожалуйста, выберите файл модпака, который поддерживается лаунчером для импорта!</string>
-    <string name="select_modpack_local_not_supported">Этот файл не поддерживается лаунчером!</string>
+    <string name="select_modpack_local_not_supported">Этот модпак не поддерживается лаунчером! Лаунчер поддерживает только импорт модпаков в формате Modrinth, CurseForge и MCBBS. Пожалуйста, проверьте, соответствует ли ваш модпак указанным форматам!</string>
     <string name="select_modpack_local_installing_files">Установка игровых файлов… (%d / %d)</string>
     <string name="modpack_download_downloading_metadata">Загрузка метаданных модпака (%.2fMB / %.2fMB)</string>
     <string name="modpack_download_downloading_mods">Загрузка модов (%.2fMB / %.2fMB)</string>
@@ -569,6 +574,7 @@
     <string name="other_login_select_role_title">Выберите персонажа</string>
     <string name="other_login_select_role_message">У текущего аккаунта есть несколько персонажей, пожалуйста, выберите персонажа, которого вы хотите использовать</string>
     <string name="other_login_registry_now">Нет аккаунта? Нажмите здесь, чтобы зарегистрироваться!</string>
+    <string name="other_login_role_not_found">Не найдена роль, соответствующая текучему аккаунту, пожалуйста, проверьте, существует ли эта роль на сервере, который вы используете!</string>
     <!-- Splash -->
     <string name="splash_screen_desc">Лаунчеру необходимо установить эти компоненты, чтобы обеспечить нормальный запуск Minecraft. Эти компоненты уже включены в приложение и требуют распаковки для нормальной работы. Нажмите на кнопку ниже, чтобы начать распаковку и обновление этих компонентов.</string>
     <string name="splash_screen_installing">Лаунчер распаковывает эти компоненты. После завершения распаковки вы автоматически перейдете на главный экран, пожалуйста, подождите.</string>

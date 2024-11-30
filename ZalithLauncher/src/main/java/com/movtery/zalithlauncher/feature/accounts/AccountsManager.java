@@ -13,8 +13,8 @@ import com.movtery.zalithlauncher.event.single.AccountUpdateEvent;
 import com.movtery.zalithlauncher.feature.log.Logging;
 import com.movtery.zalithlauncher.setting.AllSettings;
 import com.movtery.zalithlauncher.setting.Settings;
+import com.movtery.zalithlauncher.task.TaskExecutors;
 import com.movtery.zalithlauncher.utils.PathAndUrlManager;
-import com.movtery.zalithlauncher.utils.ZHTools;
 
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.authenticator.listener.DoneListener;
@@ -48,10 +48,9 @@ public final class AccountsManager {
             synchronized (AccountsManager.class) {
                 if (accountsManager == null) {
                     accountsManager = new AccountsManager();
-                    //确保完全初始化，初始化完成之后，初始化监听器，然后执行刷新与登录操作
+                    //确保完全初始化，初始化完成之后，初始化监听器，然后执行刷新操作
                     accountsManager.initListener();
                     accountsManager.reload();
-                    accountsManager.performLogin(accountsManager.getCurrentAccount(), false);
                 }
                 return accountsManager;
             }
@@ -75,10 +74,13 @@ public final class AccountsManager {
         };
 
         mDoneListener = account -> {
-            ContextExecutor.showToast(R.string.account_login_done, Toast.LENGTH_SHORT);
+            TaskExecutors.runInUIThread(() -> ContextExecutor.showToast(R.string.account_login_done, Toast.LENGTH_SHORT));
 
             //检查账号是否已存在
-            if (getAllAccount().contains(account)) return;
+            if (getAllAccount().contains(account)) {
+                EventBus.getDefault().post(new AccountUpdateEvent());
+                return;
+            }
 
             reload();
 
@@ -86,7 +88,7 @@ public final class AccountsManager {
             else EventBus.getDefault().post(new AccountUpdateEvent());
         };
 
-        mErrorListener = errorMessage -> {
+        mErrorListener = errorMessage -> TaskExecutors.runInUIThread(() -> {
             Activity activity = ContextExecutor.getActivity();
             if (errorMessage instanceof PresentedException) {
                 PresentedException exception = (PresentedException) errorMessage;
@@ -99,23 +101,26 @@ public final class AccountsManager {
             } else {
                 Tools.showError(activity, errorMessage);
             }
-        };
+        });
     }
 
-    public void performLogin(MinecraftAccount minecraftAccount, boolean force) {
-        if (AccountUtils.isNoLoginRequired(minecraftAccount)) return;
+    public void performLogin(MinecraftAccount minecraftAccount) {
+        performLogin(minecraftAccount, getDoneListener(), getErrorListener());
+    }
+
+    public void performLogin(MinecraftAccount minecraftAccount, DoneListener doneListener, ErrorListener errorListener) {
+        if (AccountUtils.isNoLoginRequired(minecraftAccount)) {
+            doneListener.onLoginDone(minecraftAccount);
+            return;
+        }
 
         if (AccountUtils.isOtherLoginAccount(minecraftAccount)) {
-            if (force || ZHTools.getCurrentTimeMillis() > minecraftAccount.expiresAt) {
-                AccountUtils.otherLogin(ContextExecutor.getApplication(), minecraftAccount);
-                return;
-            }
+            AccountUtils.otherLogin(ContextExecutor.getApplication(), minecraftAccount, doneListener, errorListener);
+            return;
         }
 
         if (AccountUtils.isMicrosoftAccount(minecraftAccount)) {
-            if (force || ZHTools.getCurrentTimeMillis() > minecraftAccount.expiresAt) {
-                AccountUtils.microsoftLogin(minecraftAccount);
-            }
+            AccountUtils.microsoftLogin(minecraftAccount, doneListener, errorListener);
         }
     }
 

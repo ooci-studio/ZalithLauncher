@@ -1,23 +1,23 @@
 {
-  "version_code": 137500,
-  "version_name": "1.3.7.5",
+  "version_code": 137800,
+  "version_name": "1.3.7.8",
   "title": {
-    "en_us": "1.3.7.5",
-    "zh_cn": "1.3.7.5",
-    "zh_tw": "1.3.7.5"
+    "en_us": "1.3.7.8",
+    "zh_cn": "1.3.7.8",
+    "zh_tw": "1.3.7.8"
   },
   "description": {
-    "en_us": "## Update Notes:\r\n- Updated [Version Management]: Recognized version information through version JSON files\r\n- Updated [Version Management]: Quick access to game folder\r\n- Updated [Install Game]: Used a more stable method to install new versions\r\n- Updated [Install Game]: Automatically modified version name when selecting additional content\r\n---\r\n- Adjusted [Game Path]: When creating a new game path, denied Android access to media data in that directory\r\n- Adjusted [launcher_profiles.json]: Only recheck and unzip when Activity is resumed\r\n- Adjusted [Permissions]: Devices running Android 9 and below will require storage permission\r\n---\r\n- Fixed [Forge]: Game crash when switching to background (Sync a5d02c1)\r\n- Fixed [Microsoft Login]: Error message when MC profile file is not found\r\n- Fixed [Launch]: Renderer and Java environment not correctly set #269\r\n- Fixed [Install Game]: Error prompt when installing vanilla game without custom version name\r\n",
-    "zh_cn": "## 更新内容：\r\n- 更新[版本管理]: 通过版本 JSON 文件识别版本信息\r\n- 更新[版本管理]: 可快速访问游戏文件夹\r\n- 更新[安装游戏]: 使用更稳定的方式安装新版本\r\n- 更新[安装游戏]: 选择附加内容时，自动修改版本名称\r\n---\r\n- 调整[游戏路径]: 新建游戏路径时，拒绝 Android 在此目录下访问媒体数据\r\n- 调整[launcher_profiles.json]: 仅在 Activity 恢复时，再检查并解压\r\n- 调整[权限]: 安卓 9 及以下设备将需要被授予存储权限\r\n---\r\n- 修复[Forge]: 切换后台时游戏崩溃 (Sync a5d02c1)\r\n- 修复[微软登录]: 未找到 MC 配置文件的错误信息\r\n- 修复[启动]: 渲染器、Java环境未正确设置 #269 \r\n- 修复[安装游戏]: 安装原版未自定义版本名称时，弹出错误提示\r\n",
-    "zh_tw": "## 更新內容：\r\n- 更新[版本管理]: 通過版本 JSON 文件識別版本信息\r\n- 更新[版本管理]: 可快速訪問遊戲資料夾\r\n- 更新[安裝遊戲]: 使用更穩定的方式安裝新版本\r\n- 更新[安裝遊戲]: 選擇附加內容時，會自動修改版本名稱\r\n---\r\n- 調整[遊戲路徑]: 新建遊戲路徑時，拒絕 Android 在此目錄下訪問媒體數據\r\n- 調整[launcher_profiles.json]: 僅在 Activity 恢復時，再檢查並解壓\r\n- 調整[權限]: 安卓 9 及以下設備將需要被授予存儲權限\r\n---\r\n- 修復[Forge]: 切換到背景時遊戲崩潰 (Sync a5d02c1)\r\n- 修復[微軟登錄]: 找不到 MC 配置文件的錯誤信息\r\n- 修復[啟動]: 渲染器、Java 環境未正確設置 #269\r\n- 修復[安裝遊戲]: 安裝原版未自定義版本名稱時，彈出錯誤提示\r\n"
+    "en_us": "## Update Note:\r\n- Update [Download]: Display Mod loader icons when selecting resource versions.\r\n- Update [Download]: Allow users to jump to resource download links.\r\n- Update [Version Management]: Restructure the \"More Actions Panel\".\r\n- Update [Account]: Other accounts can now display skin avatars.\r\n---\r\n- Adjust [App Interface]: Adjust UI and language settings.\r\n- Adjust [Link]: Prompt users before redirecting.\r\n- Adjust [Account]: Require login before launching the game.\r\n- Adjust [Account]: Support previewing high-resolution skin avatars.\r\n- Adjust [Download]: Replace \"/\" characters when automatically filling in names.\r\n---\r\n- Fix [Download]: The filter selection box fails to properly exit when leaving the download page.",
+    "zh_cn": "## 更新内容：\n- 更新[下载]: 选择资源版本时展示 Mod 加载器图标\n- 更新[下载]: 允许用户跳转到资源的下载链接\n- 更新[版本管理]: 重构“更多操作面板”\n- 更新[账号]: 外置账号可以展示皮肤头像\n---\n- 调整[应用界面]: 调整UI、语言\n- 调整[链接]: 跳转前提醒用户\n- 调整[账号]: 在启动游戏前进行登录\n- 调整[账号]: 支持预览高像素皮肤头像\n- 调整[下载]: 自动补充名称时，替换“/”字符\n---\n- 修复[下载]: 退出下载页面时，筛选选择框未能正确退出",
+    "zh_tw": "## 更新內容：\n- 更新[下載]: 選擇資源版本時展示 Mod 加載器圖標\n- 更新[下載]: 允許用戶跳轉到資源的下載連結\n- 更新[版本管理]: 重構“更多操作面板”\n- 更新[帳號]: 外置帳號可以展示皮膚頭像\n---\n- 調整[應用界面]: 調整UI、語言\n- 調整[連結]: 跳轉前提醒用戶\n- 調整[帳號]: 在啟動遊戲前進行登錄\n- 調整[帳號]: 支援預覽高像素皮膚頭像\n- 調整[下載]: 自動補充名稱時，替換“/”字符\n---\n- 修復[下載]: 退出下載頁面時，篩選選擇框未能正確退出"
   },
-  "published_at": "2024-11-23T10:50:19Z",
+  "published_at": "2024-11-30T05:38:34Z",
   "file_size": {
-    "all": 207020225,
-    "arm": 128429990,
-    "arm64": 119738291,
-    "x86": 122340990,
-    "x86_64": 123223786
+    "all": 206976026,
+    "arm": 128454719,
+    "arm64": 119694100,
+    "x86": 122365727,
+    "x86_64": 123248499
   },
-  "pre_release": true
+  "pre_release": false
 }
