@@ -13,8 +13,8 @@ class UnpackSingleFilesTask(val context: Context) : AbstractUnpackTask() {
         runCatching {
             copyFromAssets(context)
             Tools.copyAssetFile(context, "resolv.conf", PathManager.DIR_DATA, false)
-            Tools.copyAssetFile(context, "servers.json", PathAndUrlManager.DIR_GAME_HOME, true)
-            Tools.copyAssetFile(context, "background.properties", PathAndUrlManager.DIR_DATA, false)
+            Tools.copyAssetFile(context, "servers.json", PathManager.DIR_GAME_HOME, true)
+            Tools.copyAssetFile(context, "background.properties", PathManager.DIR_DATA, false)
         }.getOrElse { e("AsyncAssetManager", "Failed to unpack critical components !") }
     }
 }

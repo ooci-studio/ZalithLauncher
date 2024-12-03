@@ -19,7 +19,7 @@ class AllSettings {
         val ignoreNotch = SettingUnit("ignoreNotch", true) { key, defaultValue -> getBoolean(key, defaultValue) }
 
         @JvmStatic
-        val resolutionRatio = SettingUnit("resolutionRatio", 100) { key, defaultValue -> getInt(key, defaultValue) }
+        val resolutionRatio = SettingUnit("resolutionRatio", 80) { key, defaultValue -> getInt(key, defaultValue) }
 
         @JvmStatic
         val sustainedPerformance = SettingUnit("sustainedPerformance", false) { key, defaultValue -> getBoolean(key, defaultValue) }
@@ -117,7 +117,7 @@ class AllSettings {
         val gameMenuMemoryText = SettingUnit("gameMenuMemoryText", "M:") { key, defaultValue -> getString(key, defaultValue) }
 
         @JvmStatic
-        val gameMenuLocation = SettingUnit("gameMenuLocation", "center") { key, defaultValue -> getString(key, defaultValue) }
+        val gameMenuLocation = SettingUnit("gameMenuLocation", "right_or_bottom") { key, defaultValue -> getString(key, defaultValue) }
 
         @JvmStatic
         val gameMenuAlpha = SettingUnit("gameMenuAlpha", 100) { key, defaultValue -> getInt(key, defaultValue) }
@@ -142,7 +142,7 @@ class AllSettings {
         val modDownloadSource = SettingUnit("modDownloadSource", "original") { key, defaultValue -> getString(key, defaultValue) }
 
         @JvmStatic
-        val launcherTheme = SettingUnit("launcherTheme", "system") { key, defaultValue -> getString(key, defaultValue) }
+        val launcherTheme = SettingUnit("launcherTheme", "dark") { key, defaultValue -> getString(key, defaultValue) }
 
         @JvmStatic
         val animation = SettingUnit("animation", true) { key, defaultValue -> getBoolean(key, defaultValue) }
@@ -177,7 +177,7 @@ class AllSettings {
         val defaultCtrl = SettingUnit("defaultCtrl", PathManager.FILE_CTRLDEF_FILE) { key, defaultValue -> getString(key, defaultValue) }
 
         @JvmStatic
-        val defaultRuntime = SettingUnit("defaultRuntime", "") { key, defaultValue -> getString(key, defaultValue) }
+        val defaultRuntime = SettingUnit("defaultRuntime", "Internal-17") { key, defaultValue -> getString(key, defaultValue) }
 
         @JvmStatic
         val notificationPermissionRequest = SettingUnit("notification_permission_request", false) { key, defaultValue -> getBoolean(key, defaultValue) }
