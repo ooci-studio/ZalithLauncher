@@ -79,8 +79,8 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue 'string', 'application_package', 'com.movtery.zalithlauncher'
-            resValue 'string', 'storageProviderAuthorities', 'com.movtery.zalithlauncher.scoped.gamefolder'
+            resValue 'string', 'application_package', 'co.ooci.launcher'
+            resValue 'string', 'storageProviderAuthorities', 'co.ooci.launcher.scoped.gamefolder'
             signingConfig signingConfigs.releaseBuild
         }
     }
