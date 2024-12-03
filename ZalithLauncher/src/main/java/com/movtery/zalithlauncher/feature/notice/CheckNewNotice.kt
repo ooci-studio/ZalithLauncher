@@ -1,12 +1,11 @@
 package com.movtery.zalithlauncher.feature.notice
 
-import android.content.Context
-import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.feature.log.Logging
-import com.movtery.zalithlauncher.utils.PathAndUrlManager
+import com.movtery.zalithlauncher.setting.AllSettings
 import com.movtery.zalithlauncher.utils.ZHTools
 import com.movtery.zalithlauncher.utils.http.CallUtils
 import com.movtery.zalithlauncher.utils.http.CallUtils.CallbackListener
+import com.movtery.zalithlauncher.utils.path.UrlManager
 import com.movtery.zalithlauncher.utils.stringutils.StringUtils
 import net.kdt.pojavlaunch.Tools
 import okhttp3.Call
@@ -21,8 +20,12 @@ class CheckNewNotice {
         var noticeInfo: NoticeInfo? = null
         private var isChecking = false
 
+        private fun checkCooling(): Boolean {
+            return ZHTools.getCurrentTimeMillis() - AllSettings.noticeCheck.getValue() > 2 * 60 * 1000 //2分钟冷却
+        }
+
         @JvmStatic
-        fun checkNewNotice(context: Context, listener: CheckNoticeListener) {
+        fun checkNewNotice(listener: CheckNoticeListener) {
             if (isChecking) {
                 return
             }
@@ -34,7 +37,12 @@ class CheckNewNotice {
                 return
             }
 
-            val token = context.getString(R.string.private_api_token)
+            if (!checkCooling()) {
+                return
+            } else {
+                AllSettings.noticeCheck.put(ZHTools.getCurrentTimeMillis()).save()
+            }
+
             CallUtils(object : CallbackListener {
                 override fun onFailure(call: Call?) {
                     isChecking = false
@@ -69,7 +77,7 @@ class CheckNewNotice {
                     }
                     isChecking = false
                 }
-            }, PathAndUrlManager.URL_GITHUB_HOME + "launcher_notice.json", if (token == "DUMMY") null else token).enqueue()
+            }, "${UrlManager.URL_GITHUB_HOME}launcher_notice.json", null).enqueue()
         }
 
         private fun getLanguageText(language: String, text: NoticeJsonObject.Text): String {

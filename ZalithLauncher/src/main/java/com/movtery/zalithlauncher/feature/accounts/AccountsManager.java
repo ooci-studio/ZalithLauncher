@@ -12,9 +12,8 @@ import com.movtery.zalithlauncher.context.ContextExecutor;
 import com.movtery.zalithlauncher.event.single.AccountUpdateEvent;
 import com.movtery.zalithlauncher.feature.log.Logging;
 import com.movtery.zalithlauncher.setting.AllSettings;
-import com.movtery.zalithlauncher.setting.Settings;
 import com.movtery.zalithlauncher.task.TaskExecutors;
-import com.movtery.zalithlauncher.utils.PathAndUrlManager;
+import com.movtery.zalithlauncher.utils.path.PathManager;
 
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.authenticator.listener.DoneListener;
@@ -126,7 +125,7 @@ public final class AccountsManager {
 
     public void reload() {
         accounts.clear();
-        File accountsPath = new File(PathAndUrlManager.DIR_ACCOUNT_NEW);
+        File accountsPath = new File(PathManager.DIR_ACCOUNT_NEW);
         if (accountsPath.exists() && accountsPath.isDirectory()) {
             File[] files = accountsPath.listFiles();
             if (files != null) {
@@ -145,7 +144,7 @@ public final class AccountsManager {
     }
 
     public MinecraftAccount getCurrentAccount() {
-        MinecraftAccount account = MinecraftAccount.loadFromUniqueUUID(AllSettings.getCurrentAccount());
+        MinecraftAccount account = MinecraftAccount.loadFromUniqueUUID(AllSettings.getCurrentAccount().getValue());
         if (account == null) {
             if (getAllAccount().isEmpty()) return null;
             MinecraftAccount account1 = getAllAccount().get(0);
@@ -169,7 +168,7 @@ public final class AccountsManager {
     }
 
     public void setCurrentAccount(@NonNull MinecraftAccount account) {
-        Settings.Manager.put("currentAccount", account.getUniqueUUID()).save();
+        AllSettings.getCurrentAccount().put(account.getUniqueUUID()).save();
         EventBus.getDefault().post(new AccountUpdateEvent());
     }
 

@@ -54,12 +54,12 @@ public class ModDependenciesAdapter extends RecyclerView.Adapter<ModDependencies
 
     @NonNull
     @Override
-    public ModDependenciesAdapter.InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new InnerHolder(ItemModDependenciesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ModDependenciesAdapter.InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
         holder.setData(mData.get(position));
     }
 
@@ -142,7 +142,7 @@ public class ModDependenciesAdapter extends RecyclerView.Adapter<ModDependencies
 
             binding.thumbnailImageview.setImageDrawable(null);
             RequestBuilder<Drawable> builder = Glide.with(context).load(infoItem.getIconUrl());
-            if (!AllSettings.getResourceImageCache()) builder.diskCacheStrategy(DiskCacheStrategy.NONE);
+            if (!AllSettings.getResourceImageCache().getValue()) builder.diskCacheStrategy(DiskCacheStrategy.NONE);
             builder.into(binding.thumbnailImageview);
 
             itemView.setOnClickListener(v -> {

@@ -5,9 +5,8 @@ import com.google.gson.JsonParser
 import com.movtery.zalithlauncher.feature.log.Logging
 import com.movtery.zalithlauncher.feature.version.VersionsManager
 import com.movtery.zalithlauncher.setting.AllSettings
-import com.movtery.zalithlauncher.setting.Settings
 import com.movtery.zalithlauncher.ui.subassembly.customprofilepath.ProfileItem
-import com.movtery.zalithlauncher.utils.PathAndUrlManager
+import com.movtery.zalithlauncher.utils.path.PathManager
 import com.movtery.zalithlauncher.utils.StoragePermissionsUtils
 import net.kdt.pojavlaunch.Tools
 import java.io.FileWriter
@@ -15,11 +14,11 @@ import java.io.IOException
 
 class ProfilePathManager {
     companion object {
-        private val defaultPath: String = PathAndUrlManager.DIR_GAME_HOME
+        private val defaultPath: String = PathManager.DIR_GAME_HOME
 
         @JvmStatic
-        fun setCurrentPathId(id: String?) {
-            Settings.Manager.put("launcherProfile", id).save()
+        fun setCurrentPathId(id: String) {
+            AllSettings.launcherProfile.put(id).save()
             VersionsManager.refresh()
         }
 
@@ -28,10 +27,10 @@ class ProfilePathManager {
             get() {
                 if (StoragePermissionsUtils.checkPermissions()) {
                     //通过选中的id来获取当前路径
-                    val id = AllSettings.launcherProfile
+                    val id = AllSettings.launcherProfile.getValue()
                     if (id == "default") return defaultPath
 
-                    PathAndUrlManager.FILE_PROFILE_PATH.apply {
+                    PathManager.FILE_PROFILE_PATH.apply {
                         if (exists()) {
                             runCatching {
                                 val read = Tools.read(this)
@@ -60,7 +59,7 @@ class ProfilePathManager {
             }
 
             try {
-                FileWriter(PathAndUrlManager.FILE_PROFILE_PATH).use { fileWriter ->
+                FileWriter(PathManager.FILE_PROFILE_PATH).use { fileWriter ->
                     Tools.GLOBAL_GSON.toJson(jsonObject, fileWriter)
                 }
             } catch (e: IOException) {

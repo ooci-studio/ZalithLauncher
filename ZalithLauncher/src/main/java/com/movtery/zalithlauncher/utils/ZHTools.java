@@ -39,6 +39,7 @@ import com.movtery.zalithlauncher.feature.log.Logging;
 import com.movtery.zalithlauncher.setting.AllSettings;
 import com.movtery.zalithlauncher.ui.dialog.TipDialog;
 import com.movtery.zalithlauncher.ui.fragment.FragmentWithAnim;
+import com.movtery.zalithlauncher.utils.path.PathManager;
 
 import net.kdt.pojavlaunch.Tools;
 
@@ -88,11 +89,9 @@ public final class ZHTools {
     }
 
     public static File getCustomMouse() {
-        String customMouse = AllSettings.getCustomMouse();
-        if (customMouse == null) {
-            return null;
-        }
-        return new File(PathAndUrlManager.DIR_CUSTOM_MOUSE, customMouse);
+        String customMouse = AllSettings.getCustomMouse().getValue();
+        if (customMouse.isEmpty()) return null;
+        return new File(PathManager.DIR_CUSTOM_MOUSE, customMouse);
     }
 
     public static void dialogForceClose(Context ctx) {
@@ -167,7 +166,7 @@ public final class ZHTools {
 
     private static FragmentTransaction getFragmentTransaction(Fragment fragment) {
         FragmentTransaction transaction = fragment.requireActivity().getSupportFragmentManager().beginTransaction();
-        if (AllSettings.getAnimation()) {
+        if (AllSettings.getAnimation().getValue()) {
             transaction.setCustomAnimations(R.anim.cut_into, R.anim.cut_out, R.anim.cut_into, R.anim.cut_out);
         }
         return transaction.setReorderingAllowed(true);

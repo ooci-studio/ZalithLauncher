@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.kdt.mcgui.ProgressLayout
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.event.single.AccountUpdateEvent
 import com.movtery.zalithlauncher.feature.accounts.AccountUtils
 import com.movtery.zalithlauncher.feature.accounts.AccountsManager
 import com.movtery.zalithlauncher.feature.log.Logging
@@ -31,6 +32,7 @@ import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader
 import net.kdt.pojavlaunch.tasks.MinecraftDownloader
 import net.kdt.pojavlaunch.utils.JREUtils
 import net.kdt.pojavlaunch.value.MinecraftAccount
+import org.greenrobot.eventbus.EventBus
 
 class LaunchGame {
     companion object {
@@ -70,6 +72,7 @@ class LaunchGame {
             accountsManager.performLogin(
                 accountsManager.currentAccount,
                 { _ ->
+                    EventBus.getDefault().post(AccountUpdateEvent())
                     TaskExecutors.runInUIThread {
                         Toast.makeText(context, context.getString(R.string.account_login_done), Toast.LENGTH_SHORT).show()
                     }
@@ -98,7 +101,7 @@ class LaunchGame {
         @Throws(Throwable::class)
         @JvmStatic
         fun runGame(activity: AppCompatActivity, serverBinder: LocalBinder, minecraftVersion: Version, version: JMinecraftVersionList.Version) {
-            Tools.LOCAL_RENDERER ?: run { Tools.LOCAL_RENDERER = AllSettings.renderer }
+            Tools.LOCAL_RENDERER ?: run { Tools.LOCAL_RENDERER = AllSettings.renderer.getValue() }
 
             if (!Tools.checkRendererCompatible(activity, Tools.LOCAL_RENDERER)) {
                 val renderersList = Tools.getCompatibleRenderers(activity)
@@ -109,7 +112,7 @@ class LaunchGame {
             }
 
             val customArgs = minecraftVersion.getJavaArgs().takeIf { it.isNotBlank() }
-                ?: AllSettings.javaArgs?.takeIf { it.isNotBlank() }
+                ?: AllSettings.javaArgs.getValue().takeIf { it.isNotBlank() }
                 ?: ""
             val account = AccountsManager.getInstance().currentAccount
             printLauncherInfo(
@@ -210,10 +213,10 @@ class LaunchGame {
                 R.string.address_memory_warning_msg
             } else R.string.memory_warning_msg
 
-            if (AllSettings.ramAllocation > freeDeviceMemory) {
+            if (AllSettings.ramAllocation.value.getValue() > freeDeviceMemory) {
                 val builder = TipDialog.Builder(activity)
                     .setTitle(R.string.generic_warning)
-                    .setMessage(activity.getString(stringId, freeDeviceMemory, AllSettings.ramAllocation))
+                    .setMessage(activity.getString(stringId, freeDeviceMemory, AllSettings.ramAllocation.value.getValue()))
                     .setCenterMessage(false)
                     .setShowCancel(false)
                 if (LifecycleAwareTipDialog.haltOnDialog(activity.lifecycle, builder)) return

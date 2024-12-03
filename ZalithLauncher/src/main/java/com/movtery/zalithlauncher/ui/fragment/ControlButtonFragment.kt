@@ -16,7 +16,7 @@ import com.movtery.anim.animations.Animations
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.databinding.FragmentControlManagerBinding
 import com.movtery.zalithlauncher.event.sticky.FileSelectorEvent
-import com.movtery.zalithlauncher.setting.Settings
+import com.movtery.zalithlauncher.setting.AllSettings
 import com.movtery.zalithlauncher.task.Task
 import com.movtery.zalithlauncher.task.TaskExecutors
 import com.movtery.zalithlauncher.ui.dialog.EditControlInfoDialog
@@ -29,7 +29,7 @@ import com.movtery.zalithlauncher.ui.subassembly.customcontrols.ControlsListView
 import com.movtery.zalithlauncher.ui.subassembly.customcontrols.EditControlData.Companion.createNewControlFile
 import com.movtery.zalithlauncher.ui.subassembly.view.SearchViewWrapper
 import com.movtery.zalithlauncher.utils.NewbieGuideUtils
-import com.movtery.zalithlauncher.utils.PathAndUrlManager
+import com.movtery.zalithlauncher.utils.path.PathManager
 import com.movtery.zalithlauncher.utils.ZHTools
 import com.movtery.zalithlauncher.utils.anim.AnimUtils.Companion.setVisibilityAnim
 import com.movtery.zalithlauncher.utils.file.FileTools.Companion.copyFileInBackground
@@ -59,7 +59,7 @@ class ControlButtonFragment : FragmentWithAnim(R.layout.fragment_control_manager
                 val dialog = ZHTools.showTaskRunningDialog(requireContext())
                 Task.runTask {
                     uriList.forEach { uri ->
-                        copyFileInBackground(requireContext(), uri, File(PathAndUrlManager.DIR_CTRLMAP_PATH).absolutePath)
+                        copyFileInBackground(requireContext(), uri, File(PathManager.DIR_CTRLMAP_PATH).absolutePath)
                     }
                 }.ended(TaskExecutors.getAndroidUI()) {
                     Toast.makeText(requireContext(), getString(R.string.file_added), Toast.LENGTH_SHORT).show()
@@ -104,7 +104,7 @@ class ControlButtonFragment : FragmentWithAnim(R.layout.fragment_control_manager
                         .setMessage(R.string.controls_set_default_message)
                         .setConfirmClickListener {
                             val absolutePath = file.absolutePath
-                            Settings.Manager.put("defaultCtrl", absolutePath).save()
+                            AllSettings.defaultCtrl.put(absolutePath).save()
                         }.buildDialog()
                 }
             })
@@ -121,7 +121,7 @@ class ControlButtonFragment : FragmentWithAnim(R.layout.fragment_control_manager
             pasteButton.setOnClickListener {
                 PasteFile.getInstance().pasteFiles(
                     requireActivity(),
-                    File(PathAndUrlManager.DIR_CTRLMAP_PATH),
+                    File(PathManager.DIR_CTRLMAP_PATH),
                     null,
                     Task.runTask(TaskExecutors.getAndroidUI()) {
                         pasteButton.visibility = View.GONE
@@ -140,7 +140,7 @@ class ControlButtonFragment : FragmentWithAnim(R.layout.fragment_control_manager
                 val editControlInfoDialog = EditControlInfoDialog(requireContext(), true, null, ControlInfoData())
                 editControlInfoDialog.setTitle(getString(R.string.controls_create_new))
                 editControlInfoDialog.setOnConfirmClickListener { fileName: String, controlInfoData: ControlInfoData? ->
-                    val file = File(File(PathAndUrlManager.DIR_CTRLMAP_PATH).absolutePath, "$fileName.json")
+                    val file = File(File(PathManager.DIR_CTRLMAP_PATH).absolutePath, "$fileName.json")
                     if (file.exists()) { //检查文件是否已经存在
                         editControlInfoDialog.fileNameEditBox.error =
                             getString(R.string.file_rename_exitis)
@@ -166,7 +166,7 @@ class ControlButtonFragment : FragmentWithAnim(R.layout.fragment_control_manager
     }
 
     private fun removeLockPath(path: String?): String {
-        return path!!.replace(PathAndUrlManager.DIR_CTRLMAP_PATH, ".")
+        return path!!.replace(PathManager.DIR_CTRLMAP_PATH, ".")
     }
 
     private fun showDialog(file: File) {

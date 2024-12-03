@@ -12,29 +12,27 @@ import android.os.Build;
 import com.movtery.zalithlauncher.feature.log.Logging;
 import com.movtery.zalithlauncher.feature.unpack.Jre;
 import com.movtery.zalithlauncher.setting.AllSettings;
+import com.movtery.zalithlauncher.setting.AllStaticSettings;
 import com.movtery.zalithlauncher.setting.Settings;
 import com.movtery.zalithlauncher.ui.activity.BaseActivity;
-import com.movtery.zalithlauncher.utils.PathAndUrlManager;
+import com.movtery.zalithlauncher.utils.path.PathManager;
 
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.utils.JREUtils;
 
 public class LauncherPreferences {
-	public static int PREF_NOTCH_SIZE = 0;
-    public static final String PREF_VERSION_REPOS = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
-
     public static void loadPreferences(Context ctx) {
         //Required for the data folder.
-        PathAndUrlManager.initContextConstants(ctx);
+        PathManager.initContextConstants(ctx);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
-        String javaArgs = AllSettings.getJavaArgs();
+        String javaArgs = AllSettings.getJavaArgs().getValue();
         if (javaArgs != null) {
             for (String arg : JREUtils.parseJavaArguments(javaArgs)) {
                 if (arg.startsWith(argLwjglLibname)) {
                     // purge arg
-                    Settings.Manager.put("javaArgs", javaArgs.replace(arg, "")).save();
+                    AllSettings.getJavaArgs().put(javaArgs.replace(arg, "")).save();
                 }
             }
         }
@@ -45,7 +43,7 @@ public class LauncherPreferences {
     public static void reloadRuntime() {
         if (!Settings.Manager.contains("defaultRuntime") && !MultiRTUtils.getRuntimes().isEmpty()) {
             //设置默认运行环境
-            Settings.Manager.put("defaultRuntime", Jre.JRE_17.getJreName()).save();
+            AllSettings.getDefaultRuntime().put(Jre.JRE_17.getJreName()).save();
         }
     }
 
@@ -85,13 +83,13 @@ public class LauncherPreferences {
 
             // Notch values are rotation sensitive, handle all cases
             int orientation = activity.getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) LauncherPreferences.PREF_NOTCH_SIZE = cutout.height();
-            else if (orientation == Configuration.ORIENTATION_LANDSCAPE) LauncherPreferences.PREF_NOTCH_SIZE = cutout.width();
-            else LauncherPreferences.PREF_NOTCH_SIZE = Math.min(cutout.width(), cutout.height());
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) AllStaticSettings.notchSize = cutout.height();
+            else if (orientation == Configuration.ORIENTATION_LANDSCAPE) AllStaticSettings.notchSize = cutout.width();
+            else AllStaticSettings.notchSize = Math.min(cutout.width(), cutout.height());
 
         }catch (Exception e){
             Logging.i("NOTCH DETECTION", "No notch detected, or the device if in split screen mode");
-            LauncherPreferences.PREF_NOTCH_SIZE = -1;
+            AllStaticSettings.notchSize = -1;
         }
         Tools.updateWindowSize(activity);
     }

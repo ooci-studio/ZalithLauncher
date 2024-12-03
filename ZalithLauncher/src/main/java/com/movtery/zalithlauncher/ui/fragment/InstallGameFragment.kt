@@ -82,7 +82,7 @@ class InstallGameFragment : FragmentWithAnim(R.layout.fragment_install_game), Vi
 
             back.setOnClickListener(clickListener)
             install.setOnClickListener(clickListener)
-            isolation.isChecked = AllSettings.versionIsolation
+            isolation.isChecked = AllSettings.versionIsolation.getValue()
         }
     }
 
@@ -332,10 +332,12 @@ class InstallGameFragment : FragmentWithAnim(R.layout.fragment_install_game), Vi
     }
 
     override fun slideIn(animPlayer: AnimPlayer) {
-        animPlayer.apply(AnimPlayer.Entry(binding.root, Animations.BounceInUp))
+        animPlayer.apply(AnimPlayer.Entry(binding.nameLayout, Animations.BounceInDown))
+            .apply(AnimPlayer.Entry(binding.addonsLayout, Animations.BounceInUp))
     }
 
     override fun slideOut(animPlayer: AnimPlayer) {
-        animPlayer.apply(AnimPlayer.Entry(binding.root, Animations.FadeOutDown))
+        animPlayer.apply(AnimPlayer.Entry(binding.nameLayout, Animations.FadeOutUp))
+            .apply(AnimPlayer.Entry(binding.addonsLayout, Animations.FadeOutDown))
     }
 }

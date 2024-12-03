@@ -2,8 +2,8 @@
     <img width="256" src="ZalithLauncher/src/main/res/drawable/app_name_title.png"></img>
 </div>
 
-[![Android CI](https://github.com/MovTery/ZalithLauncher/actions/workflows/android.yml/badge.svg)](https://github.com/MovTery/ZalithLauncher/actions/workflows/android.yml)
-![Downloads](https://img.shields.io/github/downloads/MovTery/ZalithLauncher/total)
+[![Android CI](https://github.com/ZalithLauncher/ZalithLauncher/actions/workflows/android.yml/badge.svg)](https://github.com/ZalithLauncher/ZalithLauncher/actions/workflows/android.yml)
+![Downloads](https://img.shields.io/github/downloads/ZalithLauncher/ZalithLauncher/total)
 [![QQ](https://img.shields.io/badge/QQ-blue)](https://qm.qq.com/q/2MVxS0B29y)
 [![Sponsor](https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors)](https://afdian.com/a/MovTery)
 
@@ -11,7 +11,7 @@
 - Zalith Launcher 是一款基于 [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher) 开发的 Minecraft 启动器，它能够在 Android 设备上运行 [Minecraft: Java Edition](https://www.minecraft.net/)。
 - Zalith Launcher 致力于优化用户体验，重新设计了应用界面，新增了更多实用的功能，旨在最大程度地降低游玩门槛，让更多人能够轻松体验 Minecraft 的乐趣。
 
-**注意！此项目只是一个社区改版，就像 PojavLauncher 是基于 [Boardwalk](https://github.com/zhuowei/Boardwalk) 开发的一样。**
+**注意！此项目只是一个社区改版，就像 PojavLauncher 是基于 [Boardwalk](https://github.com/zhuowei/Boardwalk) 开发的一样。**  
 
 <h2 align="center">新增功能</h2>
 
@@ -32,8 +32,8 @@
 
 <h2 align="center">下载</h2>  
 
-- 前往 [Release](https://github.com/MovTery/ZalithLauncher/releases) 查看最新且经过测试的稳定版本（更新并不频繁）。
-- (并不推荐) 前往 [Actions](https://github.com/MovTery/ZalithLauncher/actions) 查看最新的版本 ( 主线：main，其他任何支线均可忽略！)，  
+- 前往 [Release](https://github.com/ZalithLauncher/ZalithLauncher/releases) 查看最新且经过测试的稳定版本（更新并不频繁）。
+- (并不推荐) 前往 [Actions](https://github.com/ZalithLauncher/ZalithLauncher/actions) 查看最新的版本 ( 主线：main，其他任何支线均可忽略！)，  
   进入后，点击 **ZalithLauncher** 下载 (Debug 为测试构建版本，Release 为发行构建版本)。
 
 <h2 align="center">协议</h2>

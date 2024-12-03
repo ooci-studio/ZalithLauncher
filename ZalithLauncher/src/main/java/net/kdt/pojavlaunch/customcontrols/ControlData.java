@@ -88,7 +88,7 @@ public class ControlData {
         this(name, keycodes, x, y, 50, 50);
     }
 
-    public ControlData(android.content.Context ctx, int resId, int[] keycodes, float x, float y, boolean isSquare) {
+    public ControlData(Context ctx, int resId, int[] keycodes, float x, float y, boolean isSquare) {
         this(ctx.getResources().getString(resId), keycodes, x, y, isSquare);
     }
 
@@ -104,7 +104,7 @@ public class ControlData {
         this(name, keycodes, dynamicX, dynamicY, 50, 50, false);
     }
 
-    public ControlData(android.content.Context ctx, int resId, int[] keycodes, String dynamicX, String dynamicY, boolean isSquare) {
+    public ControlData(Context ctx, int resId, int[] keycodes, String dynamicX, String dynamicY, boolean isSquare) {
         this(ctx.getResources().getString(resId), keycodes, dynamicX, dynamicY, isSquare);
     }
 
@@ -304,7 +304,7 @@ public class ControlData {
         valueMap.put("height", Float.toString(getHeight()));
         valueMap.put("screen_width", Integer.toString(CallbackBridge.physicalWidth));
         valueMap.put("screen_height", Integer.toString(CallbackBridge.physicalHeight));
-        valueMap.put("preferred_scale", Float.toString(AllSettings.getButtonscale()));
+        valueMap.put("preferred_scale", Float.toString(AllSettings.getButtonScale().getValue()));
 
         return valueMap;
     }

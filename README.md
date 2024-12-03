@@ -2,8 +2,8 @@
     <img width="256" src="ZalithLauncher/src/main/res/drawable/app_name_title.png"></img>
 </div>
 
-[![Android CI](https://github.com/MovTery/ZalithLauncher/actions/workflows/android.yml/badge.svg)](https://github.com/MovTery/ZalithLauncher/actions/workflows/android.yml)
-![Downloads](https://img.shields.io/github/downloads/MovTery/ZalithLauncher/total)
+[![Android CI](https://github.com/ZalithLauncher/ZalithLauncher/actions/workflows/android.yml/badge.svg)](https://github.com/ZalithLauncher/ZalithLauncher/actions/workflows/android.yml)
+![Downloads](https://img.shields.io/github/downloads/ZalithLauncher/ZalithLauncher/total)
 [![QQ](https://img.shields.io/badge/QQ-blue)](https://qm.qq.com/q/2MVxS0B29y)
 [![Sponsor](https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors)](https://afdian.com/a/MovTery)
 
@@ -32,8 +32,8 @@
 
 <h2 align="center">Download</h2>
 
-- Visit [Release](https://github.com/MovTery/ZalithLauncher/releases) to check the latest stable version (updates are infrequent).
-- (Not recommended) Visit [Actions](https://github.com/MovTery/ZalithLauncher/actions) to see the latest versions (main branch: main, other branches can be ignored!)  
+- Visit [Release](https://github.com/ZalithLauncher/ZalithLauncher/releases) to check the latest stable version (updates are infrequent).
+- (Not recommended) Visit [Actions](https://github.com/ZalithLauncher/ZalithLauncher/actions) to see the latest versions (main branch: main, other branches can be ignored!)  
   After entering, click **ZalithLauncher** to download (Debug is for test builds, Release is for release builds).
 
 <h2 align="center">License</h2>

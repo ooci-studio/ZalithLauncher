@@ -9,14 +9,16 @@ import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.feature.log.Logging
 import com.movtery.zalithlauncher.feature.update.LauncherVersion.FileSize
 import com.movtery.zalithlauncher.feature.update.UpdateLauncher.UpdateSource
+import com.movtery.zalithlauncher.setting.AllSettings
 import com.movtery.zalithlauncher.setting.AllSettings.Companion.ignoreUpdate
 import com.movtery.zalithlauncher.task.TaskExecutors.Companion.runInUIThread
 import com.movtery.zalithlauncher.ui.dialog.TipDialog
 import com.movtery.zalithlauncher.ui.dialog.UpdateDialog
-import com.movtery.zalithlauncher.utils.PathAndUrlManager
+import com.movtery.zalithlauncher.utils.path.PathManager
 import com.movtery.zalithlauncher.utils.ZHTools
 import com.movtery.zalithlauncher.utils.http.CallUtils
 import com.movtery.zalithlauncher.utils.http.CallUtils.CallbackListener
+import com.movtery.zalithlauncher.utils.path.UrlManager
 import com.movtery.zalithlauncher.utils.stringutils.StringUtils
 import net.kdt.pojavlaunch.Architecture
 import net.kdt.pojavlaunch.Tools
@@ -30,18 +32,22 @@ import java.io.IOException
 class UpdateUtils {
     companion object {
         @JvmField
-        val sApkFile: File = File(PathAndUrlManager.DIR_APP_CACHE, "cache.apk")
+        val sApkFile: File = File(PathManager.DIR_APP_CACHE, "cache.apk")
         private var LAST_UPDATE_CHECK_TIME: Long = 0
 
+        /**
+         * 启动软件的更新检测是5分钟的冷却，避免频繁检测导致Github限制访问
+         * @param force 强制检测（用于设置内更新检测）
+         */
         @JvmStatic
-        fun checkDownloadedPackage(context: Context, ignore: Boolean) {
-            if (BuildConfig.BUILD_TYPE != "release") return
+        fun checkDownloadedPackage(context: Context, force: Boolean, ignore: Boolean) {
+            val isRelease = BuildConfig.BUILD_TYPE == "release"
 
             if (sApkFile.exists()) {
                 val packageManager = context.packageManager
                 val packageInfo = packageManager.getPackageArchiveInfo(sApkFile.absolutePath, 0)
 
-                if (packageInfo != null) {
+                if (isRelease && packageInfo != null) {
                     val packageName = packageInfo.packageName
                     val versionCode = packageInfo.versionCode
                     val thisVersionCode = ZHTools.getVersionCode()
@@ -55,9 +61,18 @@ class UpdateUtils {
                     FileUtils.deleteQuietly(sApkFile)
                 }
             } else {
-                //如果安装包不存在，那么将自动获取更新
-                updateCheckerMainProgram(context, ignore)
+                if (isRelease && (force || checkCooling())) {
+                    AllSettings.updateCheck.put(ZHTools.getCurrentTimeMillis()).save()
+                    Logging.i("Check Update", "Checking new update!")
+
+                    //如果安装包不存在，那么将自动获取更新
+                    updateCheckerMainProgram(context, ignore)
+                }
             }
+        }
+
+        private fun checkCooling(): Boolean {
+            return ZHTools.getCurrentTimeMillis() - AllSettings.updateCheck.getValue() > 5 * 60 * 1000 //5分钟冷却
         }
 
         @Synchronized
@@ -65,7 +80,6 @@ class UpdateUtils {
             if (ZHTools.getCurrentTimeMillis() - LAST_UPDATE_CHECK_TIME <= 5000) return
             LAST_UPDATE_CHECK_TIME = ZHTools.getCurrentTimeMillis()
 
-            val token = context.getString(R.string.api_token)
             CallUtils(object : CallbackListener {
                 override fun onFailure(call: Call?) {
                     showFailToast(context, context.getString(R.string.update_fail))
@@ -85,7 +99,7 @@ class UpdateUtils {
                             val launcherVersion = Tools.GLOBAL_GSON.fromJson(rawJson, LauncherVersion::class.java)
 
                             val versionName = launcherVersion.versionName
-                            if (ignore && versionName == ignoreUpdate) return  //忽略此版本
+                            if (ignore && versionName == ignoreUpdate.getValue()) return  //忽略此版本
 
                             val versionCode = launcherVersion.versionCode
 //                            if (ZHTools.getVersionCode() < versionCode) {
@@ -109,7 +123,7 @@ class UpdateUtils {
                         }
                     }
                 }
-            }, PathAndUrlManager.URL_GITHUB_UPDATE, if (token == "DUMMY") null else token).enqueue()
+            }, "${UrlManager.URL_GITHUB_HOME}launcher_version.json", null).enqueue()
         }
 
         @JvmStatic
@@ -144,7 +158,7 @@ class UpdateUtils {
         fun getDownloadUrl(launcherVersion: LauncherVersion, updateSource: UpdateSource): String {
             val fileUrl: String
             val archModel = getArchModel()
-            val githubUrl = "github.com/MovTery/ZalithLauncher/releases/download/" +
+            val githubUrl = "github.com/ZalithLauncher/ZalithLauncher/releases/download/" +
                     "${launcherVersion.versionCode}/ZalithLauncher-${launcherVersion.versionName}" +
                     "${(if (archModel != null) String.format("-%s", archModel) else "")}.apk"
             fileUrl = when (updateSource) {

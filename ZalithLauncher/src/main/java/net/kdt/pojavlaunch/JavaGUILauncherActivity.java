@@ -27,7 +27,8 @@ import com.movtery.zalithlauncher.task.Task;
 import com.movtery.zalithlauncher.task.TaskExecutors;
 import com.movtery.zalithlauncher.ui.activity.BaseActivity;
 import com.movtery.zalithlauncher.ui.dialog.TipDialog;
-import com.movtery.zalithlauncher.utils.PathAndUrlManager;
+import com.movtery.zalithlauncher.utils.path.LibPath;
+import com.movtery.zalithlauncher.utils.path.PathManager;
 import com.movtery.zalithlauncher.utils.ZHTools;
 import com.movtery.zalithlauncher.utils.image.Dimension;
 import com.movtery.zalithlauncher.utils.image.ImageUtils;
@@ -78,7 +79,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
         setContentView(R.layout.activity_java_gui_launcher);
 
         try {
-            File latestLogFile = new File(PathAndUrlManager.DIR_GAME_HOME, "latestlog.txt");
+            File latestLogFile = new File(PathManager.DIR_GAME_HOME, "latestlog.txt");
             if (!latestLogFile.exists() && !latestLogFile.createNewFile())
                 throw new IOException("Failed to create a new log file");
             Logger.begin(latestLogFile.getAbsolutePath());
@@ -110,7 +111,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
             ViewGroup.LayoutParams params = mMousePointerImageView.getLayoutParams();
             Drawable drawable = mMousePointerImageView.getDrawable();
             Dimension mousescale = ImageUtils.resizeWithRatio(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
-                    AllSettings.getMouseScale());
+                    AllSettings.getMouseScale().getValue());
             params.width = (int) (mousescale.width * 0.5);
             params.height = (int) (mousescale.height * 0.5);
         });
@@ -324,7 +325,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
             if (jreName == null) {
                 if (selectedMod == null) {
                     // We were unable to find out the path to the mod. In that case, use the default runtime.
-                    selectedRuntime = MultiRTUtils.forceReread(AllSettings.getDefaultRuntime());
+                    selectedRuntime = MultiRTUtils.forceReread(AllSettings.getDefaultRuntime().getValue());
                 } else {
                     // Autoselect it properly in the other case.
                     selectedRuntime = selectRuntime(selectedMod);
@@ -451,17 +452,17 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
                 javaArgList.add(modFile.getAbsolutePath());
             }
             
-            if (AllSettings.getJavaSandbox()) {
+            if (AllSettings.getJavaSandbox().getValue()) {
                 Collections.reverse(javaArgList);
-                javaArgList.add("-Xbootclasspath/a:" + PathAndUrlManager.DIR_DATA + "/security/pro-grade.jar");
+                javaArgList.add("-Xbootclasspath/a:" + LibPath.PRO_GRADE.getAbsolutePath());
                 javaArgList.add("-Djava.security.manager=net.sourceforge.prograde.sm.ProGradeJSM");
-                javaArgList.add("-Djava.security.policy=" + PathAndUrlManager.DIR_DATA + "/security/java_sandbox.policy");
+                javaArgList.add("-Djava.security.policy=" + LibPath.JAVA_SANDBOX_POLICY.getAbsolutePath());
                 Collections.reverse(javaArgList);
             }
 
             Logger.appendToLog("Info: Java arguments: " + Arrays.toString(javaArgList.toArray(new String[0])));
 
-            JREUtils.launchJavaVM(this, runtime,null, javaArgList, AllSettings.getJavaArgs());
+            JREUtils.launchJavaVM(this, runtime,null, javaArgList, AllSettings.getJavaArgs().getValue());
         } catch (Throwable th) {
             Tools.showError(this, th, true);
         }
