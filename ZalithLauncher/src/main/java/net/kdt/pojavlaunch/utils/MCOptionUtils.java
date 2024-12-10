@@ -10,9 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.movtery.zalithlauncher.event.single.MCOptionChangeEvent;
-import com.movtery.zalithlauncher.feature.customprofilepath.ProfilePathHome;
 import com.movtery.zalithlauncher.feature.log.Logging;
+import com.movtery.zalithlauncher.feature.version.Version;
+import com.movtery.zalithlauncher.event.sticky.RunningVersionEvent;
 
+import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.Tools;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,16 +32,10 @@ import java.util.Objects;
 public class MCOptionUtils {
     private static final HashMap<String,String> sParameterMap = new HashMap<>();
     private static FileObserver sFileObserver;
-    private static String sOptionFolderPath = null;
+    private static Version sVersion = null;
 
-    public static void load(){
-        load(sOptionFolderPath == null
-                ? ProfilePathHome.getGameHome()
-                : sOptionFolderPath);
-    }
-
-    public static void load(@NonNull String folderPath) {
-        File optionFile = new File(folderPath + "/options.txt");
+    public static void load(@NonNull Version version) {
+        File optionFile = new File(version.getGameDir().getAbsolutePath() + "/options.txt");
         if(!optionFile.exists()) {
             try { // Needed for new instances I guess  :think:
                 optionFile.createNewFile();
@@ -48,11 +44,11 @@ public class MCOptionUtils {
             }
         }
 
-        if(sFileObserver == null || !Objects.equals(sOptionFolderPath, folderPath)){
-            sOptionFolderPath = folderPath;
+        if(sFileObserver == null || !Objects.equals(sVersion, version)){
+            sVersion = version;
             setupFileObserver();
         }
-        sOptionFolderPath = folderPath; // Yeah I know, it may be redundant
+        sVersion = version; // Yeah I know, it may be redundant
 
         sParameterMap.clear();
 
@@ -62,14 +58,14 @@ public class MCOptionUtils {
             while ((line = reader.readLine()) != null) {
                 int firstColonIndex = line.indexOf(':');
                 if(firstColonIndex < 0) {
-                    Logging.w(Tools.APP_NAME, "No colon on line \""+line+"\", skipping");
+                    Logging.w(PojavApplication.getKey(), "No colon on line \""+line+"\", skipping");
                     continue;
                 }
                 sParameterMap.put(line.substring(0,firstColonIndex), line.substring(firstColonIndex+1));
             }
             reader.close();
         } catch (IOException e) {
-            Logging.w(Tools.APP_NAME, "Could not load options.txt", e);
+            Logging.w(PojavApplication.getKey(), "Could not load options.txt", e);
         }
     }
 
@@ -114,10 +110,10 @@ public class MCOptionUtils {
 
         try {
             sFileObserver.stopWatching();
-            Tools.write(sOptionFolderPath + "/options.txt", result.toString());
+            Tools.write(sVersion.getGameDir().getAbsolutePath() + "/options.txt", result.toString());
             sFileObserver.startWatching();
         } catch (IOException e) {
-            Logging.w(Tools.APP_NAME, "Could not save options.txt", e);
+            Logging.w(PojavApplication.getKey(), "Could not save options.txt", e);
         }
     }
 
@@ -136,25 +132,36 @@ public class MCOptionUtils {
 
     /** Add a file observer to reload options on file change
      * Listeners get notified of the change */
-    private static void setupFileObserver(){
+    private static void setupFileObserver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            sFileObserver = new FileObserver(new File(sOptionFolderPath + "/options.txt"), FileObserver.MODIFY) {
+            sFileObserver = new FileObserver(new File(sVersion.getGameDir().getAbsolutePath() + "/options.txt"), FileObserver.MODIFY) {
                 @Override
                 public void onEvent(int i, @Nullable String s) {
-                    MCOptionUtils.load();
+                    Version version = loadVersionFromEvent();
+                    if (version == null) return;
+                    MCOptionUtils.load(version);
                     EventBus.getDefault().post(new MCOptionChangeEvent());
                 }
             };
         } else {
-            sFileObserver = new FileObserver(sOptionFolderPath + "/options.txt", FileObserver.MODIFY) {
+            sFileObserver = new FileObserver(sVersion.getGameDir().getAbsolutePath() + "/options.txt", FileObserver.MODIFY) {
                 @Override
                 public void onEvent(int i, @Nullable String s) {
-                    MCOptionUtils.load();
+                    Version version = loadVersionFromEvent();
+                    if (version == null) return;
+                    MCOptionUtils.load(version);
                     EventBus.getDefault().post(new MCOptionChangeEvent());
                 }
             };
         }
 
         sFileObserver.startWatching();
+    }
+
+    private static Version loadVersionFromEvent() {
+        RunningVersionEvent event = EventBus.getDefault().getStickyEvent(RunningVersionEvent.class);
+        if (event != null) {
+            return event.getVersion();
+        } else return null;
     }
 }

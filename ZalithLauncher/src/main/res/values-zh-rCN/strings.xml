@@ -165,7 +165,6 @@
     <string name="controls_unsupported_layout_version">不支持的控制布局版本！</string>
     <string name="controls_create_new">创建新的控制布局</string>
     <string name="controls_import_control">导入控制布局</string>
-    <string name="controls_settings_title">控制布局编辑器设置</string>
     <string name="controls_settings_button_snapping">按键吸附功能</string>
     <string name="controls_settings_button_snapping_distance">按键吸附距离</string>
     <string name="controls_info_file_name">文件名称:</string>
@@ -183,12 +182,6 @@
     <string name="controls_nothing">这里没有任何控制布局，重启应用将生成一份新的默认控制布局</string>
     <string name="replacement_customcontrol">更换控制布局</string>
     <string name="custom_control_title">管理控制布局</string>
-
-    <string name="import_control">控制布局名称:</string>
-    <string name="import_control_invalid_file">文件无效或已损坏</string>
-    <string name="import_control_verifying_file">文件正在校检中，请稍后重试…</string>
-    <string name="import_control_invalid_name">名称无效或文件已存在</string>
-    <string name="import_control_done">导入完成</string>
 
     <string name="controller_button_start">开始</string>
     <string name="controller_button_trigger_left">左触发键</string>
@@ -279,6 +272,12 @@
     <string name="account_local_account_invalid">正常的用户名称仅支持英文字母（大小写均可）、数字以及下划线作为用户名，长度不允许少于 3 字符，超过 16 字符，否则可能将导致游戏无法正常运行。\n正确的用户名举例：Name、Name_、Name123\n错误的用户名举例：Name@、N ame、name_name_name_name\n但如果你使用了相关模组或者插件能够解除这一机制，那么你可以继续使用这个名字，否则请重新命名！</string>
     <string name="account_login_local_name">用户名</string>
     <string name="account_login_start">开始登录！</string>
+    <string name="account_login_microsoft_progress">登录微软账号中：%s</string>
+    <string name="account_login_progress_access_token">获取访问令牌</string>
+    <string name="account_login_progress_xbl_token">获取 Xbox Live 令牌</string>
+    <string name="account_login_progress_xsts_token">获取 Xbox 服务安全令牌</string>
+    <string name="account_login_progress_minecraft_token">获取 Minecraft 令牌</string>
+    <string name="account_login_progress_checking">检查令牌中</string>
     <string name="account_login_no_network">未连接到互联网，登录已跳过！</string>
     <string name="account_login_skip">账号登录失败，是否跳过登录步骤？</string>
     <string name="account_no_microsoft_account">请至少登录一个 Minecraft 正版账号，我们不提倡用户在没有正版账号的情况下启动 Minecraft。</string>
@@ -467,6 +466,8 @@
     <string name="setting_resource_image_cache_desc">启用后，启动器将会对资源的封面图片、截图进行缓存，以便下次更快的加载</string>
     <string name="setting_download_source_title">游戏下载源</string>
     <string name="setting_download_source_desc">选择镜像下载源，而不是使用官方下载源</string>
+    <string name="setting_max_download_threads_title">文件下载最大线程数</string>
+    <string name="setting_max_download_threads_desc">同时下载多个文件时的最大并发数，但线程数量过多将会导致启动器卡顿，64 个线程已经足够使用了哦！</string>
     <string name="setting_version_isolation_title">默认版本隔离</string>
     <string name="setting_version_isolation_desc">安装新的版本时，是否默认选择版本隔离</string>
     <string name="setting_set_game_language_title">自动设置游戏语言</string>
@@ -625,10 +626,10 @@
     <string name="splash_screen_apply">同意并安装</string>
 
     <!-- About -->
-    <string name="about_tab">关于 Zalith Launcher</string>
-    <string name="about_dec1">Zalith Launcher 是一款基于 PojavLauncher 开发的 Minecraft 启动器，它能够在 Android 设备上运行 Minecraft: Java Edition。</string>
-    <string name="about_dec2">Zalith Launcher 致力于优化用户体验，重新设计了应用界面，新增了更多实用的功能，旨在最大程度地降低游玩门槛，让更多人能够轻松体验 Minecraft 的乐趣。</string>
-    <string name="about_dec3">Zalith Launcher 使用的是 GPL 3.0 开源协议，这一协议具有 “传染性”，任何使用、修改或衍生自 GPL 类库或软件的代码也必须采用 GPL 协议进行开源。如果你打算传播或分发本软件，请务必遵守 GPL 3.0 开源协议的相关规定。</string>
+    <string name="about_tab">关于 %s</string>
+    <string name="about_dec1">%s 是一款基于 PojavLauncher 开发的 Minecraft 启动器，它能够在 Android 设备上运行 Minecraft: Java Edition。</string>
+    <string name="about_dec2">%s 致力于优化用户体验，重新设计了应用界面，新增了更多实用的功能，旨在最大程度地降低游玩门槛，让更多人能够轻松体验 Minecraft 的乐趣。</string>
+    <string name="about_dec3">%s 使用的是 GPL 3.0 开源协议，这一协议具有 “传染性”，任何使用、修改或衍生自 GPL 类库或软件的代码也必须采用 GPL 协议进行开源。如果你打算传播或分发本软件，请务必遵守 GPL 3.0 开源协议的相关规定。</string>
     <string name="about_contributors">贡献者与鸣谢:</string>
     <string name="about_sponsors">赞助者鸣谢:</string>
     <string name="about_sponsors_desc">以下是所有支持开发的赞助者们，万分感谢！</string>

@@ -158,7 +158,6 @@
     <string name="controls_unsupported_layout_version">不支持的控制佈局版本！</string>
     <string name="controls_create_new">創建新的控制佈局</string>
     <string name="controls_import_control">匯入控制佈局</string>
-    <string name="controls_settings_title">控制佈局編輯器設置</string>
     <string name="controls_settings_button_snapping">按鍵吸附功能</string>
     <string name="controls_settings_button_snapping_distance">按鍵吸附距離</string>
     <string name="controls_info_file_name">文件名稱:</string>
@@ -176,11 +175,6 @@
     <string name="controls_nothing">這裡沒有任何控制佈局，重啟應用將生成一份新的默認控制佈局</string>
     <string name="replacement_customcontrol">更換控制佈局</string>
     <string name="custom_control_title">管理控制佈局</string>
-    <string name="import_control">控制佈局名稱:</string>
-    <string name="import_control_invalid_file">文件無效或已損壞</string>
-    <string name="import_control_verifying_file">文件正在校檢中，請稍後重試…</string>
-    <string name="import_control_invalid_name">名稱無效或文件已存在</string>
-    <string name="import_control_done">匯入完成</string>
     <string name="controller_button_start">開始</string>
     <string name="controller_button_trigger_left">左觸發鍵</string>
     <string name="controller_button_trigger_right">右觸發鍵</string>
@@ -265,6 +259,12 @@
     <string name="account_local_account_invalid">有效的使用者名稱僅支援英文大小寫字母、數字及下劃線。長度需在3至16個字元之間，否則遊戲可能無法正常運行。\n正確的使用者名稱範例：Name、Name_、Name123\n錯誤的使用者名稱範例：Name@、N ame、name_name_name_name\n但如果您已使用相關模組或插件來解除這項限制，則可繼續使用該名稱。否則，請重新命名！</string>
     <string name="account_login_local_name">使用者名稱</string>
     <string name="account_login_start">開始登入！</string>
+    <string name="account_login_microsoft_progress">正在登入 Microsoft 帳號：%s</string>
+    <string name="account_login_progress_access_token">正在取得存取權杖</string>
+    <string name="account_login_progress_xbl_token">正在取得 Xbox Live 權杖</string>
+    <string name="account_login_progress_xsts_token">正在取得 Xbox 服務安全權杖</string>
+    <string name="account_login_progress_minecraft_token">正在取得 Minecraft 權杖</string>
+    <string name="account_login_progress_checking">正在檢查權杖</string>
     <string name="account_login_no_network">未連接到網路，登入已跳過！</string>
     <string name="account_login_skip">帳號登入失敗，是否要跳過登入步驟？</string>
     <string name="account_no_microsoft_account">請至少登入一個 Minecraft 正版帳號，我們不提倡用戶在沒有正版帳號的情況下啟動 Minecraft。</string>
@@ -439,6 +439,8 @@
     <string name="setting_resource_image_cache_desc">啟用後，啟動器將會快取資源的封面圖片與截圖，方便下次更快速載入</string>
     <string name="setting_download_source_title">遊戲下載源</string>
     <string name="setting_download_source_desc">選擇鏡像下載源，而不是使用官方下載源</string>
+    <string name="setting_max_download_threads_title">檔案下載最大執行緒數</string>
+    <string name="setting_max_download_threads_desc">同時下載多個檔案時的最大並發數，但線程數量過多將會導致啟動器卡頓，64 個線程已經足夠使用囉！</string>
     <string name="setting_version_isolation_title">預設版本隔離</string>
     <string name="setting_version_isolation_desc">安裝新版本時，是否預設選擇版本隔離</string>
     <string name="setting_set_game_language_title">自動設定遊戲語言</string>
@@ -587,10 +589,10 @@
     <string name="splash_screen_jre21">Java 21 環境，Minecraft 1.20.5+ 依賴 Java 21。</string>
     <string name="splash_screen_apply">同意並安裝</string>
     <!-- About -->
-    <string name="about_tab">關於 Zalith Launcher</string>
-    <string name="about_dec1">Zalith Launcher 是一款基於 PojavLauncher 開發的 Minecraft 啟動器，它能夠在 Android 設備上運行 Minecraft: Java Edition。</string>
-    <string name="about_dec2">Zalith Launcher 致力於優化用戶體驗，重新設計了應用界面，新增了更多實用的功能，旨在最大程度地降低遊玩門檻，讓更多人能夠輕鬆體驗 Minecraft 的樂趣。</string>
-    <string name="about_dec3">Zalith Launcher 使用的是 GPL 3.0 開源協議，這一協議具有 “傳染性”；任何使用、修改或衍生自 GPL 類庫或軟體的代碼也必須採用 GPL 協議進行開源。如果你打算傳播或分發本軟體，請務必遵守 GPL 3.0 開源協議的相關規定。</string>
+    <string name="about_tab">關於 %s</string>
+    <string name="about_dec1">%s 是一款基於 PojavLauncher 開發的 Minecraft 啟動器，它能夠在 Android 設備上運行 Minecraft: Java Edition。</string>
+    <string name="about_dec2">%s 致力於優化使用者體驗，重新設計了應用介面，新增了更多實用的功能，旨在最大程度地降低遊玩門檻，讓更多人能夠輕鬆體驗 Minecraft 的樂趣。</string>
+    <string name="about_dec3">%s 使用的是 GPL 3.0 開源協議，這一協議具有「傳染性」，任何使用、修改或衍生自 GPL 類庫或軟體的程式碼也必須採用 GPL 協議進行開源。如果你打算傳播或分發本軟體，請務必遵守 GPL 3.0 開源協議的相關規定。</string>
     <string name="about_contributors">貢獻者與鳴謝:</string>
     <string name="about_sponsors">贊助者鳴謝:</string>
     <string name="about_sponsors_desc">以下是所有支持開發的贊助者們，萬分感謝！</string>

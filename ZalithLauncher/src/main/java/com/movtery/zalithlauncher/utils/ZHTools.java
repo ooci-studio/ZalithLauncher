@@ -41,7 +41,7 @@ import com.movtery.zalithlauncher.ui.dialog.TipDialog;
 import com.movtery.zalithlauncher.ui.fragment.FragmentWithAnim;
 import com.movtery.zalithlauncher.utils.path.PathManager;
 
-import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.PojavApplication;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -101,7 +101,7 @@ public final class ZHTools {
                     try {
                         ZHTools.killProcess();
                     } catch (Throwable th) {
-                        Logging.w(Tools.APP_NAME, "Could not enable System.exit() method!", th);
+                        Logging.w(PojavApplication.getKey(), "Could not enable System.exit() method!", th);
                     }
                 }).buildDialog();
     }

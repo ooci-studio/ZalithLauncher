@@ -31,7 +31,6 @@ import org.lwjgl.glfw.CallbackBridge;
  * sending keys has to be implemented by sub classes.
  */
 public interface ControlInterface extends View.OnLongClickListener, GrabListener {
-
     View getControlView();
 
     ControlData getProperties();
@@ -215,7 +214,9 @@ public interface ControlInterface extends View.OnLongClickListener, GrabListener
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     default boolean canSnap(ControlInterface button) {
-        float MIN_DISTANCE = Tools.dpToPx(8);
+        if (!AllSettings.getButtonSnapping().getValue()) return false;
+
+        float MIN_DISTANCE = getSnapDistance();
 
         if (button == this) return false;
         if (button.getControlView().getVisibility() == GONE) return false;
@@ -239,57 +240,55 @@ public interface ControlInterface extends View.OnLongClickListener, GrabListener
      * @param y Coordinate on the y axis
      */
     default void snapAndAlign(float x, float y) {
-        float MIN_DISTANCE = Tools.dpToPx(AllSettings.getButtonSnappingDistance().getValue());
+        final float MIN_DISTANCE = getSnapDistance();
         String dynamicX = generateDynamicX(x);
         String dynamicY = generateDynamicY(y);
 
         getControlView().setX(x);
         getControlView().setY(y);
 
-        if (AllSettings.getButtonSnapping().getValue()) { //可开关按键吸附功能
-            for (ControlInterface button : ((ControlLayout) getControlView().getParent()).getButtonChildren()) {
-                //Step 1: Filter unwanted buttons
-                if (!canSnap(button)) continue;
+        for (ControlInterface button : ((ControlLayout) getControlView().getParent()).getButtonChildren()) {
+            //Step 1: Filter unwanted buttons
+            if (!canSnap(button)) continue;
 
-                //Step 2: Get Coordinates
-                float button_top = button.getControlView().getY();
-                float button_bottom = button_top + button.getControlView().getHeight();
-                float button_left = button.getControlView().getX();
-                float button_right = button_left + button.getControlView().getWidth();
+            //Step 2: Get Coordinates
+            float button_top = button.getControlView().getY();
+            float button_bottom = button_top + button.getControlView().getHeight();
+            float button_left = button.getControlView().getX();
+            float button_right = button_left + button.getControlView().getWidth();
 
-                float top = getControlView().getY();
-                float bottom = getControlView().getY() + getControlView().getHeight();
-                float left = getControlView().getX();
-                float right = getControlView().getX() + getControlView().getWidth();
+            float top = getControlView().getY();
+            float bottom = getControlView().getY() + getControlView().getHeight();
+            float left = getControlView().getX();
+            float right = getControlView().getX() + getControlView().getWidth();
 
-                //Step 3: For each axis, we try to snap to the nearest
-                if (Math.abs(top - button_bottom) < MIN_DISTANCE) { // Bottom snap
-                    dynamicY = applySize(button.getProperties().dynamicY, button) + applySize(" + ${height}", button) + " + ${margin}";
-                } else if (Math.abs(button_top - bottom) < MIN_DISTANCE) { //Top snap
-                    dynamicY = applySize(button.getProperties().dynamicY, button) + " - ${height} - ${margin}";
-                }
-                if (!dynamicY.equals(generateDynamicY(getControlView().getY()))) { //If we snapped
-                    if (Math.abs(button_left - left) < MIN_DISTANCE) { //Left align snap
-                        dynamicX = applySize(button.getProperties().dynamicX, button);
-                    } else if (Math.abs(button_right - right) < MIN_DISTANCE) { //Right align snap
-                        dynamicX = applySize(button.getProperties().dynamicX, button) + applySize(" + ${width}", button) + " - ${width}";
-                    }
-                }
-
-                if (Math.abs(button_left - right) < MIN_DISTANCE) { //Left snap
-                    dynamicX = applySize(button.getProperties().dynamicX, button) + " - ${width} - ${margin}";
-                } else if (Math.abs(left - button_right) < MIN_DISTANCE) { //Right snap
-                    dynamicX = applySize(button.getProperties().dynamicX, button) + applySize(" + ${width}", button) + " + ${margin}";
-                }
-                if (!dynamicX.equals(generateDynamicX(getControlView().getX()))) { //If we snapped
-                    if (Math.abs(button_top - top) < MIN_DISTANCE) { //Top align snap
-                        dynamicY = applySize(button.getProperties().dynamicY, button);
-                    } else if (Math.abs(button_bottom - bottom) < MIN_DISTANCE) { //Bottom align snap
-                        dynamicY = applySize(button.getProperties().dynamicY, button) + applySize(" + ${height}", button) + " - ${height}";
-                    }
-                }
-
+            //Step 3: For each axis, we try to snap to the nearest
+            if (Math.abs(top - button_bottom) < MIN_DISTANCE) { // Bottom snap
+                dynamicY = applySize(button.getProperties().dynamicY, button) + applySize(" + ${height}", button) + " + ${margin}";
+            } else if (Math.abs(button_top - bottom) < MIN_DISTANCE) { //Top snap
+                dynamicY = applySize(button.getProperties().dynamicY, button) + " - ${height} - ${margin}";
             }
+            if (!dynamicY.equals(generateDynamicY(getControlView().getY()))) { //If we snapped
+                if (Math.abs(button_left - left) < MIN_DISTANCE) { //Left align snap
+                    dynamicX = applySize(button.getProperties().dynamicX, button);
+                } else if (Math.abs(button_right - right) < MIN_DISTANCE) { //Right align snap
+                    dynamicX = applySize(button.getProperties().dynamicX, button) + applySize(" + ${width}", button) + " - ${width}";
+                }
+            }
+
+            if (Math.abs(button_left - right) < MIN_DISTANCE) { //Left snap
+                dynamicX = applySize(button.getProperties().dynamicX, button) + " - ${width} - ${margin}";
+            } else if (Math.abs(left - button_right) < MIN_DISTANCE) { //Right snap
+                dynamicX = applySize(button.getProperties().dynamicX, button) + applySize(" + ${width}", button) + " + ${margin}";
+            }
+            if (!dynamicX.equals(generateDynamicX(getControlView().getX()))) { //If we snapped
+                if (Math.abs(button_top - top) < MIN_DISTANCE) { //Top align snap
+                    dynamicY = applySize(button.getProperties().dynamicY, button);
+                } else if (Math.abs(button_bottom - bottom) < MIN_DISTANCE) { //Bottom align snap
+                    dynamicY = applySize(button.getProperties().dynamicY, button) + applySize(" + ${height}", button) + " - ${height}";
+                }
+            }
+
         }
 
         setDynamicX(dynamicX);
@@ -407,5 +406,12 @@ public interface ControlInterface extends View.OnLongClickListener, GrabListener
         }
 
         return true;
+    }
+
+    static float getSnapDistance() {
+        return Tools.dpToPx(AllSettings.getButtonSnappingDistance().getValue());
+    }
+    static float getMarginDistance() {
+        return Tools.dpToPx(2);
     }
 }

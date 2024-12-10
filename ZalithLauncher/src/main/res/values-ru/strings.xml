@@ -158,7 +158,6 @@
     <string name="controls_unsupported_layout_version">Неподдерживаемая версия раскладки управления!</string>
     <string name="controls_create_new">Создать новую раскладку управления</string>
     <string name="controls_import_control">Импортировать раскладку управления</string>
-    <string name="controls_settings_title">Настройки редактора раскладки управления</string>
     <string name="controls_settings_button_snapping">Функция привязки кнопок</string>
     <string name="controls_settings_button_snapping_distance">Расстояние привязки кнопок</string>
     <string name="controls_info_file_name">Имя файла:</string>
@@ -176,11 +175,6 @@
     <string name="controls_nothing">Здесь нет раскладки управления, перезапуск приложения сгенерирует новую раскладку управления по умолчанию</string>
     <string name="replacement_customcontrol">Заменить раскладку управления</string>
     <string name="custom_control_title">Управление раскладками управления</string>
-    <string name="import_control">Имя раскладки управления:</string>
-    <string name="import_control_invalid_file">Файл недействителен или поврежден</string>
-    <string name="import_control_verifying_file">Файл проверяется, пожалуйста, повторите попытку позже…</string>
-    <string name="import_control_invalid_name">Неверное имя или файл уже существует</string>
-    <string name="import_control_done">Импорт завершен</string>
     <string name="controller_button_start">Старт</string>
     <string name="controller_button_trigger_left">Левый триггер</string>
     <string name="controller_button_trigger_right">Правый триггер</string>
@@ -265,6 +259,12 @@
     <string name="account_local_account_invalid">Допустимые имена пользователей поддерживают только английские буквы (большие и малые), цифры и подчеркивания. Длина должна быть не менее 3 и не более 16 символов, иначе игра может не запуститься.\nПримеры правильных имен: Name, Name_, Name123\nПримеры неправильных имен: Name@, N ame, name_name_name_name\nОднако, если вы использовали соответствующие моды или плагины, чтобы обойти этот механизм, то можете продолжать использовать это имя. В противном случае, попробуйте переименовать!</string>
     <string name="account_login_local_name">Имя пользователя</string>
     <string name="account_login_start">Начать вход!</string>
+    <string name="account_login_microsoft_progress">Вход в учетную запись Microsoft: %s</string>
+    <string name="account_login_progress_access_token">Получение доступа к токен</string>
+    <string name="account_login_progress_xbl_token">Получение токена Xbox Live</string>
+    <string name="account_login_progress_xsts_token">Получение токена безопасности службы Xbox</string>
+    <string name="account_login_progress_minecraft_token">Получение токена Minecraft</string>
+    <string name="account_login_progress_checking">Проверка токена</string>
     <string name="account_login_no_network">Не подключен к Интернету, вход пропущен!</string>
     <string name="account_login_skip">Авторизация на учетную запись не удалась, хотите ли вы пропустить шаг авторизации?</string>
     <string name="account_no_microsoft_account">Пожалуйста, войдите хотя бы в один лицензионный аккаунт Minecraft, мы не рекомендуем запускать Minecraft без лицензионного аккаунта.</string>
@@ -439,6 +439,8 @@
     <string name="setting_resource_image_cache_desc">При включении лаунчер будет кэшировать обложки и скриншоты ресурсов для более быстрого загрузки в следующий раз</string>
     <string name="setting_download_source_title">Источник загрузки игры</string>
     <string name="setting_download_source_desc">Выберите зеркальный источник загрузки вместо официального</string>
+    <string name="setting_max_download_threads_title">Максимальное количество потоков для загрузки</string>
+    <string name="setting_max_download_threads_desc">При одновременной загрузке нескольких файлов максимальное количество параллельных потоков, но слишком много потоков может привести к затормозкам запуска. 64 потока достаточно!</string>
     <string name="setting_version_isolation_title">Изоляция версии по умолчанию</string>
     <string name="setting_version_isolation_desc">При установке новой версии следует ли по умолчанию выбирать изоляцию версии?</string>
     <string name="setting_set_game_language_title">Автоматическая настройка языка игры</string>
@@ -587,10 +589,10 @@
     <string name="splash_screen_jre21">Среда Java 21, Minecraft 1.20.5+ зависит от Java 21.</string>
     <string name="splash_screen_apply">Согласиться и установить</string>
     <!-- About -->
-    <string name="about_tab">О Zalith Launcher</string>
-    <string name="about_dec1">Zalith Launcher - это лаунчер для Minecraft, разработанный на основе PojavLauncher, который может запускать Minecraft: Java Edition на устройствах Android.</string>
-    <string name="about_dec2">Zalith Launcher направлен на оптимизацию пользовательского опыта, переработку интерфейса приложения и добавление большего количества полезных функций, с целью максимального снижения барьеров для игры, позволяя большему количеству людей легко наслаждаться удовольствием от Minecraft.</string>
-    <string name="about_dec3">Zalith Launcher лицензирован под лицензией GPL 3.0 с открытым исходным кодом, которая обладает "вирусной" природой; любой код, использующий, модифицирующий или производящий библиотеки или программное обеспечение GPL, также должен быть открытым под лицензией GPL. Если вы планируете распространять или делиться этим программным обеспечением, пожалуйста, убедитесь, что вы соблюдаете соответствующие положения лицензии GPL 3.0 с открытым исходным кодом.</string>
+    <string name="about_tab">О %s</string>
+    <string name="about_dec1">%s — это лаунчер Minecraft, основанный на PojavLauncher, который позволяет запускать Minecraft: Java Edition на устройствах Android.</string>
+    <string name="about_dec2">%s ориентирован на оптимизацию пользовательского опыта, переработку интерфейса приложения и добавление более практичных функций, чтобы снизить барьеры для игры и позволить большему количеству людей легко наслаждаться Minecraft.</string>
+    <string name="about_dec3">%s использует лицензию GPL 3.0 с открытым исходным кодом, которая является "вирусной". Любой код, использующий, изменяющий или производный от библиотек или программного обеспечения GPL, также должен использовать лицензию GPL для открытия исходного кода. Если вы собираетесь распространять это программное обеспечение, соблюдайте соответствующие положения лицензии GPL 3.0.</string>
     <string name="about_contributors">Авторы и Благодарности:</string>
     <string name="about_sponsors">Благодарности спонсорам:</string>
     <string name="about_sponsors_desc">Ниже приведены все спонсоры, поддерживающие разработку, огромное спасибо!</string>

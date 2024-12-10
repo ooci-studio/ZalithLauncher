@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Ooci Launcher</string>
     <!-- Zalith Launcher -->
     <string name="generic_close">Close</string>
     <string name="generic_return">Return</string>
@@ -159,7 +158,6 @@
     <string name="controls_unsupported_layout_version">Unsupported control layout version!</string>
     <string name="controls_create_new">Create New Control Layout</string>
     <string name="controls_import_control">Import Control Layout</string>
-    <string name="controls_settings_title">Control Layout Editor Settings</string>
     <string name="controls_settings_button_snapping">Button Snapping</string>
     <string name="controls_settings_button_snapping_distance">Button Snapping Distance</string>
     <string name="controls_info_file_name">File Name:</string>
@@ -177,11 +175,6 @@
     <string name="controls_nothing">There are no control layouts here. Restarting the app will generate a new default layout.</string>
     <string name="replacement_customcontrol">Replace Control Layout</string>
     <string name="custom_control_title">Manage Control Layouts</string>
-    <string name="import_control">Control Layout Name:</string>
-    <string name="import_control_invalid_file">File is invalid or corrupted</string>
-    <string name="import_control_verifying_file">File is being verified, please try again later…</string>
-    <string name="import_control_invalid_name">Name is invalid or file already exists</string>
-    <string name="import_control_done">Import Complete</string>
     <string name="controller_button_a" translatable="false">A</string>
     <string name="controller_button_b" translatable="false">B</string>
     <string name="controller_button_x" translatable="false">X</string>
@@ -271,6 +264,12 @@
     <string name="account_local_account_invalid">Valid usernames only support English letters (both uppercase and lowercase), numbers, and underscores. The length must be between 3 and 16 characters, otherwise the game may not run properly.\nExamples of correct usernames: Name, Name_, Name123\nExamples of incorrect usernames: Name@, N ame, name_name_name_name\nHowever, if you have used relevant mods or plugins to bypass this restriction, you can continue using this name. Otherwise, please rename it!</string>
     <string name="account_login_local_name">Username</string>
     <string name="account_login_start">Start Login!</string>
+    <string name="account_login_microsoft_progress">Logging in to Microsoft account: %s</string>
+    <string name="account_login_progress_access_token">Fetching access token</string>
+    <string name="account_login_progress_xbl_token">Fetching Xbox Live token</string>
+    <string name="account_login_progress_xsts_token">Fetching Xbox Service Security Token</string>
+    <string name="account_login_progress_minecraft_token">Fetching Minecraft token</string>
+    <string name="account_login_progress_checking">Checking token</string>
     <string name="account_login_no_network">Not connected to the internet, login skipped!</string>
     <string name="account_login_skip">Login failed, do you want to skip the login step?</string>
     <string name="account_no_microsoft_account">Please log in with at least one Minecraft premium account, we do not encourage launching Minecraft without a premium account.</string>
@@ -445,6 +444,8 @@
     <string name="setting_resource_image_cache_desc">When enabled, the launcher will cache the cover images and screenshots of resources for faster loading next time</string>
     <string name="setting_download_source_title">Game Download Source</string>
     <string name="setting_download_source_desc">Choose a mirror download source instead of using the official download source</string>
+    <string name="setting_max_download_threads_title">Max Download Threads</string>
+    <string name="setting_max_download_threads_desc">Maximum number of concurrent downloads when downloading multiple files simultaneously, but too many threads will cause launcher lag. 64 threads are sufficient!</string>
     <string name="setting_version_isolation_title">Default Version Isolation</string>
     <string name="setting_version_isolation_desc">When installing a new version, should version isolation be selected by default?</string>
     <string name="setting_set_game_language_title">Auto Set Game Language</string>
@@ -595,10 +596,10 @@
     <string name="splash_screen_jre21">Java 21 environment, Minecraft 1.20.5+ depends on Java 21.</string>
     <string name="splash_screen_apply">Agree and Install</string>
     <!-- About -->
-    <string name="about_tab">About Zalith Launcher</string>
-    <string name="about_dec1">Zalith Launcher is a Minecraft launcher developed based on PojavLauncher, capable of running Minecraft: Java Edition on Android devices.</string>
-    <string name="about_dec2">Zalith Launcher is dedicated to optimizing user experience, redesigning the application interface, and adding more practical features, aiming to lower the barriers to play as much as possible, allowing more people to easily enjoy the fun of Minecraft.</string>
-    <string name="about_dec3">Zalith Launcher is licensed under the GPL 3.0 open source license, which has a "viral" nature; any code that uses, modifies, or derives from GPL libraries or software must also be open-sourced under the GPL license. If you intend to distribute or share this software, please make sure to comply with the relevant provisions of the GPL 3.0 open source license.</string>
+    <string name="about_tab">About %s</string>
+    <string name="about_dec1">%s is a Minecraft launcher based on PojavLauncher that allows Minecraft: Java Edition to run on Android devices.</string>
+    <string name="about_dec2">%s focuses on optimizing user experience, redesigning the application interface, and adding more practical features, aiming to lower the barriers to play and let more people enjoy the fun of Minecraft easily.</string>
+    <string name="about_dec3">%s uses the GPL 3.0 open-source license, which is "viral." Any code that uses, modifies, or derives from GPL libraries or software must also adopt the GPL license for open sourcing. If you intend to distribute this software, please comply with the relevant provisions of the GPL 3.0 open-source license.</string>
     <string name="about_contributors">Contributors and Acknowledgements:</string>
     <string name="about_sponsors">Acknowledgements to Sponsors:</string>
     <string name="about_sponsors_desc">The following are all the sponsors who support the development, thank you very much!</string>

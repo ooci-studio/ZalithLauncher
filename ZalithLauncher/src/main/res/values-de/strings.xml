@@ -158,7 +158,6 @@
     <string name="controls_unsupported_layout_version">Nicht unterstützte Layoutversion!</string>
     <string name="controls_create_new">Neues Steuerungslayout erstellen</string>
     <string name="controls_import_control">Steuerungslayout importieren</string>
-    <string name="controls_settings_title">Einstellungen des Steuerungslayout-Editors</string>
     <string name="controls_settings_button_snapping">Tastenrasterung aktivieren</string>
     <string name="controls_settings_button_snapping_distance">Tastenrasterungsabstand</string>
     <string name="controls_info_file_name">Dateiname:</string>
@@ -176,11 +175,6 @@
     <string name="controls_nothing">Hier gibt es keine Steuerungsraster. Beim Neustart der Anwendung wird ein neues Standard-Steuerungsraster generiert.</string>
     <string name="replacement_customcontrol">Steuerungsraster ersetzen</string>
     <string name="custom_control_title">Steuerungsraster verwalten</string>
-    <string name="import_control">Name des Steuerungsrasters:</string>
-    <string name="import_control_invalid_file">Datei ist ungültig oder beschädigt</string>
-    <string name="import_control_verifying_file">Datei wird überprüft, bitte versuchen Sie es später erneut…</string>
-    <string name="import_control_invalid_name">Name ist ungültig oder die Datei existiert bereits</string>
-    <string name="import_control_done">Import abgeschlossen</string>
     <string name="controller_button_start">Start</string>
     <string name="controller_button_trigger_left">Linker Trigger</string>
     <string name="controller_button_trigger_right">Rechter Trigger</string>
@@ -265,6 +259,12 @@
     <string name="account_local_account_invalid">Gültige Benutzernamen unterstützen nur englische Buchstaben (Groß- und Kleinschreibung), Zahlen und Unterstriche. Die Länge muss zwischen 3 und 16 Zeichen liegen, sonst kann das Spiel nicht ordnungsgemäß ausgeführt werden.\nBeispiele für korrekte Benutzernamen: Name, Name_, Name123\nBeispiele für falsche Benutzernamen: Name@, N ame, name_name_name_name\nJedoch, wenn Sie relevante Mods oder Plugins verwendet haben, um diese Mechanik zu umgehen, können Sie diesen Namen weiterhin verwenden. Ansonsten, bitte umbenennen Sie ihn!</string>
     <string name="account_login_local_name">Benutzername</string>
     <string name="account_login_start">Anmeldung starten!</string>
+    <string name="account_login_microsoft_progress">Anmelden beim Microsoft-Konto: %s</string>
+    <string name="account_login_progress_access_token">Zugriffstoken wird abgerufen</string>
+    <string name="account_login_progress_xbl_token">Xbox Live-Token wird abgerufen</string>
+    <string name="account_login_progress_xsts_token">Xbox Service Security Token wird abgerufen</string>
+    <string name="account_login_progress_minecraft_token">Minecraft-Token wird abgerufen</string>
+    <string name="account_login_progress_checking">Token wird überprüft</string>
     <string name="account_login_no_network">Nicht mit dem Internet verbunden, Login übersprungen!</string>
     <string name="account_login_skip">Anmeldung fehlgeschlagen, möchten Sie den Anmeldeschritt überspringen?</string>
     <string name="account_no_microsoft_account">Bitte melde dich mindestens mit einem offiziellen Minecraft-Konto an. Wir empfehlen nicht, Minecraft ohne offizielles Konto zu starten.</string>
@@ -439,6 +439,8 @@
     <string name="setting_resource_image_cache_desc">Wenn aktiviert, speichert der Launcher die Titelbilder und Screenshots von Ressourcen im Cache, um sie beim nächsten Mal schneller zu laden</string>
     <string name="setting_download_source_title">Spiel-Downloadquelle</string>
     <string name="setting_download_source_desc">Wählen Sie eine Mirror-Downloadquelle anstelle der offiziellen Downloadquelle</string>
+    <string name="setting_max_download_threads_title">Maximale Download-Threads</string>
+    <string name="setting_max_download_threads_desc">Maximale Anzahl von gleichzeitigen Downloads bei gleichzeitigen Downloads mehrerer Dateien, aber zu viele Threads können zu Störungen beim Start führen. 64 Threads sind ausreichend!</string>
     <string name="setting_version_isolation_title">Standardversion-Isolierung</string>
     <string name="setting_version_isolation_desc">Soll bei der Installation einer neuen Version standardmäßig die Versionsisolierung ausgewählt werden?</string>
     <string name="setting_set_game_language_title">Automatische Spielsprachen-Einstellung</string>
@@ -587,10 +589,10 @@
     <string name="splash_screen_jre21">Java 21-Umgebung, Minecraft 1.20.5+ benötigt Java 21.</string>
     <string name="splash_screen_apply">Zustimmen und installieren</string>
     <!-- About -->
-    <string name="about_tab">Über Zalith Launcher</string>
-    <string name="about_dec1">Zalith Launcher ist ein auf PojavLauncher basierender Minecraft-Launcher, der in der Lage ist, Minecraft: Java Edition auf Android-Geräten auszuführen.</string>
-    <string name="about_dec2">Zalith Launcher widmet sich der Optimierung der Benutzererfahrung, hat die Anwendungsoberfläche neu gestaltet und weitere nützliche Funktionen hinzugefügt, um die Hürden für das Spielen so weit wie möglich zu senken, damit mehr Menschen die Freude an Minecraft leicht genießen können.</string>
-    <string name="about_dec3">Zalith Launcher ist unter der GPL 3.0 Open-Source-Lizenz lizenziert, die eine "virale" Natur hat; jeder Code, der GPL-Bibliotheken oder -Software verwendet, modifiziert oder davon abgeleitet wird, muss ebenfalls unter der GPL-Lizenz open-source sein. Wenn Sie beabsichtigen, diese Software zu verbreiten oder zu teilen, stellen Sie bitte sicher, dass Sie die relevanten Bestimmungen der GPL 3.0 Open-Source-Lizenz einhalten.</string>
+    <string name="about_tab">Über %s</string>
+    <string name="about_dec1">%s ist ein Minecraft-Launcher basierend auf PojavLauncher, der es ermöglicht, Minecraft: Java Edition auf Android-Geräten auszuführen.</string>
+    <string name="about_dec2">%s konzentriert sich auf die Optimierung der Benutzererfahrung, die Neugestaltung der Anwendungsoberfläche und das Hinzufügen weiterer praktischer Funktionen, um die Einstiegshürden zu senken und mehr Menschen den einfachen Zugang zum Spaß von Minecraft zu ermöglichen.</string>
+    <string name="about_dec3">%s verwendet die GPL-3.0-Open-Source-Lizenz, die "virale" Eigenschaften hat. Jeder Code, der Bibliotheken oder Software der GPL verwendet, modifiziert oder davon abgeleitet ist, muss ebenfalls die GPL-Lizenz für Open Source verwenden. Wenn Sie beabsichtigen, diese Software zu verbreiten, halten Sie sich bitte an die entsprechenden Bestimmungen der GPL-3.0-Lizenz.</string>
     <string name="about_contributors">Beiträger und Danksagungen:</string>
     <string name="about_sponsors">Danksagungen an Sponsoren:</string>
     <string name="about_sponsors_desc">Hier sind alle Sponsoren, die die Entwicklung unterstützen, vielen Dank!</string>

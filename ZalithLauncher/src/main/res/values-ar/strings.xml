@@ -158,7 +158,6 @@
     <string name="controls_unsupported_layout_version">إصدار تخطيط التحكم غير مدعوم!</string>
     <string name="controls_create_new">إنشاء تخطيط تحكم جديد</string>
     <string name="controls_import_control">استيراد تخطيط التحكم</string>
-    <string name="controls_settings_title">إعدادات محرر تخطيط التحكم</string>
     <string name="controls_settings_button_snapping">ميزة التقاط الأزرار</string>
     <string name="controls_settings_button_snapping_distance">مسافة التقاط الأزرار</string>
     <string name="controls_info_file_name">اسم الملف:</string>
@@ -176,11 +175,6 @@
     <string name="controls_nothing">لا يوجد هنا أي تخطيطات تحكم، سيتم إنشاء تخطيط تحكم افتراضي جديد عند إعادة تشغيل التطبيق</string>
     <string name="replacement_customcontrol">استبدال تخطيط التحكم</string>
     <string name="custom_control_title">إدارة تخطيطات التحكم</string>
-    <string name="import_control">اسم تخطيط التحكم:</string>
-    <string name="import_control_invalid_file">الملف غير صالح أو تالف</string>
-    <string name="import_control_verifying_file">الملف قيد التحقق، يرجى المحاولة مرة أخرى لاحقًا…</string>
-    <string name="import_control_invalid_name">الاسم غير صالح أو الملف موجود بالفعل</string>
-    <string name="import_control_done">اكتمال الاستيراد</string>
     <string name="controller_button_start">بدء</string>
     <string name="controller_button_trigger_left">زر الزناد الأيسر</string>
     <string name="controller_button_trigger_right">زر الزناد الأيمن</string>
@@ -265,6 +259,12 @@
     <string name="account_local_account_invalid">الأسماء صحيحة للمستخدمين تدعم فقط الحروف الإنجليزية (كبيرة وصغيرة) والأرقام والخطوط السفلية. يجب أن يكون طولها بين 3 و 16 حرفا، وإلا فقد يفشل تشغيل اللعبة.\nأمثلة على الأسماء صحيحة: Name, Name_, Name123\nأمثلة على أسماء خاطئة: Name@, N ame, name_name_name_name\nلكن إذا كنت قد استخدمت مودز أو إضافات ذات صلة لتفويض هذا القيد، فيمكنك الاستمرار في استخدام هذا الاسم. وإلا، يرجى إعادة التسمية!</string>
     <string name="account_login_local_name">اسم المستخدم</string>
     <string name="account_login_start">بدء تسجيل الدخول!</string>
+    <string name="account_login_microsoft_progress">جاري تسجيل الدخول إلى حساب Microsoft: %s</string>
+    <string name="account_login_progress_access_token">جاري الحصول على رمز الوصول</string>
+    <string name="account_login_progress_xbl_token">جاري الحصول على رمز Xbox Live</string>
+    <string name="account_login_progress_xsts_token">جاري الحصول على رمز الأمان لخدمة Xbox</string>
+    <string name="account_login_progress_minecraft_token">جاري الحصول على رمز Minecraft</string>
+    <string name="account_login_progress_checking">جاري التحقق من الرمز</string>
     <string name="account_login_no_network">غير متصل إلى الإنترنت، تم تخطي تسجيل الدخول!</string>
     <string name="account_login_skip">فشل الدخول إلى الحساب، هل تريد تجاوز خطوة الدخول؟</string>
     <string name="account_no_microsoft_account">يرجى تسجيل الدخول إلى حساب Minecraft الأصلي على الأقل، لا نشجع المستخدمين على تشغيل Minecraft بدون حساب أصلي.</string>
@@ -439,6 +439,8 @@
     <string name="setting_resource_image_cache_desc">عند التفعيل، سيقوم المشغل بتخزين صور غلاف الموارد ولقطات الشاشة مؤقتًا لتحميلها بشكل أسرع في المرة القادمة</string>
     <string name="setting_download_source_title">مصدر تنزيل اللعبة</string>
     <string name="setting_download_source_desc">اختيار مصدر تنزيل مرآة بدلاً من استخدام المصدر الرسمي</string>
+    <string name="setting_max_download_threads_title">عدد الحلقات الأقصى لتنزيل الملفات</string>
+    <string name="setting_max_download_threads_desc">عدد الحد الأقصى لتنزيلات متزامنة عند تنزيل عدة ملفات في وقت واحد، لكن الكثير من الخيوط سيؤدي إلى تباطؤ البداية. 64 خيط كافية!</string>
     <string name="setting_version_isolation_title">عزل الإصدار الافتراضي</string>
     <string name="setting_version_isolation_desc">عند تثبيت إصدار جديد، هل يجب اختيار العزل الافتراضي للإصدار؟</string>
     <string name="setting_set_game_language_title">ضبط لغة اللعبة تلقائيًا</string>
@@ -587,10 +589,10 @@
     <string name="splash_screen_jre21">بيئة Java 21، يعتمد Minecraft 1.20.5+ على Java 21.</string>
     <string name="splash_screen_apply">موافقة وتثبيت</string>
     <!-- About -->
-    <string name="about_tab">حول Zalith Launcher</string>
-    <string name="about_dec1">زاليث لانشر هو مشغل ماينكرافت تم تطويره بناءً على بوجافلانشر، قادر على تشغيل ماينكرافت: إصدار Java على أجهزة أندرويد.</string>
-    <string name="about_dec2">يكرس زاليث لانشر جهوده لتحسين تجربة المستخدم، وإعادة تصميم واجهة التطبيق، وإضافة المزيد من الميزات العملية، بهدف تقليل حواجز اللعب قدر الإمكان، مما يسمح لمزيد من الناس بالاستمتاع بسهولة بمتعة ماينكرافت.</string>
-    <string name="about_dec3">زاليث لانشر مرخص بموجب رخصة GPL 3.0 مفتوحة المصدر، والتي لها طبيعة "فيروسية"; يجب أن يتم أيضًا فتح مصدر أي كود يستخدم أو يعدل أو يستمد من مكتبات أو برامج GPL تحت رخصة GPL. إذا كنت تنوي توزيع أو مشاركة هذا البرنامج، يرجى التأكد من الامتثال للأحكام ذات الصلة برخصة GPL 3.0 مفتوحة المصدر.</string>
+    <string name="about_tab">حول %s</string>
+    <string name="about_dec1">%s هو مشغل Minecraft يعتمد على PojavLauncher ويسمح بتشغيل Minecraft: Java Edition على أجهزة Android.</string>
+    <string name="about_dec2">%s يركز على تحسين تجربة المستخدم، وإعادة تصميم واجهة التطبيق، وإضافة المزيد من الميزات العملية بهدف تقليل عوائق اللعب وجعل المزيد من الأشخاص يستمتعون بمتعة Minecraft بسهولة.</string>
+    <string name="about_dec3">%s يستخدم رخصة المصدر المفتوح GPL 3.0، التي تعتبر "معدية". أي كود يستخدم أو يعدل أو يشتق من مكتبات أو برامج GPL يجب أن يعتمد أيضًا رخصة GPL للمصدر المفتوح. إذا كنت تنوي توزيع هذا البرنامج، يرجى الالتزام بأحكام رخصة المصدر المفتوح GPL 3.0.</string>
     <string name="about_contributors">المساهمون والتقديرات:</string>
     <string name="about_sponsors">شكر خاص للجهات الراعية:</string>
     <string name="about_sponsors_desc">هؤلاء هم جميع الرعاة الذين يدعمون التطوير، شكرًا جزيلًا لكم!</string>

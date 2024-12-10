@@ -34,6 +34,7 @@ import com.movtery.zalithlauncher.event.single.PageOpacityChangeEvent;
 import com.movtery.zalithlauncher.event.single.SwapToLoginEvent;
 import com.movtery.zalithlauncher.event.sticky.InstallingVersionEvent;
 import com.movtery.zalithlauncher.event.sticky.MinecraftVersionValueEvent;
+import com.movtery.zalithlauncher.event.value.DownloadProgressKeyEvent;
 import com.movtery.zalithlauncher.event.value.InDownloadFragmentEvent;
 import com.movtery.zalithlauncher.event.value.InstallGameEvent;
 import com.movtery.zalithlauncher.event.value.InstallLocalModpackEvent;
@@ -202,8 +203,7 @@ public class LauncherActivity extends BaseActivity {
     @Subscribe()
     public void event(MicrosoftLoginEvent event) {
         new MicrosoftBackgroundLogin(false, event.getUri().getQueryParameter("code")).performLogin(
-                null,
-                accountsManager.getProgressListener(),
+                this, null,
                 accountsManager.getDoneListener(),
                 accountsManager.getErrorListener()
         );
@@ -305,6 +305,15 @@ public class LauncherActivity extends BaseActivity {
         new GameInstaller(this, event).installGame();
     }
 
+    @Subscribe()
+    public void event(DownloadProgressKeyEvent event) {
+        if (event.getObserve()) {
+            binding.progressLayout.observe(event.getProgressKey());
+        } else {
+            binding.progressLayout.unObserve(event.getProgressKey());
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -398,6 +407,7 @@ public class LauncherActivity extends BaseActivity {
                 Tools.backToMainMenu(this);
             }
         });
+        binding.appTitleText.setText(PojavApplication.getKey());
         binding.appTitleText.setOnClickListener(v ->
                 binding.appTitleText.setText(StringUtils.shiftString(binding.appTitleText.getText().toString(), ShiftDirection.RIGHT, 1))
         );
@@ -442,7 +452,6 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ContextExecutor.setActivity(this);
         setPageOpacity();
         //避免切换回来的时候，找不到账号，应该在这里刷新账户
         accountsManager.reload();

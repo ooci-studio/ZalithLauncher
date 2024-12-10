@@ -2,15 +2,14 @@ package com.movtery.zalithlauncher.ui.fragment.settings.wrapper
 
 import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
-import com.movtery.zalithlauncher.setting.SettingUnit
-import com.movtery.zalithlauncher.setting.Settings
+import com.movtery.zalithlauncher.listener.SimpleTextWatcher
+import com.movtery.zalithlauncher.setting.unit.StringSettingUnit
 
 class EditTextSettingsWrapper(
-    private val unit: SettingUnit<String>,
+    private val unit: StringSettingUnit,
     val mainView: View,
     editText: EditText
 ) : AbstractSettingsWrapper(mainView) {
@@ -26,25 +25,9 @@ class EditTextSettingsWrapper(
                 false
             }
 
-            addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    before: Int,
-                    count: Int
-                ) {
-                }
-
-                override fun afterTextChanged(s: Editable) {
-                    Settings.Manager.put(unit, s).save()
+            addTextChangedListener(object : SimpleTextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    unit.put(s.toString()).save()
                     listener?.onChanged(s.toString())
                 }
             })

@@ -1,8 +1,8 @@
 package com.movtery.zalithlauncher.feature.accounts;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +18,6 @@ import com.movtery.zalithlauncher.utils.path.PathManager;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.authenticator.listener.DoneListener;
 import net.kdt.pojavlaunch.authenticator.listener.ErrorListener;
-import net.kdt.pojavlaunch.authenticator.listener.ProgressListener;
 import net.kdt.pojavlaunch.authenticator.microsoft.PresentedException;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 
@@ -30,12 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class AccountsManager {
-    private final static int MAX_LOGIN_STEP = 5;
     @SuppressLint("StaticFieldLeak")
     private static volatile AccountsManager accountsManager;
     private final List<MinecraftAccount> accounts = new ArrayList<>();
-    private ObjectAnimator mLoginBarAnimator;
-    private ProgressListener mProgressListener;
     private DoneListener mDoneListener;
     private ErrorListener mErrorListener;
 
@@ -59,19 +55,6 @@ public final class AccountsManager {
 
     @SuppressLint("ObjectAnimatorBinding")
     private void initListener() {
-        mProgressListener = step -> {
-            // Animate the login bar, cosmetic purposes only
-            float mLoginBarWidth = -1;
-            float value = (float) Tools.currentDisplayMetrics.widthPixels / MAX_LOGIN_STEP;
-            if (mLoginBarAnimator != null) {
-                mLoginBarAnimator.cancel();
-                mLoginBarAnimator.setFloatValues(mLoginBarWidth, value * step);
-            } else {
-                mLoginBarAnimator = ObjectAnimator.ofFloat(this, "LoginBarWidth", mLoginBarWidth, value * step);
-            }
-            mLoginBarAnimator.start();
-        };
-
         mDoneListener = account -> {
             TaskExecutors.runInUIThread(() -> ContextExecutor.showToast(R.string.account_login_done, Toast.LENGTH_SHORT));
 
@@ -103,23 +86,23 @@ public final class AccountsManager {
         });
     }
 
-    public void performLogin(MinecraftAccount minecraftAccount) {
-        performLogin(minecraftAccount, getDoneListener(), getErrorListener());
+    public void performLogin(final Context context, MinecraftAccount minecraftAccount) {
+        performLogin(context, minecraftAccount, getDoneListener(), getErrorListener());
     }
 
-    public void performLogin(MinecraftAccount minecraftAccount, DoneListener doneListener, ErrorListener errorListener) {
+    public void performLogin(final Context context, MinecraftAccount minecraftAccount, DoneListener doneListener, ErrorListener errorListener) {
         if (AccountUtils.isNoLoginRequired(minecraftAccount)) {
             doneListener.onLoginDone(minecraftAccount);
             return;
         }
 
         if (AccountUtils.isOtherLoginAccount(minecraftAccount)) {
-            AccountUtils.otherLogin(ContextExecutor.getApplication(), minecraftAccount, doneListener, errorListener);
+            AccountUtils.otherLogin(context, minecraftAccount, doneListener, errorListener);
             return;
         }
 
         if (AccountUtils.isMicrosoftAccount(minecraftAccount)) {
-            AccountUtils.microsoftLogin(minecraftAccount, doneListener, errorListener);
+            AccountUtils.microsoftLogin(context, minecraftAccount, doneListener, errorListener);
         }
     }
 
@@ -170,10 +153,6 @@ public final class AccountsManager {
     public void setCurrentAccount(@NonNull MinecraftAccount account) {
         AllSettings.getCurrentAccount().put(account.getUniqueUUID()).save();
         EventBus.getDefault().post(new AccountUpdateEvent());
-    }
-
-    public ProgressListener getProgressListener() {
-        return mProgressListener;
     }
 
     public DoneListener getDoneListener() {
