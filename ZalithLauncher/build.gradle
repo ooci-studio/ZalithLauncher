@@ -53,7 +53,7 @@ android {
         versionCode 138000
         versionName "1.3.8"
         multiDexEnabled true //important
-        resValue 'string', 'generic_yiza', System.getenv("SANPMU")
+        resValue 'string', 'generic_yiza', 'T29jaUxhdW5jaGVy'
         resValue 'string', 'curseforge_api_key', getCFApiKey()
     }
 
