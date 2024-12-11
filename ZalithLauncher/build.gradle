@@ -23,7 +23,7 @@ configurations {
 }
 
 android {
-    def nameId = "com.movtery.zalithlauncher"
+    def nameId = "co.ooci.zalithlauncher"
 
     namespace nameId
 
