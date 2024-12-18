@@ -45,6 +45,11 @@
     <string name="generic_input_too_small">القيمة المدخلة صغيرة جدًا، يجب أن تكون على الأقل %s</string>
     <string name="generic_input_too_big">القيمة المدخلة كبيرة جدًا، يجب أن تكون على الأكثر %s</string>
     <string name="generic_copied">تم النسخ</string>
+    <string name="generic_release">الإصدار الرسمي</string>
+    <string name="generic_debug">إصدار تجريبي</string>
+    <string name="generic_pre_release">إصدار ما قبل النشر</string>
+    <string name="generic_beta">نسخة بيتا</string>
+    <string name="generic_alpha">نسخة ألفا</string>
     <!-- Error -->
     <string name="error_fatal">حدث انهيار غير متوقع في %s</string>
     <string name="error_no_version">لا توجد نسخة!</string>
@@ -67,7 +72,6 @@
     <string name="customctrl_editor_exit_msg">هل أنت متأكد من الخروج؟</string>
     <string name="customctrl_editor_exit">الخروج من المحرر</string>
     <string name="global_save_and_exit">حفظ والخروج</string>
-    <string name="version_release">الإصدار الرسمي</string>
     <string name="version_snapshot">الإصدار المبدئي</string>
     <string name="version_alpha">إصدار ألفا</string>
     <string name="version_beta">إصدار بيتا</string>
@@ -76,7 +80,7 @@
     <string name="memory_warning_msg">الذاكرة المتاحة حاليًا (%d) أقل من الذاكرة المخصصة (%d)، مما قد يؤدي إلى تعطل اللعبة، إذا تعطلت اللعبة، يرجى تغيير الإعدادات!</string>
     <string name="address_memory_warning_msg">المساحة الحرة المتاحة (%d) أقل من الذاكرة المخصصة (%d)، مما يؤدي إلى التعطل، إذا تعطلت اللعبة، يرجى ضبط تخصيص الذاكرة.</string>
     <string name="notif_channel_name">عام</string>
-    <string name="lazy_service_default_title">خدمة مكتب Zalith الأمامية</string>
+    <string name="lazy_service_default_title">خدمة مكتب %s الأمامية</string>
     <string name="progresslayout_tasks_in_progress">%d مهمة قيد التنفيذ</string>
     <string name="notification_terminate">إنهاء</string>
     <string name="notification_game_runs">اللعبة تعمل!</string>
@@ -89,6 +93,7 @@
     <string name="version_select_hint">اختيار الإصدار</string>
     <string name="notif_error_occured">حدث خطأ</string>
     <string name="notif_error_occured_desc">انقر لعرض التفاصيل</string>
+    <string name="input_preview_tip">معاينة مربع الإدخال، التقاط إدخال لوحة المفاتيح الافتراضية، للمرجعية فقط:</string>
     <string name="dl_tampered_manifest_title">تحذير التحقق من الملف</string>
     <string name="dl_tampered_manifest"><![CDATA[قائمة إصدارات اللعبة على مصدر التصوير لا تتطابق مع قائمة إصدارات Mojang الرسمية، مما يعني أنها قد تكون معدلة<br/>
         <b>هذا ليس آمنًا. إذا استمريت، قد تكون معلوماتك الشخصية في خطر!</b><br/>
@@ -239,6 +244,7 @@
     <string name="pedit_isolation_enabled">تمكين عزل الإصدارات</string>
     <string name="pedit_reset_icon">سيتم إعادة تعيين الرمز المخصص الذي قمت بتحديده، وهذه العملية لا يمكن التراجع عنها. هل أنت متأكد أنك تريد إعادة تعيين رمز النسخة؟</string>
     <string name="pedit_control">تخطيط التحكم</string>
+    <string name="pedit_custom_path">مسار مخصص</string>
     <string name="pedit_default">(استخدام القيمة الافتراضية العامة)</string>
     <string name="profile_mods_download_mod">تنزيل Mod</string>
     <string name="profile_mods_download_mod_release_version">عرض إصدارات Minecraft الرسمية فقط</string>
@@ -513,8 +519,7 @@
     <string name="download_info_date">تاريخ الإنشاء:</string>
     <string name="download_info_modloader">متوافق مع:</string>
     <string name="download_info_dependencies">نوع الاعتماد:</string>
-    <string name="download_info_release_type_beta">نسخة تجريبية</string>
-    <string name="download_info_release_type_alpha">نسخة ألفا</string>
+    <string name="download_info_load_screenshot">إظهار لقطة الشاشة</string>
     <string name="download_search_failed">فشل في البحث عن الموارد!</string>
     <string name="download_search_no_result">لم يتم العثور على موارد ذات صلة!</string>
     <string name="download_search_platform_not_supported">المنصة الحالية لا تدعم تنزيل هذا النوع من الموارد، أو لا تدعم تصفية الفئات هذه!</string>
@@ -611,8 +616,6 @@
     <string name="about_version_code">رمز إصدار البرنامج:</string>
     <string name="about_last_update_time">آخر وقت تحديث:</string>
     <string name="about_version_status">حالة الإصدار:</string>
-    <string name="about_version_status_debug">إصدار تجريبي</string>
-    <string name="about_version_status_pre_release">إصدار مسبق</string>
     <!-- Newbie Guide -->
     <string name="newbie_guide_general_close">يمكنك النقر على هذا الزر للإغلاق والعودة إلى الواجهة السابقة.</string>
     <string name="newbie_guide_general_refresh">يمكنك النقر على هذا الزر لتحديث المحتوى الحالي.</string>
@@ -629,6 +632,7 @@
     <string name="newbie_guide_mod_search">انقر لاستدعاء مربع البحث، واستخدمه للعثور على الوحدة النمطية التي تبحث عنها بسرعة.</string>
     <string name="newbie_guide_mod_import">حدد ملف وحدة نمطية في مدير الملفات الأصلي لاستيراده إلى مجلد الوحدات النمطية الحالي.</string>
     <string name="newbie_guide_mod_download">انقر للدخول إلى صفحة تنزيل الوحدات النمطية، حيث يمكنك البحث عن الوحدات النمطية وتنزيلها عبر الإنترنت.</string>
+    <string name="newbie_guide_game_menu">يمكنك سحب نافذة القائمة العائمة إلى أي مكان على الشاشة.</string>
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">دعم تطويري</string>
     <string name="request_sponsorship_message">تم تطوير وصيانة معظم محتويات هذا البرنامج بواسطتي وحدي. إذا كنت تجد هذا البرنامج مفيدًا بالنسبة لك وكان بإمكانك، أرجو أن تفكر في رعايتي لإعطائي المزيد من الدافع لمواصلة التطوير والتحسين، شكرًا لدعمك!</string>

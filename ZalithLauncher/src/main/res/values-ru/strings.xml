@@ -45,6 +45,11 @@
     <string name="generic_input_too_small">Введенное значение слишком маленькое, минимум %s</string>
     <string name="generic_input_too_big">Введенное значение слишком большое, максимум %s</string>
     <string name="generic_copied">Скопировано</string>
+    <string name="generic_release">Официальная версия</string>
+    <string name="generic_debug">Тестовая версия</string>
+    <string name="generic_pre_release">Предрелизная версия</string>
+    <string name="generic_beta">Бета-версия</string>
+    <string name="generic_alpha">Альфа-версия</string>
     <!-- Error -->
     <string name="error_fatal">%s неожиданно завершил работу</string>
     <string name="error_no_version">Версия не найдена!</string>
@@ -67,7 +72,6 @@
     <string name="customctrl_editor_exit_msg">Вы уверены, что хотите выйти?</string>
     <string name="customctrl_editor_exit">Выйти из редактора</string>
     <string name="global_save_and_exit">Сохранить и выйти</string>
-    <string name="version_release">Релиз</string>
     <string name="version_snapshot">Снимок</string>
     <string name="version_alpha">Альфа</string>
     <string name="version_beta">Бета</string>
@@ -76,7 +80,7 @@
     <string name="memory_warning_msg">Доступная память (%d) ниже выделенной (%d), это может привести к сбою игры. Если игра закроется, измените конфигурацию!</string>
     <string name="address_memory_warning_msg">Доступное свободное пространство памяти (%d) ниже выделенного (%d), это приведет к сбою. Если игра закроется, отрегулируйте выделение памяти.</string>
     <string name="notif_channel_name">Обычный</string>
-    <string name="lazy_service_default_title">Служба ресепшн Zalith</string>
+    <string name="lazy_service_default_title">Служба ресепшн %s</string>
     <string name="progresslayout_tasks_in_progress">%d задач в процессе</string>
     <string name="notification_terminate">Завершить</string>
     <string name="notification_game_runs">Игра запущена!</string>
@@ -89,6 +93,7 @@
     <string name="version_select_hint">Выберите версию</string>
     <string name="notif_error_occured">Произошла ошибка</string>
     <string name="notif_error_occured_desc">Нажмите, чтобы увидеть подробности</string>
+    <string name="input_preview_tip">Предварительный просмотр ввода, перехват ввода с экранной клавиатуры, только для справки:</string>
     <string name="dl_tampered_manifest_title">Предупреждение о проверке файла</string>
     <string name="dl_tampered_manifest"><![CDATA[Список версий игры на зеркальном источнике не соответствует официальному списку версий Mojang, что может указывать на возможность подделки.<br/>
         <b>Это небезопасно. Если вы продолжите, ваши личные данные могут быть под угрозой!</b><br/>
@@ -239,6 +244,7 @@
     <string name="pedit_isolation_enabled">Включить изоляцию версий</string>
     <string name="pedit_reset_icon">Это сбросит установленную вами пользовательскую иконку, и операция необратима. Вы уверены, что хотите сбросить иконку версии?</string>
     <string name="pedit_control">Раскладка управления</string>
+    <string name="pedit_custom_path">Пользовательский путь</string>
     <string name="pedit_default">(Использовать глобальное значение по умолчанию)</string>
     <string name="profile_mods_download_mod">Скачать мод</string>
     <string name="profile_mods_download_mod_release_version">Показывать только официальные версии Minecraft</string>
@@ -513,8 +519,7 @@
     <string name="download_info_date">Дата создания:</string>
     <string name="download_info_modloader">Совместимость с:</string>
     <string name="download_info_dependencies">Тип зависимости:</string>
-    <string name="download_info_release_type_beta">Бета</string>
-    <string name="download_info_release_type_alpha">Альфа</string>
+    <string name="download_info_load_screenshot">Показать снимок экрана</string>
     <string name="download_search_failed">Не удалось найти ресурсы!</string>
     <string name="download_search_no_result">Связанные ресурсы не найдены!</string>
     <string name="download_search_platform_not_supported">Текущая платформа не поддерживает загрузку этого типа ресурса или фильтрацию этой категории!</string>
@@ -611,8 +616,6 @@
     <string name="about_version_code">Код версии программного обеспечения:</string>
     <string name="about_last_update_time">Дата последнего обновления:</string>
     <string name="about_version_status">Статус версии:</string>
-    <string name="about_version_status_debug">Отладочная версия</string>
-    <string name="about_version_status_pre_release">Предварительная версия</string>
     <!-- Newbie Guide -->
     <string name="newbie_guide_general_close">Нажмите эту кнопку, чтобы закрыть и вернуться на предыдущий экран.</string>
     <string name="newbie_guide_general_refresh">Нажмите эту кнопку, чтобы обновить текущее содержимое.</string>
@@ -629,6 +632,7 @@
     <string name="newbie_guide_mod_search">Нажмите, чтобы вызвать панель поиска, с её помощью вы сможете быстро найти нужный вам мод.</string>
     <string name="newbie_guide_mod_import">Выберите файл мода в нативный файловом менеджере, чтобы импортировать его в текущую папку модов.</string>
     <string name="newbie_guide_mod_download">Нажмите, чтобы перейти на страницу загрузки модов, где вы можете искать и загружать моды онлайн.</string>
+    <string name="newbie_guide_game_menu">Вы можете переместить плавающее окно игрового меню в любое место на экране.</string>
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">Поддержите мою разработку</string>
     <string name="request_sponsorship_message">Большую часть этого программного обеспечения разработал и поддерживаю только я. Если вы считаете, что это программное обеспечение полезно для вас и у вас есть возможность, пожалуйста, рассмотрите возможность поддержки меня, чтобы у меня было больше мотивации продолжать разработку и улучшение. Спасибо за вашу поддержку!</string>

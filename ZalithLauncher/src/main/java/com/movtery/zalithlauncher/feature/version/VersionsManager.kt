@@ -3,6 +3,8 @@ package com.movtery.zalithlauncher.feature.version
 import android.content.Context
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.event.single.RefreshVersionsEvent
+import com.movtery.zalithlauncher.event.single.RefreshVersionsEvent.MODE.END
+import com.movtery.zalithlauncher.event.single.RefreshVersionsEvent.MODE.START
 import com.movtery.zalithlauncher.event.sticky.InstallingVersionEvent
 import com.movtery.zalithlauncher.feature.customprofilepath.ProfilePathHome
 import com.movtery.zalithlauncher.feature.log.Logging
@@ -61,6 +63,8 @@ object VersionsManager {
 
     private suspend fun refreshWithMutex() {
         refreshMutex.withLock {
+            EventBus.getDefault().post(RefreshVersionsEvent(START))
+
             try {
                 versions.clear()
 
@@ -125,7 +129,7 @@ object VersionsManager {
                 }.execute()
             } finally {
                 //使用事件通知版本已刷新
-                EventBus.getDefault().post(RefreshVersionsEvent())
+                EventBus.getDefault().post(RefreshVersionsEvent(END))
             }
         }
     }
@@ -303,11 +307,11 @@ object VersionsManager {
                     copyVersion(version, string, checked)
                 }.beforeStart(TaskExecutors.getAndroidUI()) {
                     dialog.show()
-                }.ended(TaskExecutors.getAndroidUI()) {
-                    dialog.dismiss()
-                    refresh()
                 }.onThrowable { e ->
                     Tools.showErrorRemote(e)
+                }.finallyTask(TaskExecutors.getAndroidUI()) {
+                    dialog.dismiss()
+                    refresh()
                 }.execute()
                 true
             }.buildDialog()
@@ -352,6 +356,7 @@ object VersionsManager {
         //保存版本配置文件
         version.getVersionConfig().copy().let { config ->
             config.setVersionPath(newVersion)
+            config.setIsolation(true)
             config.saveWithThrowable()
         }
     }

@@ -45,6 +45,11 @@
     <string name="generic_input_too_small">La valeur saisie est trop petite, elle doit être au moins %s</string>
     <string name="generic_input_too_big">La valeur saisie est trop grande, elle ne peut être que %s</string>
     <string name="generic_copied">Copié</string>
+    <string name="generic_release">Version officielle</string>
+    <string name="generic_debug">Version de test</string>
+    <string name="generic_pre_release">Version préliminaire</string>
+    <string name="generic_beta">Version bêta</string>
+    <string name="generic_alpha">Version alpha</string>
     <!-- Error -->
     <string name="error_fatal">%s a rencontré une erreur fatale</string>
     <string name="error_no_version">Aucune version disponible !</string>
@@ -67,7 +72,6 @@
     <string name="customctrl_editor_exit_msg">Êtes-vous sûr de vouloir quitter ?</string>
     <string name="customctrl_editor_exit">Quitter l\'éditeur</string>
     <string name="global_save_and_exit">Sauvegarder et quitter</string>
-    <string name="version_release">Version officielle</string>
     <string name="version_snapshot">Version snapshot</string>
     <string name="version_alpha">Version Alpha</string>
     <string name="version_beta">Version Beta</string>
@@ -76,7 +80,7 @@
     <string name="memory_warning_msg">La mémoire disponible actuelle (%d) est inférieure à la mémoire allouée (%d), ce qui pourrait entraîner un plantage du jeu. Si le jeu plante, veuillez modifier la configuration !</string>
     <string name="address_memory_warning_msg">L\'espace mémoire libre disponible (%d) est inférieur à la mémoire allouée (%d), ce qui entraînera un plantage. Si le jeu plante, veuillez ajuster l\'allocation de mémoire.</string>
     <string name="notif_channel_name">Général</string>
-    <string name="lazy_service_default_title">Service de Réception Zalith</string>
+    <string name="lazy_service_default_title">Service de Réception %s</string>
     <string name="progresslayout_tasks_in_progress">%d tâches en cours</string>
     <string name="notification_terminate">Terminer</string>
     <string name="notification_game_runs">Le jeu est en cours d\'exécution !</string>
@@ -89,6 +93,7 @@
     <string name="version_select_hint">Sélectionner une version</string>
     <string name="notif_error_occured">Une erreur est survenue</string>
     <string name="notif_error_occured_desc">Cliquez pour voir les détails</string>
+    <string name="input_preview_tip">Aperçu du champ de saisie, capture l\'entrée du clavier virtuel, à titre de référence uniquement :</string>
     <string name="dl_tampered_manifest_title">Avertissement de vérification de fichier</string>
     <string name="dl_tampered_manifest"><![CDATA[La liste des versions de jeu sur la source miroir ne correspond pas à celle de Mojang, ce qui signifie qu\'elle pourrait avoir été modifiée.<br/>
         <b>Cela n\'est pas sûr. Si vous continuez, vos informations personnelles pourraient être en danger !</b><br/>
@@ -239,6 +244,7 @@
     <string name="pedit_isolation_enabled">Activer l\'isolement des versions</string>
     <string name="pedit_reset_icon">Cela réinitialisera l\'icône personnalisée que vous avez définie, et l\'opération est irréversible. Êtes-vous sûr de vouloir réinitialiser l\'icône de la version ?</string>
     <string name="pedit_control">Disposition de contrôle</string>
+    <string name="pedit_custom_path">Chemin personnalisé</string>
     <string name="pedit_default">(Utiliser la valeur par défaut globale)</string>
     <string name="profile_mods_download_mod">Télécharger le Mod</string>
     <string name="profile_mods_download_mod_release_version">Afficher uniquement les versions officielles de Minecraft</string>
@@ -513,8 +519,7 @@
     <string name="download_info_date">Date de création:</string>
     <string name="download_info_modloader">Compatible avec:</string>
     <string name="download_info_dependencies">Type de dépendance:</string>
-    <string name="download_info_release_type_beta">Bêta</string>
-    <string name="download_info_release_type_alpha">Alpha</string>
+    <string name="download_info_load_screenshot">Afficher la capture d\'écran</string>
     <string name="download_search_failed">Échec de la recherche de ressources!</string>
     <string name="download_search_no_result">Aucune ressource correspondante trouvée!</string>
     <string name="download_search_platform_not_supported">La plateforme actuelle ne prend pas en charge le téléchargement de ce type de ressource ou ce filtre de catégorie!</string>
@@ -611,8 +616,6 @@
     <string name="about_version_code">Code de version du logiciel :</string>
     <string name="about_last_update_time">Dernière date de mise à jour :</string>
     <string name="about_version_status">État de la version :</string>
-    <string name="about_version_status_debug">Version de test</string>
-    <string name="about_version_status_pre_release">Version préliminaire</string>
     <!-- Newbie Guide -->
     <string name="newbie_guide_general_close">Vous pouvez cliquer sur ce bouton pour fermer et revenir à l\'écran précédent.</string>
     <string name="newbie_guide_general_refresh">Vous pouvez cliquer sur ce bouton pour actualiser le contenu actuel.</string>
@@ -629,6 +632,7 @@
     <string name="newbie_guide_mod_search">Cliquez pour invoquer la barre de recherche et utilisez-la pour trouver rapidement le mod que vous recherchez.</string>
     <string name="newbie_guide_mod_import">Sélectionnez un fichier de mod dans le gestionnaire de fichiers natif pour l\'importer dans le dossier de mods actuel.</string>
     <string name="newbie_guide_mod_download">Cliquez pour accéder à la page de téléchargement de mods, où vous pouvez rechercher et télécharger des mods en ligne.</string>
+    <string name="newbie_guide_game_menu">Vous pouvez déplacer la fenêtre flottante du menu de jeu à n\'importe quel endroit de l\'écran.</string>
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">Soutenez mon développement</string>
     <string name="request_sponsorship_message">La plupart du contenu de ce logiciel a été développé et maintenu par moi seul. Si vous trouvez ce logiciel utile et que vos conditions le permettent, j\'espère que vous pourrez envisager de me parrainer pour que j\'ai plus de motivation à continuer à développer et à améliorer, merci pour votre soutien !</string>

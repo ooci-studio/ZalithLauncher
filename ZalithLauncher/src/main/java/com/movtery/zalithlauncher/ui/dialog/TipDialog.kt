@@ -1,12 +1,15 @@
 package com.movtery.zalithlauncher.ui.dialog
 
 import android.content.Context
+import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.TextView
 import androidx.annotation.CheckResult
 import com.movtery.zalithlauncher.databinding.DialogTipBinding
 import com.movtery.zalithlauncher.ui.dialog.DraggableDialog.DialogInitializationListener
+
 
 class TipDialog private constructor(
     context: Context,
@@ -19,6 +22,7 @@ class TipDialog private constructor(
     showCancel: Boolean,
     showConfirm: Boolean,
     centerMessage: Boolean,
+    private val warning: Boolean,
     private val cancelListener: OnCancelClickListener?,
     private val confirmListener: OnConfirmClickListener?,
     private val dismissListener: OnDialogDismissListener?
@@ -26,30 +30,44 @@ class TipDialog private constructor(
     private val binding = DialogTipBinding.inflate(layoutInflater)
 
     init {
-        setContentView(binding.root)
-        DraggableDialog.initDialog(this)
-
-        title?.apply { binding.titleView.text = this }
-        message?.apply { binding.messageView.text = this }
-        cancel?.apply { binding.cancelButton.text = this }
-        confirm?.apply { binding.confirmButton.text = this }
-        if (centerMessage) binding.messageView.gravity = Gravity.CENTER_HORIZONTAL
-        if (showCheckBox) {
-            binding.checkBox.visibility = View.VISIBLE
-            checkBoxText?.let { binding.checkBox.text = it }
+        fun TextView.addText(textString: String?) {
+            this.text = textString
+            textString ?: run { this.visibility = View.GONE }
         }
 
-        binding.cancelButton.setOnClickListener {
-            cancelListener?.onCancelClick()
-            this.dismiss()
-        }
-        binding.confirmButton.setOnClickListener {
-            confirmListener?.onConfirmClick(binding.checkBox.isChecked)
-            this.dismiss()
-        }
+        binding.apply {
+            setContentView(root)
+            DraggableDialog.initDialog(this@TipDialog)
 
-        binding.cancelButton.visibility = if (showCancel) View.VISIBLE else View.GONE
-        binding.confirmButton.visibility = if (showConfirm) View.VISIBLE else View.GONE
+            titleView.addText(title)
+            messageView.addText(message)
+
+            cancel?.apply { cancelButton.text = this }
+            confirm?.apply { confirmButton.text = this }
+            if (centerMessage) messageView.gravity = Gravity.CENTER_HORIZONTAL
+            if (showCheckBox) {
+                checkBox.visibility = View.VISIBLE
+                checkBoxText?.let { checkBox.text = it }
+            }
+
+            cancelButton.setOnClickListener {
+                cancelListener?.onCancelClick()
+                this@TipDialog.dismiss()
+            }
+            confirmButton.setOnClickListener {
+                confirmListener?.onConfirmClick(checkBox.isChecked)
+                this@TipDialog.dismiss()
+            }
+
+            cancelButton.visibility = if (showCancel) View.VISIBLE else View.GONE
+            confirmButton.visibility = if (showConfirm) View.VISIBLE else View.GONE
+
+            //如果开启了警告模式，那么就为标题添加一个红色的警告图标
+            if (warning) {
+                warningIcon.visibility = View.VISIBLE
+                warningIcon.drawable.setTint(Color.RED)
+            }
+        }
     }
 
     override fun dismiss() {
@@ -85,13 +103,14 @@ class TipDialog private constructor(
         private var showCancel = true
         private var showConfirm = true
         private var centerMessage = true
+        private var warning = false
 
         fun buildDialog(): TipDialog {
             val tipDialog = TipDialog(
                 this.context,
                 title, message, confirm, cancel, checkBox,
                 showCheckBox,
-                showCancel, showConfirm, centerMessage,
+                showCancel, showConfirm, centerMessage, warning,
                 cancelClickListener, confirmClickListener, dialogDismissListener
             )
             tipDialog.setCancelable(cancelable)
@@ -199,6 +218,15 @@ class TipDialog private constructor(
         @CheckResult
         fun setCenterMessage(center: Boolean): Builder {
             this.centerMessage = center
+            return this
+        }
+
+        /**
+         * 为标题栏添加红色警告图标
+         */
+        @CheckResult
+        fun setWarning(): Builder {
+            this.warning = true
             return this
         }
     }

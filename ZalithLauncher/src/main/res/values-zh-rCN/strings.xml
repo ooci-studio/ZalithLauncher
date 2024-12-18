@@ -45,6 +45,11 @@
     <string name="generic_input_too_small">填写的值过小，至少需要为 %s</string>
     <string name="generic_input_too_big">填写的值过大，最大只能为 %s</string>
     <string name="generic_copied">已复制</string>
+    <string name="generic_release">正式版</string>
+    <string name="generic_debug">测试版</string>
+    <string name="generic_pre_release">预发布版</string>
+    <string name="generic_beta">测试版</string>
+    <string name="generic_alpha">内测版</string>
 
     <!-- Error -->
     <string name="error_fatal">%s 意外地崩溃了</string>
@@ -69,7 +74,6 @@
     <string name="customctrl_editor_exit_msg">你是否确认退出？</string>
     <string name="customctrl_editor_exit">退出编辑器</string>
     <string name="global_save_and_exit">保存并退出</string>
-    <string name="version_release">正式版</string>
     <string name="version_snapshot">快照版</string>
     <string name="version_alpha">Alpha 版</string>
     <string name="version_beta">Beta 版</string>
@@ -78,7 +82,7 @@
     <string name="memory_warning_msg">当前可用内存（%d）低于所分配的内存（%d），这可能会导致游戏崩溃，如果游戏崩溃请更改配置！</string>
     <string name="address_memory_warning_msg">当前可用的空闲内存空间 (%d) 低于分配的内存 (%d)，这会导致崩溃，如果游戏崩溃，请调整内存分配。</string>
     <string name="notif_channel_name">常规</string>
-    <string name="lazy_service_default_title">Zalith 前台服务</string>
+    <string name="lazy_service_default_title">%s 前台服务</string>
     <string name="progresslayout_tasks_in_progress">%d 项任务正在进行中</string>
     <string name="notification_terminate">终止</string>
     <string name="notification_game_runs">游戏正在运行！</string>
@@ -91,6 +95,7 @@
     <string name="version_select_hint">选择版本</string>
     <string name="notif_error_occured">出现了一个错误</string>
     <string name="notif_error_occured_desc">点击查看详细信息</string>
+    <string name="input_preview_tip">预览输入框，捕获软键盘输入，仅供参考:</string>
 
     <string name="dl_tampered_manifest_title">文件校验警告</string>
     <string name="dl_tampered_manifest"><![CDATA[镜像源上的游戏版本列表与 Mojang 官方版本列表并不一致，这意味着它可能被篡改了<br/>
@@ -250,6 +255,7 @@
     <string name="pedit_isolation_enabled">启用版本隔离</string>
     <string name="pedit_reset_icon">这将会重置你设置的自定义图标，且操作不可逆，你确定要重置版本图标吗？</string>
     <string name="pedit_control">控制布局</string>
+    <string name="pedit_custom_path">自定义路径</string>
     <string name="pedit_default">（使用全局默认值）</string>
 
     <string name="profile_mods_download_mod">下载模组</string>
@@ -543,8 +549,7 @@
     <string name="download_info_date">创建日期:</string>
     <string name="download_info_modloader">适用于:</string>
     <string name="download_info_dependencies">依赖类型:</string>
-    <string name="download_info_release_type_beta">测试版</string>
-    <string name="download_info_release_type_alpha">内测版</string>
+    <string name="download_info_load_screenshot">展示屏幕截图</string>
     <string name="download_search_failed">搜索资源时失败！</string>
     <string name="download_search_no_result">未找到相关资源！</string>
     <string name="download_search_platform_not_supported">当前平台不支持下载这类资源，或不支持此类别筛选！</string>
@@ -648,8 +653,6 @@
     <string name="about_version_code">软件版本码:</string>
     <string name="about_last_update_time">上一次更新时间:</string>
     <string name="about_version_status">版本状态:</string>
-    <string name="about_version_status_debug">测试版</string>
-    <string name="about_version_status_pre_release">预发布版</string>
 
     <!-- Newbie Guide -->
     <string name="newbie_guide_general_close">可点击此按钮以关闭并返回上一个界面。</string>
@@ -667,6 +670,7 @@
     <string name="newbie_guide_mod_search">点击可召唤搜索框，使用它可以快速搜寻到你想要寻找的模组。</string>
     <string name="newbie_guide_mod_import">在原生的文件管理器内选择一个模组文件，可将其导入当前模组文件夹。</string>
     <string name="newbie_guide_mod_download">点击可以进入模组下载页面，你可以在那里在线搜索与下载模组。</string>
+    <string name="newbie_guide_game_menu">可以拖动游戏菜单悬浮窗至屏幕的任意位置。</string>
 
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">支持我的开发</string>

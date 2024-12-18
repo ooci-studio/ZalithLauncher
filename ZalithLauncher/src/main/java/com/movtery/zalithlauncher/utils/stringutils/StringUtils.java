@@ -94,6 +94,14 @@ public class StringUtils {
     }
 
     /**
+     * @return 检查字符串是否为null，如果是那么则返回""，如果不是，则返回字符串本身
+     */
+    public static String getStringNotNull(String string) {
+        if (string == null) return "";
+        else return string;
+    }
+
+    /**
      * 检查一段字符串内是否含有中文字符（中文标点）
      * @param str 检查的字符
      * @return 是否带有中文

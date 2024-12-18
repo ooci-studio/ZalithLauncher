@@ -15,7 +15,7 @@ import com.google.android.flexbox.FlexboxLayout
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.databinding.ItemVersionBinding
 import com.movtery.zalithlauncher.databinding.ViewVersionManagerBinding
-import com.movtery.zalithlauncher.feature.customprofilepath.ProfilePathHome
+import com.movtery.zalithlauncher.feature.customprofilepath.ProfilePathManager
 import com.movtery.zalithlauncher.feature.version.Version
 import com.movtery.zalithlauncher.feature.version.VersionIconUtils
 import com.movtery.zalithlauncher.feature.version.VersionsManager
@@ -88,9 +88,9 @@ class VersionAdapter(
                     }
                 }
 
-                binding.settings.visibility = View.VISIBLE
-                binding.settings.setOnClickListener { _ ->
-                    showPopupWindow(binding.settings, it)
+                binding.operate.visibility = View.VISIBLE
+                binding.operate.setOnClickListener { _ ->
+                    showPopupWindow(binding.operate, it)
                 }
 
                 VersionIconUtils(it).start(binding.versionIcon)
@@ -107,7 +107,7 @@ class VersionAdapter(
             }
             binding.versionIcon.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.ic_add))
             binding.version.setText(R.string.version_install_new)
-            binding.settings.visibility = View.GONE
+            binding.operate.visibility = View.GONE
             binding.root.setOnClickListener { listener.onCreateVersion() }
         }
 
@@ -174,6 +174,7 @@ class VersionAdapter(
             TipDialog.Builder(context)
                 .setTitle(context.getString(R.string.version_manager_delete))
                 .setMessage(deleteMessage)
+                .setWarning()
                 .setCancelable(false)
                 .setConfirmClickListener {
                     FileDeletionHandler(
@@ -188,11 +189,9 @@ class VersionAdapter(
 
         private fun swapPath(path: String) {
             val bundle = Bundle()
-            bundle.putString(
-                FilesFragment.BUNDLE_LOCK_PATH,
-                ProfilePathHome.gameHome
-            )
+            bundle.putString(FilesFragment.BUNDLE_LOCK_PATH, ProfilePathManager.currentPath)
             bundle.putString(FilesFragment.BUNDLE_LIST_PATH, path)
+            bundle.putBoolean(FilesFragment.BUNDLE_QUICK_ACCESS_PATHS, false)
             ZHTools.swapFragmentWithAnim(
                 parentFragment,
                 FilesFragment::class.java, FilesFragment.TAG, bundle

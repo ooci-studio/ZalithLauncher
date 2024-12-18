@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kdt.mcgui.ProgressLayout
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.event.single.AccountUpdateEvent
+import com.movtery.zalithlauncher.feature.accounts.AccountType
 import com.movtery.zalithlauncher.feature.accounts.AccountUtils
 import com.movtery.zalithlauncher.feature.accounts.AccountsManager
 import com.movtery.zalithlauncher.feature.log.Logging
@@ -87,6 +88,7 @@ class LaunchGame {
                         TipDialog.Builder(context)
                             .setTitle(R.string.generic_error)
                             .setMessage("${context.getString(R.string.account_login_skip)}\r\n$errorMessage")
+                            .setWarning()
                             .setConfirmClickListener { launch() }
                             .setCenterMessage(false)
                             .buildDialog()
@@ -111,20 +113,20 @@ class LaunchGame {
                 Tools.releaseCache()
             }
 
-            val customArgs = minecraftVersion.getJavaArgs().takeIf { it.isNotBlank() }
-                ?: AllSettings.javaArgs.getValue().takeIf { it.isNotBlank() }
-                ?: ""
+            val isNoNetwork = !NetworkUtils.isNetworkAvailable(activity)
+
+            val customArgs = minecraftVersion.getJavaArgs().takeIf { it.isNotBlank() } ?: ""
             val account = AccountsManager.getInstance().currentAccount
             printLauncherInfo(
                 minecraftVersion,
                 customArgs.takeIf { it.isNotBlank() } ?: "NONE",
                 minecraftVersion.getJavaDir().takeIf { it.isNotBlank() } ?: "NONE",
-                account
+                account, isNoNetwork
             )
             JREUtils.redirectAndPrintJRELog()
 
             val requiredJavaVersion = version.javaVersion?.majorVersion ?: 8
-            launch(activity, account, minecraftVersion, requiredJavaVersion, customArgs)
+            launch(activity, account, isNoNetwork, minecraftVersion, requiredJavaVersion, customArgs)
             //Note that we actually stall in the above function, even if the game crashes. But let's be safe.
             activity.runOnUiThread { serverBinder.isActive = false }
         }
@@ -133,7 +135,8 @@ class LaunchGame {
             minecraftVersion: Version,
             javaArguments: String,
             javaRuntime: String,
-            account: MinecraftAccount
+            account: MinecraftAccount,
+            isNoNetwork: Boolean
         ) {
             fun formatJavaRuntimeString(): String {
                 val prefix = Tools.LAUNCHERPROFILES_RTPREFIX
@@ -156,7 +159,7 @@ class LaunchGame {
             Logger.appendToLog("Info: Game Path: ${minecraftVersion.getGameDir().absolutePath} (Isolation: ${minecraftVersion.isIsolation()})")
             Logger.appendToLog("Info: Custom Java arguments: $javaArguments")
             Logger.appendToLog("Info: Java Runtime: ${formatJavaRuntimeString()}")
-            Logger.appendToLog("Info: Account: ${account.username} (${account.accountType})")
+            Logger.appendToLog("Info: Account: ${account.username} (${if (isNoNetwork) AccountType.LOCAL.type else account.accountType})")
         }
 
         @Throws(Throwable::class)
@@ -164,6 +167,7 @@ class LaunchGame {
         private fun launch(
             activity: AppCompatActivity,
             account: MinecraftAccount,
+            isNoNetwork: Boolean,
             minecraftVersion: Version,
             versionJavaRequirement: Int,
             customArgs: String
@@ -187,6 +191,7 @@ class LaunchGame {
 
             val launchArgs = LaunchArgs(
                 account,
+                isNoNetwork,
                 gameDirPath,
                 minecraftVersion,
                 versionInfo,
@@ -217,6 +222,7 @@ class LaunchGame {
                 val builder = TipDialog.Builder(activity)
                     .setTitle(R.string.generic_warning)
                     .setMessage(activity.getString(stringId, freeDeviceMemory, AllSettings.ramAllocation.value.getValue()))
+                    .setWarning()
                     .setCenterMessage(false)
                     .setShowCancel(false)
                 if (LifecycleAwareTipDialog.haltOnDialog(activity.lifecycle, builder)) return

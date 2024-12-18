@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.movtery.anim.AnimPlayer
+import com.movtery.anim.animations.Animations
+import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.event.value.DownloadRecyclerEnableEvent
 import com.movtery.zalithlauncher.feature.download.InfoViewModel
 import com.movtery.zalithlauncher.feature.download.ScreenshotAdapter
@@ -29,6 +32,7 @@ import com.movtery.zalithlauncher.task.TaskExecutors
 import com.movtery.zalithlauncher.ui.subassembly.modlist.ModListAdapter
 import com.movtery.zalithlauncher.ui.subassembly.modlist.ModListFragment
 import com.movtery.zalithlauncher.ui.subassembly.modlist.ModListItemBean
+import com.movtery.zalithlauncher.ui.view.AnimButton
 import com.movtery.zalithlauncher.utils.MCVersionRegex.Companion.RELEASE_REGEX
 import com.movtery.zalithlauncher.utils.ZHTools
 import com.movtery.zalithlauncher.utils.stringutils.StringUtilsKt
@@ -137,7 +141,17 @@ class DownloadModFragment : ModListFragment() {
         val mData: MutableList<ModListItemBean> = ArrayList()
         mModVersionsByMinecraftVersion.entries
             .sortedWith { entry1, entry2 ->
-                -VersionNumber.compare(entry1.key.first, entry2.key.first)
+                val mcVersionComparison = -VersionNumber.compare(entry1.key.first, entry2.key.first)
+                if (mcVersionComparison != 0) {
+                    mcVersionComparison
+                } else {
+                    val name1 = entry1.key.second?.name ?: ""
+                    val name2 = entry2.key.second?.name ?: ""
+                    //保证有ModLoader的版本在前
+                    if (name1.isEmpty() && name2.isNotEmpty()) 1
+                    else if (name1.isNotEmpty() && name2.isEmpty()) -1
+                    else name1.compareTo(name2)
+                }
             }
             .forEach { entry: Map.Entry<Pair<String, ModLoader?>, List<VersionItem>> ->
                 currentTask?.apply { if (isCancelled) return }
@@ -211,7 +225,22 @@ class DownloadModFragment : ModListFragment() {
         Task.runTask {
             platformHelper.getScreenshots(mInfoItem.projectId)
         }.ended(TaskExecutors.getAndroidUI()) { screenshotItems ->
-            screenshotItems?.let { setScreenshotView(it) }
+            screenshotItems?.let addButton@{ items ->
+                if (items.isEmpty()) return@addButton
+                fragmentActivity?.let { activity ->
+                    //添加一个按钮，通过点击这个按钮来加载屏幕截图数据
+                    addMoreView(AnimButton(activity).apply {
+                        layoutParams = RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                        setText(R.string.download_info_load_screenshot)
+                        setOnClickListener {
+                            setScreenshotView(items)
+                            AnimPlayer.play().apply(AnimPlayer.Entry(this, Animations.FadeOut))
+                                .setOnEnd { removeMoreView(this) }
+                                .start()
+                        }
+                    })
+                }
+            }
             removeMoreView(progressBar)
         }.onThrowable { e ->
             Logging.e(

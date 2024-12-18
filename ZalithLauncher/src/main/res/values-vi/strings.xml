@@ -45,6 +45,11 @@
     <string name="generic_input_too_small">Giá trị đã nhập quá nhỏ, cần ít nhất là %s</string>
     <string name="generic_input_too_big">Giá trị đã nhập quá lớn, tối đa chỉ là %s</string>
     <string name="generic_copied">Đã sao chép</string>
+    <string name="generic_release">Phiên bản chính thức</string>
+    <string name="generic_debug">Phiên bản thử nghiệm</string>
+    <string name="generic_pre_release">Phiên bản phát hành trước</string>
+    <string name="generic_beta">Phiên bản beta</string>
+    <string name="generic_alpha">Phiên bản alpha</string>
     <!-- Error -->
     <string name="error_fatal">%s đã gặp sự cố nghiêm trọng</string>
     <string name="error_no_version">Không có phiên bản!</string>
@@ -67,7 +72,6 @@
     <string name="customctrl_editor_exit_msg">Bạn có chắc chắn muốn thoát?</string>
     <string name="customctrl_editor_exit">Thoát trình soạn thảo</string>
     <string name="global_save_and_exit">Lưu và thoát</string>
-    <string name="version_release">Phiên bản chính thức</string>
     <string name="version_snapshot">Phiên bản Snapshot</string>
     <string name="version_alpha">Phiên bản Alpha</string>
     <string name="version_beta">Phiên bản Beta</string>
@@ -76,7 +80,7 @@
     <string name="memory_warning_msg">Bộ nhớ hiện có (%d) thấp hơn bộ nhớ được phân bổ (%d), điều này có thể gây ra sự cố trò chơi, nếu trò chơi bị sự cố, vui lòng thay đổi cấu hình!</string>
     <string name="address_memory_warning_msg">Không gian bộ nhớ trống hiện có (%d) thấp hơn bộ nhớ được phân bổ (%d), điều này sẽ gây ra sự cố, nếu trò chơi bị sự cố, vui lòng điều chỉnh phân bổ bộ nhớ.</string>
     <string name="notif_channel_name">Thông thường</string>
-    <string name="lazy_service_default_title">Dịch vụ Tiếp tân Zalith</string>
+    <string name="lazy_service_default_title">Dịch vụ Tiếp tân %s</string>
     <string name="progresslayout_tasks_in_progress">%d nhiệm vụ đang diễn ra</string>
     <string name="notification_terminate">Kết thúc</string>
     <string name="notification_game_runs">Trò chơi đang chạy!</string>
@@ -89,6 +93,7 @@
     <string name="version_select_hint">Chọn phiên bản</string>
     <string name="notif_error_occured">Đã xảy ra lỗi</string>
     <string name="notif_error_occured_desc">Nhấn vào đây để xem chi tiết</string>
+    <string name="input_preview_tip">Xem trước khung nhập liệu, ghi lại đầu vào từ bàn phím mềm, chỉ để tham khảo:</string>
     <string name="dl_tampered_manifest_title">Cảnh báo xác minh tệp</string>
     <string name="dl_tampered_manifest"><![CDATA[Danh sách phiên bản trò chơi trên nguồn hình ảnh không khớp với danh sách phiên bản chính thức của Mojang, điều này có nghĩa là nó có thể đã bị thay đổi<br/>
         <b>Hành động này không an toàn. Nếu bạn tiếp tục, thông tin cá nhân của bạn có thể gặp rủi ro!</b><br/>
@@ -239,6 +244,7 @@
     <string name="pedit_isolation_enabled">Bật cách ly phiên bản</string>
     <string name="pedit_reset_icon">Điều này sẽ đặt lại biểu tượng tùy chỉnh bạn đã thiết lập và thao tác không thể hoàn tác. Bạn có chắc chắn muốn đặt lại biểu tượng phiên bản không?</string>
     <string name="pedit_control">Bố cục điều khiển</string>
+    <string name="pedit_custom_path">Đường dẫn tùy chỉnh</string>
     <string name="pedit_default">（Sử dụng giá trị mặc định toàn cục）</string>
     <string name="profile_mods_download_mod">Tải xuống Mod</string>
     <string name="profile_mods_download_mod_release_version">Chỉ hiển thị phiên bản chính thức của Minecraft</string>
@@ -513,8 +519,7 @@
     <string name="download_info_date">Ngày tạo:</string>
     <string name="download_info_modloader">Tương thích với:</string>
     <string name="download_info_dependencies">Loại phụ thuộc:</string>
-    <string name="download_info_release_type_beta">Phiên bản Beta</string>
-    <string name="download_info_release_type_alpha">Phiên bản Alpha</string>
+    <string name="download_info_load_screenshot">Hiển thị ảnh chụp màn hình</string>
     <string name="download_search_failed">Tìm kiếm tài nguyên thất bại!</string>
     <string name="download_search_no_result">Không tìm thấy tài nguyên liên quan!</string>
     <string name="download_search_platform_not_supported">Nền tảng hiện tại không hỗ trợ tải xuống loại tài nguyên này hoặc bộ lọc loại này!</string>
@@ -611,8 +616,6 @@
     <string name="about_version_code">Mã phiên bản phần mềm:</string>
     <string name="about_last_update_time">Lần cập nhật cuối:</string>
     <string name="about_version_status">Trạng thái phiên bản:</string>
-    <string name="about_version_status_debug">Bản thử nghiệm</string>
-    <string name="about_version_status_pre_release">Bản phát hành trước</string>
     <!-- Newbie Guide -->
     <string name="newbie_guide_general_close">Có thể nhấn nút này để đóng và quay lại giao diện trước đó.</string>
     <string name="newbie_guide_general_refresh">Có thể nhấn nút này để làm mới nội dung hiện tại.</string>
@@ -629,6 +632,7 @@
     <string name="newbie_guide_mod_search">Nhấp vào để triệu hồi hộp tìm kiếm, sử dụng nó để nhanh chóng tìm kiếm Mod bạn muốn tìm.</string>
     <string name="newbie_guide_mod_import">Chọn một tệp Mod trong trình quản lý tệp gốc, có thể nhập nó vào thư mục Mod hiện tại.</string>
     <string name="newbie_guide_mod_download">Nhấp vào để vào trang tải xuống Mod, bạn có thể tìm kiếm và tải xuống Mod trực tuyến ở đó.</string>
+    <string name="newbie_guide_game_menu">Bạn có thể kéo cửa sổ nổi của menu trò chơi đến bất kỳ vị trí nào trên màn hình.</string>
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">Hỗ trợ phát triển của tôi</string>
     <string name="request_sponsorship_message">Phần lớn nội dung của phần mềm này do một mình tôi phát triển và bảo trì. Nếu bạn thấy phần mềm này hữu ích và có điều kiện, mong bạn xem xét tài trợ cho tôi, để tôi có thêm động lực tiếp tục phát triển và cải tiến, cảm ơn sự ủng hộ của bạn!</string>

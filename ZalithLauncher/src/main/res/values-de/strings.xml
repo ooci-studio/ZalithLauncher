@@ -45,6 +45,11 @@
     <string name="generic_input_too_small">Der Wert ist zu klein, mindestens %s</string>
     <string name="generic_input_too_big">Der Wert ist zu groß, maximal %s</string>
     <string name="generic_copied">Kopiert</string>
+    <string name="generic_release">Release</string>
+    <string name="generic_debug">Testversion</string>
+    <string name="generic_pre_release">Vorabversion</string>
+    <string name="generic_beta">Beta-Version</string>
+    <string name="generic_alpha">Alpha-Version</string>
     <!-- Error -->
     <string name="error_fatal">%s ist unerwartet abgestürzt</string>
     <string name="error_no_version">Keine Version vorhanden!</string>
@@ -67,7 +72,6 @@
     <string name="customctrl_editor_exit_msg">Möchtest du wirklich beenden?</string>
     <string name="customctrl_editor_exit">Editor beenden</string>
     <string name="global_save_and_exit">Speichern und beenden</string>
-    <string name="version_release">Offizielle Version</string>
     <string name="version_snapshot">Snapshot</string>
     <string name="version_alpha">Alpha-Version</string>
     <string name="version_beta">Beta-Version</string>
@@ -76,7 +80,7 @@
     <string name="memory_warning_msg">Der verfügbare Speicher (%d) ist niedriger als der zugewiesene Speicher (%d), was zu Abstürzen führen kann. Wenn das Spiel abstürzt, ändere bitte die Konfiguration!</string>
     <string name="address_memory_warning_msg">Der verfügbare freie Speicherplatz (%d) ist niedriger als der zugewiesene Speicher (%d), was zu Abstürzen führen kann. Wenn das Spiel abstürzt, passe bitte die Speicherzuweisung an.</string>
     <string name="notif_channel_name">Allgemein</string>
-    <string name="lazy_service_default_title">Zalith Empfangsdienst</string>
+    <string name="lazy_service_default_title">%s Empfangsdienst</string>
     <string name="progresslayout_tasks_in_progress">%d Aufgaben laufen</string>
     <string name="notification_terminate">Beenden</string>
     <string name="notification_game_runs">Das Spiel läuft!</string>
@@ -89,6 +93,7 @@
     <string name="version_select_hint">Version auswählen</string>
     <string name="notif_error_occured">Ein Fehler ist aufgetreten</string>
     <string name="notif_error_occured_desc">Klicken Sie hier, um Details anzuzeigen</string>
+    <string name="input_preview_tip">Eingabevorschau-Feld, erfasst die Eingabe der Soft-Tastatur, nur als Referenz:</string>
     <string name="dl_tampered_manifest_title">Warnung zur Dateiprüfung</string>
     <string name="dl_tampered_manifest"><![CDATA[Die Versionsliste der Spiele auf der Mirror-Quelle stimmt nicht mit der offiziellen Versionsliste von Mojang überein, was bedeutet, dass sie möglicherweise manipuliert wurde.<br/>
         <b>Dies ist nicht sicher. Wenn Sie fortfahren, könnte Ihre persönliche Sicherheit gefährdet sein!</b><br/>
@@ -239,6 +244,7 @@
     <string name="pedit_isolation_enabled">Versionstrennung aktivieren</string>
     <string name="pedit_reset_icon">Dadurch wird das benutzerdefinierte Symbol, das du festgelegt hast, zurückgesetzt, und der Vorgang ist nicht rückgängig zu machen. Bist du sicher, dass du das Versionssymbol zurücksetzen möchtest?</string>
     <string name="pedit_control">Steuerungsraster</string>
+    <string name="pedit_custom_path">Benutzerdefinierter Pfad</string>
     <string name="pedit_default">(Globale Standardeinstellung verwenden)</string>
     <string name="profile_mods_download_mod">Mod herunterladen</string>
     <string name="profile_mods_download_mod_release_version">Nur offizielle Minecraft-Versionen anzeigen</string>
@@ -513,8 +519,7 @@
     <string name="download_info_date">Erstellungsdatum:</string>
     <string name="download_info_modloader">Kompatibel mit:</string>
     <string name="download_info_dependencies">Abhängigkeitsart:</string>
-    <string name="download_info_release_type_beta">Beta</string>
-    <string name="download_info_release_type_alpha">Alpha</string>
+    <string name="download_info_load_screenshot">Bildschirmfoto anzeigen</string>
     <string name="download_search_failed">Fehler beim Suchen nach Ressourcen!</string>
     <string name="download_search_no_result">Keine verwandten Ressourcen gefunden!</string>
     <string name="download_search_platform_not_supported">Die aktuelle Plattform unterstützt das Herunterladen dieses Typs von Ressourcen oder diese Kategoriefilterung nicht!</string>
@@ -611,8 +616,6 @@
     <string name="about_version_code">Software-Versionscode:</string>
     <string name="about_last_update_time">Letzte Aktualisierungszeit:</string>
     <string name="about_version_status">Versionsstatus:</string>
-    <string name="about_version_status_debug">Testversion</string>
-    <string name="about_version_status_pre_release">Vorabversion</string>
     <!-- Newbie Guide -->
     <string name="newbie_guide_general_close">Klicken Sie auf diese Schaltfläche, um zu schließen und zum vorherigen Bildschirm zurückzukehren.</string>
     <string name="newbie_guide_general_refresh">Klicken Sie auf diese Schaltfläche, um den aktuellen Inhalt zu aktualisieren.</string>
@@ -629,6 +632,7 @@
     <string name="newbie_guide_mod_search">Klicken Sie, um das Suchfeld aufzurufen, mit dem Sie schnell den gewünschten Mod finden können.</string>
     <string name="newbie_guide_mod_import">Wählen Sie im nativen Dateimanager eine Mod-Datei aus, um sie in den aktuellen Mod-Ordner zu importieren.</string>
     <string name="newbie_guide_mod_download">Klicken Sie, um zur Mod-Download-Seite zu gelangen, auf der Sie Mods online suchen und herunterladen können.</string>
+    <string name="newbie_guide_game_menu">Sie können das schwebende Spielfenster an jede Position auf dem Bildschirm ziehen.</string>
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">Unterstütze meine Entwicklung</string>
     <string name="request_sponsorship_message">Der Großteil dieser Software wurde von mir allein entwickelt und gewartet. Wenn Sie diese Software hilfreich finden und es Ihnen möglich ist, würde ich mich freuen, wenn Sie meine Entwicklung unterstützen würden, damit ich weiterhin motiviert bin, sie zu verbessern. Vielen Dank für Ihre Unterstützung!</string>

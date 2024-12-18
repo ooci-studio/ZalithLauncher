@@ -3,6 +3,7 @@ package com.movtery.zalithlauncher.feature.version
 import android.os.Parcel
 import android.os.Parcelable
 import com.movtery.zalithlauncher.feature.log.Logging
+import com.movtery.zalithlauncher.utils.stringutils.StringUtils.getStringNotNull
 import net.kdt.pojavlaunch.Tools
 import java.io.File
 import java.io.FileWriter
@@ -13,21 +14,32 @@ class VersionConfig(private var versionPath: File) : Parcelable {
     private var javaArgs: String = ""
     private var renderer: String = ""
     private var control: String = ""
+    private var customPath: String = ""
 
     constructor(
         filePath: File,
+        isolation: Boolean = false,
         javaDir: String = "",
         javaArgs: String = "",
         renderer: String = "",
-        control: String = ""
+        control: String = "",
+        customPath: String = ""
     ) : this(filePath) {
+        this.isolation = isolation
         this.javaDir = javaDir
         this.javaArgs = javaArgs
         this.renderer = renderer
         this.control = control
+        this.customPath = customPath
     }
 
-    fun copy(): VersionConfig = VersionConfig(versionPath, javaDir, javaArgs, renderer, control)
+    fun copy(): VersionConfig = VersionConfig(versionPath, isolation,
+        getStringNotNull(javaDir),
+        getStringNotNull(javaArgs),
+        getStringNotNull(renderer),
+        getStringNotNull(control),
+        getStringNotNull(customPath)
+    )
 
     fun save() {
         runCatching {
@@ -63,48 +75,59 @@ class VersionConfig(private var versionPath: File) : Parcelable {
         this.isolation = isolation
     }
 
-    fun getJavaDir() = javaDir
+    fun getJavaDir(): String = getStringNotNull(javaDir)
 
     fun setJavaDir(dir: String) { this.javaDir = dir }
 
-    fun getJavaArgs() = javaArgs
+    fun getJavaArgs(): String = getStringNotNull(javaArgs)
 
     fun setJavaArgs(args: String) { this.javaArgs = args }
 
-    fun getRenderer() = renderer
+    fun getRenderer(): String = getStringNotNull(renderer)
 
     fun setRenderer(renderer: String) { this.renderer = renderer }
 
-    fun getControl() = control
+    fun getControl(): String = getStringNotNull(control)
 
     fun setControl(control: String) { this.control = control }
 
+    fun getCustomPath(): String = getStringNotNull(customPath)
+
+    fun setCustomPath(customPath: String) { this.customPath = customPath }
+
     override fun toString(): String {
-        return "VersionConfig{versionPath='$versionPath', javaDir='$javaDir', javaArgs='$javaArgs', renderer='$renderer', control='$control'}"
+        return "VersionConfig{" +
+                "isolation=$isolation, " +
+                "versionPath='$versionPath', " +
+                "javaDir='${getStringNotNull(javaDir)}', " +
+                "javaArgs='${getStringNotNull(javaArgs)}', " +
+                "renderer='${getStringNotNull(renderer)}', " +
+                "control='${getStringNotNull(control)}', " +
+                "customPath='${getStringNotNull(customPath)}'}"
     }
 
     override fun describeContents(): Int = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeInt(if (isolation) 1 else 0)
         dest.writeString(versionPath.absolutePath)
-        dest.writeString(javaDir)
-        dest.writeString(javaArgs)
-        dest.writeString(renderer)
-        dest.writeString(control)
+        dest.writeInt(if (isolation) 1 else 0)
+        dest.writeString(getStringNotNull(javaDir))
+        dest.writeString(getStringNotNull(javaArgs))
+        dest.writeString(getStringNotNull(renderer))
+        dest.writeString(getStringNotNull(control))
+        dest.writeString(getStringNotNull(customPath))
     }
 
     companion object CREATOR : Parcelable.Creator<VersionConfig> {
         override fun createFromParcel(parcel: Parcel): VersionConfig {
-            val isolation = parcel.readInt() > 0
             val versionPath = File(parcel.readString().orEmpty())
+            val isolation = parcel.readInt() > 0
             val javaDir = parcel.readString().orEmpty()
             val javaArgs = parcel.readString().orEmpty()
             val renderer = parcel.readString().orEmpty()
             val control = parcel.readString().orEmpty()
-            return VersionConfig(versionPath, javaDir, javaArgs, renderer, control).apply {
-                setIsolation(isolation)
-            }
+            val customPath = parcel.readString().orEmpty()
+            return VersionConfig(versionPath, isolation, javaDir, javaArgs, renderer, control, customPath)
         }
 
         override fun newArray(size: Int): Array<VersionConfig?> {

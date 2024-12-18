@@ -71,7 +71,6 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', nameId + '.debug'
             resValue 'string', 'storageProviderAuthorities', nameId + '.scoped.gamefolder.debug'
         }
         proguard {
@@ -79,7 +78,10 @@ android {
             minifyEnabled true
             shrinkResources true
         }
-
+        proguardNoDebug {
+            initWith proguard
+            debuggable false
+        }
         release {
             // Don't set to true or java.awt will be a.a or something similar.
             minifyEnabled false
@@ -87,7 +89,6 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue 'string', 'application_package', nameId
             resValue 'string', 'storageProviderAuthorities', nameId + '.scoped.gamefolder'
             signingConfig signingConfigs.releaseBuild
         }
@@ -170,6 +171,7 @@ android {
 
     buildFeatures {
         prefab true
+        buildConfig true
     }
 
     buildToolsVersion = '34.0.0'
